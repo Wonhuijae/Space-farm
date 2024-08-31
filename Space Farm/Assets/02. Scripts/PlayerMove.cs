@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.LowLevel;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -32,8 +33,9 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Move();
-        Rotate();
+        Debug.Log($"{playerInput.hValue} {playerInput.vValue}");
+        if (playerInput.hValue != 0 || playerInput.vValue != 0)  Move();
+        
         Jump();
         CameraRotate();
     }
@@ -44,12 +46,8 @@ public class PlayerMove : MonoBehaviour
         // 이동 방향
         Vector3 moveDirection = new Vector3(playerInput.hValue, 0, playerInput.vValue).normalized;
 
+        playerRB.rotation = Quaternion.LookRotation(moveDirection);
         playerRB.MovePosition(playerRB.position + moveDirection * Time.deltaTime * moveSpeed);
-    }
-
-    void Rotate()
-    {
-
     }
 
     void Jump()
