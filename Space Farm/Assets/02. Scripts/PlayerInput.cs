@@ -1,3 +1,4 @@
+using Palmmedia.ReportGenerator.Core.CodeAnalysis;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,7 +65,7 @@ public class PlayerInput : MonoBehaviour
     {
         if(isMouseDrag) isMouseDrag = false;
 
-        isMouseUp = true;
+        isMouseUp = false;
     }
 
     private void OnMouseDrag() // 왼쪽 버튼 드래그 시 매 프레임
