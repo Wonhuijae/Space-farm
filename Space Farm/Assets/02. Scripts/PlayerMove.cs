@@ -33,7 +33,6 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log($"{playerInput.hValue} {playerInput.vValue}");
         if (playerInput.hValue != 0 || playerInput.vValue != 0)  Move();
         
         Jump();
