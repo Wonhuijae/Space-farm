@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 public class EnvironmentController : MonoBehaviour
 {
     public Light dLight;
-    public float cycleSpeed = 1.0f;
     float dayDuration = 60f; // 게임 내 하루 시간
     private float dayCounter = 0f;
     float lightAngle = 0f;
@@ -15,7 +14,6 @@ public class EnvironmentController : MonoBehaviour
     void Update()
     {
         TimeCycle();
-        SkyCycle();
     }
 
     void TimeCycle()
@@ -25,10 +23,7 @@ public class EnvironmentController : MonoBehaviour
 
         lightAngle = Mathf.Lerp(0, 360, dayCounter); // 0에서 360까지 counter만큼 증가
         dLight.transform.rotation = Quaternion.Euler(new Vector3(lightAngle - 90, 90, 0)); // z 각도, y각도는 고정, x각도 변화, -90부터 시작
-    }
 
-    void SkyCycle()
-    {
-        RenderSettings.skybox.SetFloat("_Rotation", Time.time * cycleSpeed);
+        RenderSettings.skybox.SetFloat("_Rotation", Time.time * 0.25f); // 스카이박스 회전
     }
 }
