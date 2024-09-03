@@ -1,6 +1,9 @@
 using Palmmedia.ReportGenerator.Core.CodeAnalysis;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
@@ -9,6 +12,29 @@ public class PlayerInput : MonoBehaviour
     public string moveHAxisName = "Horizontal";
     public string moveVAxisName = "Vertical";
     public string jumpKeyName = "Jump";
+    public event Action<int> OnChangedShortCut;
+
+    private UIManager UIinstance;
+
+    public int shortCutPressed
+    {
+        get
+        {
+            for (int i = 0; i < ShortCuts.Length; i++)
+            {
+                if (Input.GetKeyDown(ShortCuts[i]))
+                {
+                    if (OnChangedShortCut != null) OnChangedShortCut?.Invoke(i);
+                    lastKey = i;
+                    return lastKey;
+                }
+            }
+
+            return lastKey;
+        }
+        private set { }
+    }
+    private int lastKey;
 
     // 입력 값
     public float hValue { get; private set; }
@@ -28,6 +54,16 @@ public class PlayerInput : MonoBehaviour
     public bool isMouseOver { get; private set; }
     public bool isMouseExit { get; private set; }
 
+    private KeyCode[] ShortCuts =
+    {
+        KeyCode.Alpha1,
+        KeyCode.Alpha2,
+        KeyCode.Alpha3,
+        KeyCode.Alpha4,
+        KeyCode.Alpha5,
+        KeyCode.Alpha6,
+    };
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -43,10 +79,21 @@ public class PlayerInput : MonoBehaviour
         isMouseEnter = false;
         isMouseOver = false;
         isMouseExit = false;
+
+        shortCutPressed = 0;
+        lastKey = 0;
+    }
+
+    private void Start()
+    {
+        UIinstance = FindObjectOfType<UIManager>();
+        if (UIinstance != null) OnChangedShortCut += UIinstance.ChangeActiveShortCut;
     }
 
     void Update()
     {
+        Debug.Log(shortCutPressed);
+
         hValue = Input.GetAxis(moveHAxisName);
         vValue = Input.GetAxis(moveVAxisName);
 

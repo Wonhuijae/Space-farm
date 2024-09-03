@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class FarmSystemInput : MonoBehaviour
 {
-    // ∏ﬁ¿Œ ƒ´∏ﬁ∂Û
+    // Î©îÏù∏ Ïπ¥Î©îÎùº
     public Camera cam;
     public Vector3 mousePos
     {
         get
         {
-            _mousePos = Input.mousePosition; // «ˆ¿Á ∏∂øÏΩ∫ ¿ßƒ°
+            _mousePos = Input.mousePosition;
             _mousePos.z = cam.nearClipPlane;
             Ray ray = cam.ScreenPointToRay(_mousePos);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100, planeLayer))
+            if (Physics.Raycast(ray, out hit, 100000, planeLayer))
             {
                 _mousePos = hit.point;
-                _mousePos.y = 0.001f;
             }
             return _mousePos;
         }
     }
-    private Vector3 _mousePos; //  ¿”Ω√ ∫Øºˆ
+    private Vector3 _mousePos;
 
     public Vector3Int cellPos
     {
@@ -35,8 +34,9 @@ public class FarmSystemInput : MonoBehaviour
         }
     }
     private Vector3Int _cellPos;
-    public LayerMask planeLayer; // ∏∂øÏΩ∫ ∞®¡ˆø° ªÁøÎµ… ∑π¿ÃæÓ
-    public GameObject previewObj; // ºø πÃ∏Æ∫∏±‚ ø¿∫Í¡ß∆Æ
+    public LayerMask planeLayer;
+    public GameObject previewObj;
+    public GameObject originalFiled;
 
     private Grid grid;
 
@@ -47,9 +47,12 @@ public class FarmSystemInput : MonoBehaviour
 
     private void Update()
     {
-        //previewObj.transform.position = mousePos;
         previewObj.transform.position = grid.CellToWorld(cellPos);
 
-        Debug.Log($"{cellPos} {mousePos}");
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 fieldPos = grid.CellToWorld(cellPos);
+            Instantiate(originalFiled, fieldPos, Quaternion.identity);
+        }
     }
 }

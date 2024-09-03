@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public GameObject panelDetails;
+    public TextMeshProUGUI text;
+    public GameObject[] shortCutBTNs;
+
+    private int curActiceShortCut;
 
     public static UIManager instance
     {
@@ -26,6 +32,8 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        curActiceShortCut = -1;
     }
 
     // Update is called once per frame
@@ -37,5 +45,15 @@ public class UIManager : MonoBehaviour
     public void CloseDetails()
     {
         panelDetails.SetActive(false);
+    }
+
+    public void ChangeActiveShortCut(int _ShortCut)
+    {
+        if (curActiceShortCut >= 0 && curActiceShortCut != _ShortCut) 
+        {
+            shortCutBTNs[curActiceShortCut].GetComponent<Outline>().enabled = false;
+        }
+        shortCutBTNs[_ShortCut].GetComponent<Outline>().enabled = true;
+        curActiceShortCut = _ShortCut;
     }
 }
