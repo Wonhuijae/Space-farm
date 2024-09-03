@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class EnvironmentController : MonoBehaviour
 {
     public Light dLight;
-    float dayDuration = 60f; // 게임 내 하루 시간
+    float dayDuration = 300f; // 게임 내 하루 시간
     private float dayCounter = 0f;
     float lightAngle = 0f;
 

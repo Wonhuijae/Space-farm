@@ -17,6 +17,7 @@ public class FarmSystemInput : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100, planeLayer))
             {
                 _mousePos = hit.point;
+                _mousePos.y = 0.001f;
             }
             return _mousePos;
         }
@@ -28,6 +29,7 @@ public class FarmSystemInput : MonoBehaviour
         get
         {
             _cellPos = grid.WorldToCell(mousePos);
+            
 
             return _cellPos;
         }
@@ -41,13 +43,13 @@ public class FarmSystemInput : MonoBehaviour
     private void Awake()
     {
         grid = GetComponentInChildren<Grid>();
-
-        if (grid == null) Debug.Log("그리드 없음");
     }
 
     private void Update()
     {
         //previewObj.transform.position = mousePos;
         previewObj.transform.position = grid.CellToWorld(cellPos);
+
+        Debug.Log($"{cellPos} {mousePos}");
     }
 }
