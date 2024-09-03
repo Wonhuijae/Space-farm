@@ -24,7 +24,7 @@ public class PlayerInput : MonoBehaviour
             {
                 if (Input.GetKeyDown(ShortCuts[i]))
                 {
-                    if (OnChangedShortCut != null) OnChangedShortCut?.Invoke(i);
+                    if (lastKey != i  && OnChangedShortCut != null) OnChangedShortCut?.Invoke(i);
                     lastKey = i;
                     return lastKey;
                 }
