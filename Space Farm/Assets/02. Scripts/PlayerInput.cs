@@ -28,8 +28,6 @@ public class PlayerInput : MonoBehaviour
     public bool isMouseOver { get; private set; }
     public bool isMouseExit { get; private set; }
 
-
-
     // Start is called before the first frame update
     void Awake()
     {
