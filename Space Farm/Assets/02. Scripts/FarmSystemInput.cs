@@ -62,6 +62,7 @@ public class FarmSystemInput : MonoBehaviour
         grid = GetComponentInChildren<Grid>();
         UIinstance = FindObjectOfType<UIManager>();
         isOverLapped = false;
+        previewObj.SetActive(false);
     }
 
     private void Update()

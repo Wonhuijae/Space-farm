@@ -46,8 +46,8 @@ public class EnvironmentController : MonoBehaviour
         if (dayCounter >= 1f) dayCounter = 0f; // 하루 지나면 초기화
         onChangeTime?.Invoke(inGameH, inGameM % 60);
 
-        //lightAngle = Mathf.Lerp(0, 360, dayCounter); // 0에서 360까지 counter만큼 증가
-        //dLight.transform.rotation = Quaternion.Euler(new Vector3(lightAngle - 90, 90, 0)); // z 각도, y각도는 고정, x각도 변화, -90부터 시작
+        lightAngle = Mathf.Lerp(0, 360, dayCounter); // 0에서 360까지 counter만큼 증가
+        dLight.transform.rotation = Quaternion.Euler(new Vector3(lightAngle - 90, 90, 0)); // z 각도, y각도는 고정, x각도 변화, -90부터 시작
 
         RenderSettings.skybox.SetFloat("_Rotation", Time.time * 0.25f); // 스카이박스 회전
     }
