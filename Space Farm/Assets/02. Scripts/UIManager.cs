@@ -7,10 +7,11 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public GameObject panelDetails;
-    public TextMeshProUGUI text;
+    //public TextMeshProUGUI text;
     public GameObject[] shortCutBTNs;
+    public TextMeshProUGUI timeText;
 
-    private int curActiceShortCut;
+    public int curActiveShortCut { get; private set; }
 
     public static UIManager instance
     {
@@ -33,7 +34,7 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        curActiceShortCut = -1;
+        curActiveShortCut = -1;
     }
 
     // Update is called once per frame
@@ -49,11 +50,17 @@ public class UIManager : MonoBehaviour
 
     public void ChangeActiveShortCut(int _ShortCut)
     {
-        if (curActiceShortCut >= 0 && curActiceShortCut != _ShortCut) 
+        //Debug.Log(_ShortCut);
+        if (curActiveShortCut >= 0 && curActiveShortCut != _ShortCut) 
         {
-            shortCutBTNs[curActiceShortCut].GetComponent<Outline>().enabled = false;
+            shortCutBTNs[curActiveShortCut].GetComponent<Outline>().enabled = false;
         }
         shortCutBTNs[_ShortCut].GetComponent<Outline>().enabled = true;
-        curActiceShortCut = _ShortCut;
+        curActiveShortCut = _ShortCut;
+    }
+
+    public void SetTime(int _h, int _m)
+    {
+        timeText.text = $"{_h} : {_m}";
     }
 }

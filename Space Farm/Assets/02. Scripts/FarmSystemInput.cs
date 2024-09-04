@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class FarmSystemInput : MonoBehaviour
 {
+    public static FarmSystemInput instance
+    {
+        get
+        {
+            if(_instance == null)
+            {
+                _instance = FindAnyObjectByType<FarmSystemInput>();
+            }
+
+            return _instance;
+        }
+    }
+
+    private static FarmSystemInput _instance;
+
     // 메인 카메라
     public Camera cam;
     public Vector3 mousePos
@@ -36,23 +51,45 @@ public class FarmSystemInput : MonoBehaviour
     private Vector3Int _cellPos;
     public LayerMask planeLayer;
     public GameObject previewObj;
-    public GameObject originalFiled;
+    public GameObject originalField;
 
     private Grid grid;
+    private UIManager UIinstance;
+    private bool isOverLapped;
 
     private void Awake()
     {
         grid = GetComponentInChildren<Grid>();
+        UIinstance = FindObjectOfType<UIManager>();
+        isOverLapped = false;
     }
 
     private void Update()
     {
         previewObj.transform.position = grid.CellToWorld(cellPos);
 
-        if (Input.GetMouseButtonDown(0))
+        if (UIinstance.curActiveShortCut == 0 && Input.GetMouseButtonDown(0))
         {
-            Vector3 fieldPos = grid.CellToWorld(cellPos);
-            Instantiate(originalFiled, fieldPos, Quaternion.identity);
+            if (!isOverLapped)
+            {
+                Vector3 fieldPos = grid.CellToWorld(cellPos);
+                Instantiate(originalField, fieldPos, Quaternion.identity);
+                Debug.Log("설치 완료");
+            }
+            else
+            {
+               Debug.Log("설치 불가");
+            }
         }
+    }
+
+    public void ChangeStateCollEnter() // 충돌 상태가 된다
+    {
+        isOverLapped = true;
+    }
+    
+    public void ChangeStateCollExit() // 충돌 상태가 아니게 된다
+    {
+        isOverLapped = false;
     }
 }

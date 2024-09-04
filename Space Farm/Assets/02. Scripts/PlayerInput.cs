@@ -24,7 +24,7 @@ public class PlayerInput : MonoBehaviour
             {
                 if (Input.GetKeyDown(ShortCuts[i]))
                 {
-                    if (lastKey != i  && OnChangedShortCut != null) OnChangedShortCut?.Invoke(i);
+                    if (OnChangedShortCut != null) OnChangedShortCut?.Invoke(i);
                     lastKey = i;
                     return lastKey;
                 }
@@ -80,7 +80,7 @@ public class PlayerInput : MonoBehaviour
         isMouseOver = false;
         isMouseExit = false;
 
-        shortCutPressed = 0;
+        shortCutPressed = -1;
         lastKey = 0;
     }
 
@@ -92,12 +92,11 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(shortCutPressed);
-
         hValue = Input.GetAxis(moveHAxisName);
         vValue = Input.GetAxis(moveVAxisName);
 
         isJump = Input.GetButton("Jump");
+        lastKey = shortCutPressed;
     }
 
     private void OnMouseDown() // 마우스 왼쪽 클릭 시 한 번
