@@ -46,22 +46,22 @@ public class FieldCycle : MonoBehaviour
         }
     }
 
-    public void Sowing() // ÆÄÁ¾
+    public void Sowing() // ï¿½ï¿½ï¿½ï¿½
     {
-        Debug.Log("ÆÄÁ¾");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½");
         state = State.seed;
         seeds.GetComponent<Seeds>().Visulalize();
     }
-    void Grow() // ¼ºÀå
+    void Grow() // ï¿½ï¿½ï¿½ï¿½
     {
-        if (state == State.seed) // ¾¾ > ½Ï
+        if (state == State.seed) // ï¿½ï¿½ > ï¿½ï¿½
         {
-            Debug.Log("¼ºÀå");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½");
             seeds.GetComponent<Seeds>().Invisibllize();
             sprout.GetComponent<Sprouts>().Visulalize();
             state = State.sprout;
         }
-        else if(state == State.sprout) // ½Ï > ¼ºÀå¿Ï·á
+        else if(state == State.sprout) // ï¿½ï¿½ > ï¿½ï¿½ï¿½ï¿½Ï·ï¿½
         {
             Crops.Grow();
             sprout.GetComponent<Sprouts>().Invisibllize();
