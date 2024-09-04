@@ -50,6 +50,7 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
+        showCase[0].SetActive(true);
         SetHighLight(showCase[0]);
     }
 
