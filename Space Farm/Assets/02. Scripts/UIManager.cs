@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,9 +11,19 @@ public class UIManager : MonoBehaviour
     //public TextMeshProUGUI text;
     public GameObject[] shortCutBTNs;
     public TextMeshProUGUI timeText;
-
     public int curActiveShortCut { get; private set; }
+    public GameObject[] showCase;
 
+    string normalColorCode = "#FFFFFF84";
+    Color normalColor
+    {
+        get
+        {
+            if (ColorUtility.TryParseHtmlString(normalColorCode, out _color)) return _color;
+            else return Color.white;
+        }
+    }
+    Color _color;
     public static UIManager instance
     {
         get
@@ -37,6 +48,11 @@ public class UIManager : MonoBehaviour
         curActiveShortCut = -1;
     }
 
+    private void OnEnable()
+    {
+        SetHighLight(showCase[0]);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -50,7 +66,6 @@ public class UIManager : MonoBehaviour
 
     public void ChangeActiveShortCut(int _ShortCut)
     {
-        //Debug.Log(_ShortCut);
         if (curActiveShortCut >= 0 && curActiveShortCut != _ShortCut) 
         {
             shortCutBTNs[curActiveShortCut].GetComponent<Outline>().enabled = false;
@@ -62,5 +77,21 @@ public class UIManager : MonoBehaviour
     public void SetTime(int _h, int _m)
     {
         timeText.text = $"{_h} : {_m}";
+    }
+
+    public void SetHighLight(GameObject _o)
+    {
+        foreach(var o in showCase)
+        {
+            if (o == _o)
+            {
+                o.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+                o.GetComponent<Outline>().enabled = true;
+                
+                continue;
+            }
+            o.GetComponent<Outline>().enabled = false;
+            o.GetComponentInChildren<TextMeshProUGUI>().color = normalColor;
+        }
     }
 }

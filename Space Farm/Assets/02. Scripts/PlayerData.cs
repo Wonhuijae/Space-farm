@@ -9,10 +9,4 @@ public class PlayerData : ScriptableObject
 
     public Color color;
     public string playerName;
-
-    // Start is called before the first frame update
-    void Awake()
-    {
-
-    }
 }

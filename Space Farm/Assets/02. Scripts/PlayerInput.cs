@@ -97,8 +97,11 @@ public class PlayerInput : MonoBehaviour
 
         isJump = Input.GetButton("Jump");
         lastKey = shortCutPressed;
-    }
 
+        isMouseDown = Input.GetMouseButton(0);
+        //Debug.Log(isMouseDown);
+    }
+    /*
     private void OnMouseDown() // 마우스 왼쪽 클릭 시 한 번
     {
         isMouseDown = true;
@@ -135,4 +138,5 @@ public class PlayerInput : MonoBehaviour
     {
         isMouseOneClick = true;
     }
+    */
 }
