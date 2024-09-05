@@ -11,6 +11,7 @@ public class FieldCycle : MonoBehaviour
 
     float time;
 
+    GameManager gmInstace;
     enum State
     {
         none,
@@ -23,6 +24,8 @@ public class FieldCycle : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        gmInstace = FindObjectOfType<GameManager>();
+
         seeds = GetComponentInChildren<Seeds>().gameObject;
         sprout = GetComponentInChildren<Sprouts>().gameObject;
         Crops = GetComponentInChildren<ICrops>();
@@ -46,22 +49,20 @@ public class FieldCycle : MonoBehaviour
         }
     }
 
-    public void Sowing() // ����
+    public void Sowing()
     {
-        Debug.Log("����");
         state = State.seed;
         seeds.GetComponent<Seeds>().Visulalize();
     }
-    void Grow() // ����
+    void Grow()
     {
-        if (state == State.seed) // �� > ��
+        if (state == State.seed)
         {
-            Debug.Log("����");
             seeds.GetComponent<Seeds>().Invisibllize();
             sprout.GetComponent<Sprouts>().Visulalize();
             state = State.sprout;
         }
-        else if(state == State.sprout) // �� > ����Ϸ�
+        else if(state == State.sprout)
         {
             Crops.Grow();
             sprout.GetComponent<Sprouts>().Invisibllize();
@@ -70,6 +71,6 @@ public class FieldCycle : MonoBehaviour
 
     public void OnMouseDown()
     {
-        Sowing();
+        if(gmInstace.toolState == ToolState.trowel) Sowing();
     }
 }

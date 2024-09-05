@@ -18,3 +18,4 @@ MonoBehaviour:
   Icon_Shop: {fileID: 21300000, guid: bd80f96e0ac1aca43a937dfe0f729f86, type: 3}
   Icon_Item: {fileID: 21300000, guid: bd80f96e0ac1aca43a937dfe0f729f86, type: 3}
   shortCutName: "\uC790\uB3D9\uC218\uD655"
+  toolState: 5

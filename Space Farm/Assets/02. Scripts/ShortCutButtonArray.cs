@@ -23,7 +23,8 @@ public class ShortCutButtonArray : MonoBehaviour
             tmpBtn.transform.parent = gameObject.transform;
             tmpBtn.transform.localScale = Vector3.one;
 
-            // tmpBtn.GetComponent<Button>().onClick.AddListener(tmpBtn.GetComponent<ShortCutManager>().OnClickShortCut);
+            tmpBtn.GetComponent<ShortCutManager>().toolState = item.toolState;
+
             Image[] tmpImage = tmpBtn.GetComponentsInChildren<Image>();
 
             foreach (Image img in tmpImage)

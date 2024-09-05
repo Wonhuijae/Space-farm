@@ -73,15 +73,13 @@ public class FarmSystemInput : MonoBehaviour
         grid = GetComponentInChildren<Grid>();
         UIinstance = FindObjectOfType<UIManager>();
         isOverLapped = false;
-        previewObj.SetActive(false);
     }
 
     private void Update()
     {
-        previewObj.transform.position = grid.CellToWorld(cellPos);
-
-        if (UIinstance.toolState == 0 && Input.GetMouseButtonDown(0))
+        if (UIinstance.toolState == ToolState.hoe && Input.GetMouseButtonDown(0))
         {
+            previewObj.transform.position = grid.CellToWorld(cellPos);
             if (!isOverLapped)
             {
                 Vector3 fieldPos = grid.CellToWorld(cellPos);

@@ -11,5 +11,5 @@ public class ItemData : ScriptableObject
     public Sprite Icon_Shop; // 상점용 아이콘
     public Sprite Icon_Item; // 아이템/단축바용 아이콘
     public string shortCutName;
-    public ITools toolScript;
+    public ToolState toolState;
 }

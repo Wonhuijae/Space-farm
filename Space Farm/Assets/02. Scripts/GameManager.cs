@@ -86,5 +86,8 @@ public class GameManager : MonoBehaviour
     public void ChangeTool(ToolState _toolState)
     {
         toolState = _toolState;
+        playerData.ToolState = toolState;
+
+        Debug.Log(toolState);
     }
 }

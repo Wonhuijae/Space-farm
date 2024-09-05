@@ -6,25 +6,19 @@ using UnityEngine.UI;
 
 public class ShortCutManager : MonoBehaviour
 {
-    public event Action<GameObject> OnPressedShortCut;
+    public event Action<GameObject, ToolState> OnPressedShortCut;
 
     private UIManager UIinstance;
-    private GameManager gameInstance;
+    
+    public ToolState toolState;
 
     private void Awake()
     {
-        gameInstance = FindObjectOfType<GameManager>();
         UIinstance = FindObjectOfType<UIManager>();
         if(UIinstance != null )
         {
             OnPressedShortCut += UIinstance.ChangeActiveShortCut;
+            GetComponent<Button>().onClick.AddListener( () => UIinstance.ChangeActiveShortCut(gameObject, toolState));
         }
-
-        GetComponent<Button>().onClick.AddListener(OnClickShortCut);
-    }
-
-    public void OnClickShortCut()
-    {
-        OnPressedShortCut?.Invoke(gameObject);
     }
 }
