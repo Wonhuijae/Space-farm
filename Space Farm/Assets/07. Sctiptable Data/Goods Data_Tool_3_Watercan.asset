@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e336202e0dec4ba4d8fcc5c63e8deea9, type: 3}
+  m_Name: Goods Data_Tool_3_Watercan
+  m_EditorClassIdentifier: 
+  Name: "\uBB3C\uBFCC\uB9AC\uAC1C"
+  Price: 100
+  Description: "\uAE30\uBCF8 \uBB3C\uBFCC\uB9AC\uAC1C"
+  Icon_Shop: {fileID: 21300000, guid: ae20d7cec96e36b4f972a9dcdd5fb3da, type: 3}
+  Icon_Item: {fileID: 21300000, guid: ae20d7cec96e36b4f972a9dcdd5fb3da, type: 3}
+  shortCutName: "\uBB3C \uC8FC\uAE30"

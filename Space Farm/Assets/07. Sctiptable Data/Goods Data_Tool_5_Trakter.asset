@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e336202e0dec4ba4d8fcc5c63e8deea9, type: 3}
-  m_Name: Goods Data_Tool_Hoe
+  m_Name: Goods Data_Tool_5_Trakter
   m_EditorClassIdentifier: 
-  Name: "\uAD2D\uC774"
-  Price: 100
-  Description: "\uAE30\uBCF8 \uAD2D\uC774"
-  Icon_Shop: {fileID: 21300000, guid: 24fcb9cb27f97f145b6b8c086bba1fb6, type: 3}
-  Icon_Item: {fileID: 0}
+  Name: "\uD2B8\uB799\uD130"
+  Price: 2000
+  Description: "\uC790\uB3D9\uC73C\uB85C \uC218\uD655\uD55C\uB2E4"
+  Icon_Shop: {fileID: 21300000, guid: bd80f96e0ac1aca43a937dfe0f729f86, type: 3}
+  Icon_Item: {fileID: 21300000, guid: bd80f96e0ac1aca43a937dfe0f729f86, type: 3}
+  shortCutName: "\uC790\uB3D9\uC218\uD655"

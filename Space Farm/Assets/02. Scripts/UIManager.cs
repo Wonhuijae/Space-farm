@@ -7,11 +7,14 @@ using System;
 
 public class UIManager : MonoBehaviour
 {
+    private GameManager gameInstace;
+
     public GameObject panelDetails;
     //public TextMeshProUGUI text;
     public GameObject[] shortCutBTNs;
     public TextMeshProUGUI timeText;
-    public int curActiveShortCut { get; private set; }
+    public GameObject curActiveShortCut { get; private set; }
+    public ToolState toolState {  get; private set; }
     public GameObject[] showCase;
     public GameObject[] contents;
 
@@ -41,12 +44,12 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        gameInstace = FindObjectOfType<GameManager>();
+
         if (instance != this)
         {
             Destroy(gameObject);
         }
-
-        curActiveShortCut = -1;
     }
 
     private void OnEnable()
@@ -65,14 +68,16 @@ public class UIManager : MonoBehaviour
         panelDetails.SetActive(false);
     }
 
-    public void ChangeActiveShortCut(int _ShortCut)
+    public void ChangeActiveShortCut(GameObject _ShortCut)
     {
-        if (curActiveShortCut >= 0 && curActiveShortCut != _ShortCut) 
+        if (curActiveShortCut != _ShortCut) 
         {
-            shortCutBTNs[curActiveShortCut].GetComponent<Outline>().enabled = false;
+            curActiveShortCut.GetComponent<Outline>().enabled = false;
         }
-        shortCutBTNs[_ShortCut].GetComponent<Outline>().enabled = true;
+        _ShortCut.GetComponent<Outline>().enabled = true;
         curActiveShortCut = _ShortCut;
+
+        gameInstace.ChangeTool(_ShortCut.GetComponent<ITools>().CurToolState());
     }
 
     public void SetTime(int _h, int _m)

@@ -12,11 +12,11 @@ public class PlayerInput : MonoBehaviour
     public string moveHAxisName = "Horizontal";
     public string moveVAxisName = "Vertical";
     public string jumpKeyName = "Jump";
-    public event Action<int> OnChangedShortCut;
+    //public event Action<int> OnChangedShortCut;
 
     private UIManager UIinstance;
 
-    public int shortCutPressed
+    /*public int shortCutPressed
     {
         get
         {
@@ -33,8 +33,8 @@ public class PlayerInput : MonoBehaviour
             return lastKey;
         }
         private set { }
-    }
-    private int lastKey;
+    }*/
+    //private int lastKey;
 
     // 입력 값
     public float hValue { get; private set; }
@@ -58,7 +58,7 @@ public class PlayerInput : MonoBehaviour
     public bool isMouseOver { get; private set; }
     public bool isMouseExit { get; private set; }*/
 
-    private KeyCode[] ShortCuts =
+    /*private KeyCode[] ShortCuts =
     {
         KeyCode.Alpha1,
         KeyCode.Alpha2,
@@ -66,7 +66,7 @@ public class PlayerInput : MonoBehaviour
         KeyCode.Alpha4,
         KeyCode.Alpha5,
         KeyCode.Alpha6,
-    };
+    };*/
 
     // Start is called before the first frame update
     void Awake()
@@ -78,14 +78,14 @@ public class PlayerInput : MonoBehaviour
         isMouseUp = false;
         isMouseOneClick = false;
 
-        shortCutPressed = -1;
-        lastKey = 0;
+        //shortCutPressed = -1;
+        //lastKey = 0;
     }
 
     private void Start()
     {
         UIinstance = FindObjectOfType<UIManager>();
-        if (UIinstance != null) OnChangedShortCut += UIinstance.ChangeActiveShortCut;
+        //if (UIinstance != null) OnChangedShortCut += UIinstance.ChangeActiveShortCut;
     }
 
     void Update()
@@ -94,7 +94,7 @@ public class PlayerInput : MonoBehaviour
         vValue = Input.GetAxis(moveVAxisName);
 
         isJump = Input.GetButton("Jump");
-        lastKey = shortCutPressed;
+        //lastKey = shortCutPressed;
 
         isMouseDown = Input.GetMouseButton(0);
 

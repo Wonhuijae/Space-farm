@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public enum ToolState
-    {
-        hoe,
-        trowel,
-        watercan,
-        sickle,
-        trakter,
-        sprinkler
-    }
+{
+    None,
+    hoe,
+    trowel,
+    watercan,
+    sickle,
+    trakter,
+    sprinkler
+ }
 public class FarmSystemInput : MonoBehaviour
 {
     public static FarmSystemInput instance
@@ -65,7 +66,7 @@ public class FarmSystemInput : MonoBehaviour
     private UIManager UIinstance;
     private bool isOverLapped;
 
-    
+    public ToolState toolState;
 
     private void Awake()
     {
@@ -79,7 +80,7 @@ public class FarmSystemInput : MonoBehaviour
     {
         previewObj.transform.position = grid.CellToWorld(cellPos);
 
-        if (UIinstance.curActiveShortCut == 0 && Input.GetMouseButtonDown(0))
+        if (UIinstance.toolState == 0 && Input.GetMouseButtonDown(0))
         {
             if (!isOverLapped)
             {
