@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI timeText;
     public int curActiveShortCut { get; private set; }
     public GameObject[] showCase;
+    public GameObject[] contents;
 
     string normalColorCode = "#FFFFFF84";
     Color normalColor
@@ -50,8 +51,7 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        showCase[0].SetActive(true);
-        SetHighLight(showCase[0]);
+        SetHighLight(showCase[0], contents[0]);
     }
 
     // Update is called once per frame
@@ -80,11 +80,11 @@ public class UIManager : MonoBehaviour
         timeText.text = $"{_h} : {_m}";
     }
 
-    public void SetHighLight(GameObject _o)
+    public void SetHighLight(GameObject _text, GameObject _content)
     {
         foreach(var o in showCase)
         {
-            if (o == _o)
+            if (o == _text)
             {
                 o.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
                 o.GetComponent<Outline>().enabled = true;
@@ -93,6 +93,16 @@ public class UIManager : MonoBehaviour
             }
             o.GetComponent<Outline>().enabled = false;
             o.GetComponentInChildren<TextMeshProUGUI>().color = normalColor;
+        }
+
+        foreach(var c in contents)
+        {
+            if(c == _content)
+            {
+                c.SetActive(true);
+                continue;
+            }
+            c.SetActive(false);
         }
     }
 }

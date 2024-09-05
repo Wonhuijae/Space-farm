@@ -7,11 +7,11 @@ using UnityEngine.UI;
 public class CategoryButton : MonoBehaviour
 {
     public GameObject showCase;
+    public GameObject content;
 
     UIManager UIinstance;
 
-
-    public event Action<GameObject> OnChangeCategory;
+    public event Action<GameObject, GameObject> OnChangeCategory;
 
     private void Awake()
     {
@@ -23,6 +23,6 @@ public class CategoryButton : MonoBehaviour
     {
         showCase.SetActive(true);
         GetComponent<Outline>().enabled = true;
-        OnChangeCategory?.Invoke(gameObject);
+        OnChangeCategory?.Invoke(gameObject, content);
     }
 }

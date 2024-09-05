@@ -17,6 +17,7 @@ public class PlayerMove : MonoBehaviour
 
     public int jumpCount;
     public bool isGround;
+    
 
     // Start is called before the first frame update
     void Awake()
@@ -36,7 +37,6 @@ public class PlayerMove : MonoBehaviour
         if (playerInput.hValue != 0 || playerInput.vValue != 0)  Move();
         
         Jump();
-        CameraRotate();
     }
 
     // 이동 위치 = 현재 위치 + 방향 * 시간 * 속도
@@ -57,11 +57,6 @@ public class PlayerMove : MonoBehaviour
             jumpCount--;
             isGround = false;
         }
-    }
-
-    void CameraRotate()
-    {
-
     }
 
     private void OnCollisionEnter(Collision collision)

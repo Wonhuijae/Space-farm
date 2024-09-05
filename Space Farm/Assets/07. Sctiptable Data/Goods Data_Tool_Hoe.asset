@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e336202e0dec4ba4d8fcc5c63e8deea9, type: 3}
-  m_Name: Goods Data_Wheat
+  m_Name: Goods Data_Tool_Hoe
   m_EditorClassIdentifier: 
-  Name: "\uC740\uD558 \uBC00"
-  Price: 20
-  Description: "\uAC70\uD488\uC774 \uC740\uD558\uB97C \uB2EE\uC558\uB2E4"
-  Image: {fileID: 21300000, guid: 98ffb0cbda8d0d24884541b8f7d6ab50, type: 3}
+  Name: "\uAD2D\uC774"
+  Price: 100
+  Description: "\uAE30\uBCF8 \uAD2D\uC774"
+  Icon_Shop: {fileID: 21300000, guid: 24fcb9cb27f97f145b6b8c086bba1fb6, type: 3}
+  Icon_Item: {fileID: 0}

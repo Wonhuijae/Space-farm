@@ -1,7 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum ToolState
+    {
+        hoe,
+        trowel,
+        watercan,
+        sickle,
+        trakter,
+        sprinkler
+    }
 public class FarmSystemInput : MonoBehaviour
 {
     public static FarmSystemInput instance
@@ -56,6 +64,8 @@ public class FarmSystemInput : MonoBehaviour
     private Grid grid;
     private UIManager UIinstance;
     private bool isOverLapped;
+
+    
 
     private void Awake()
     {

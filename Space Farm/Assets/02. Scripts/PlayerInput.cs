@@ -46,13 +46,17 @@ public class PlayerInput : MonoBehaviour
     public bool isMouseUp { get; private set; }
     public bool isMouseOneClick { get; private set; }
 
-    // 드래그
-    public bool isMouseDrag { get; private set; }
+    public float rX { get; private set; }
+    public float rY { get; private set; }
 
-    // 마우스오버
+    /*
+    // 드래그
+    public bool isMouseDrag { get; private set; }*/
+
+    /*// 마우스오버
     public bool isMouseEnter { get; private set; }
     public bool isMouseOver { get; private set; }
-    public bool isMouseExit { get; private set; }
+    public bool isMouseExit { get; private set; }*/
 
     private KeyCode[] ShortCuts =
     {
@@ -73,12 +77,6 @@ public class PlayerInput : MonoBehaviour
         isMouseDown = false;
         isMouseUp = false;
         isMouseOneClick = false;
-  
-        isMouseDrag = false;
-
-        isMouseEnter = false;
-        isMouseOver = false;
-        isMouseExit = false;
 
         shortCutPressed = -1;
         lastKey = 0;
@@ -99,8 +97,14 @@ public class PlayerInput : MonoBehaviour
         lastKey = shortCutPressed;
 
         isMouseDown = Input.GetMouseButton(0);
-        //Debug.Log(isMouseDown);
+
+        if(isMouseDown)
+        {
+            rX = Input.GetAxis("Mouse X");
+            rY = Input.GetAxis("Mouse Y");
+        }
     }
+
     /*
     private void OnMouseDown() // 마우스 왼쪽 클릭 시 한 번
     {

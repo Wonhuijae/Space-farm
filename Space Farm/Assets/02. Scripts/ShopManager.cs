@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
@@ -8,39 +9,44 @@ using static UnityEditor.Progress;
 public class ShopManager : MonoBehaviour
 {
     [SerializeField]
-    private GoodsData[] goodsData;
-    [SerializeField]
     private GameObject prefabPanel;
     [SerializeField]
     private GameObject detailPanel;
 
-    // Start is called before the first frame update
-    void Awake()
+    [SerializeField]
+    private ItemData[] itemData;
+
+    void OnEnable()
     {
-        for (int i = 0; i < goodsData.Length; i++)
+        foreach(Transform o in GetComponentInChildren<Transform>())
         {
-            GeneratrItem(goodsData[i], i);
+            Destroy(o.gameObject);
+        }
+
+        for (int i = 0; i < itemData.Length; i++)
+        {
+            GenerateItem(itemData[i], i);
         }
     }
 
-    void GeneratrItem(GoodsData _item, int _idx)
+    void GenerateItem(ItemData _item, int _idx)
     {
         GameObject tmpPanel = Instantiate(prefabPanel, gameObject.transform.position, Quaternion.identity);
         tmpPanel.transform.parent = gameObject.transform; // 자식으로 추가
-        tmpPanel.transform.localScale = Vector3.one;
+        tmpPanel.transform.localScale = Vector3.one; // 크기 조정
 
-        foreach (var t in tmpPanel.GetComponentsInChildren<Image>())
+        foreach (var t in tmpPanel.GetComponentsInChildren<Image>()) // 상점 아이콘
         {
-            if (t.gameObject.name == "Image_Thumbnail") t.GetComponent<Image>().sprite = _item.Image;
+            if (t.gameObject.name == "Image_Thumbnail") t.GetComponent<Image>().sprite = _item.Icon_Shop;
         }
 
         foreach(var t in tmpPanel.GetComponentsInChildren<TextMeshProUGUI>())
         {
-            if(t.gameObject.name == "Text_Name") t.text = _item.Name;
-            else t.text = _item.Price + " G";
+            if(t.gameObject.name == "Text_Name") t.text = _item.Name; // 이름
+            else t.text = _item.Price + " G"; // 가격
         }
 
-        tmpPanel.GetComponent<Button>().onClick.AddListener(() => ShowDetails(_idx));
+        tmpPanel.GetComponent<Button>().onClick.AddListener(() => ShowDetails(_idx)); // 해당 아이템 데이터 넘김
     }
 
     void ShowDetails(int _idx)
@@ -48,14 +54,14 @@ public class ShopManager : MonoBehaviour
         detailPanel.SetActive(true);
         foreach (var t in detailPanel.GetComponentsInChildren<Image>())
         {
-            if (t.gameObject.name == "Image_Thumbnail") t.GetComponent<Image>().sprite = goodsData[_idx].Image;
+            if (t.gameObject.name == "Image_Thumbnail") t.GetComponent<Image>().sprite = itemData[_idx].Icon_Shop;
         }
 
         foreach (var t in detailPanel.GetComponentsInChildren<TextMeshProUGUI>())
         {
-            if (t.gameObject.name == "Text_Name") t.GetComponent<TextMeshProUGUI>().text = goodsData[_idx].Name;
-            else if(t.gameObject.name == "Text_Contents") t.GetComponent<TextMeshProUGUI>().text = goodsData[_idx].Description;
-            else if(t.gameObject.name == "Text_Price") t.text = goodsData[_idx].Price + " G";
+            if (t.gameObject.name == "Text_Name") t.GetComponent<TextMeshProUGUI>().text = itemData[_idx].Name;
+            else if(t.gameObject.name == "Text_Contents") t.GetComponent<TextMeshProUGUI>().text = itemData[_idx].Description;
+            else if(t.gameObject.name == "Text_Price") t.text = itemData[_idx].Price + " G";
         }
     }
 }
