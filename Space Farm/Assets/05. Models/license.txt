@@ -1,0 +1,11 @@
+Model Information:
+* title:	Sprinkler Head Without Bulb
+* source:	https://sketchfab.com/3d-models/sprinkler-head-without-bulb-1ef88938c9fc486fa2981b2725bf396d
+* author:	ccych (https://sketchfab.com/ccych)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Sprinkler Head Without Bulb" (https://sketchfab.com/3d-models/sprinkler-head-without-bulb-1ef88938c9fc486fa2981b2725bf396d) by ccych (https://sketchfab.com/ccych) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

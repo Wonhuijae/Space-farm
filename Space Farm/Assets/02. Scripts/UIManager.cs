@@ -69,29 +69,27 @@ public class UIManager : MonoBehaviour
 
     public void ChangeActiveShortCut(GameObject _ShortCut, ToolState _tState)
     {
-        if (toolState != ToolState.None) // µµ±¸ »óÅÂ°¡ noneÀÌ ¾Æ´Ï°í
+        if (toolState != ToolState.None) // ë„êµ¬ ì¥ë¹„ ìƒíƒœê°€ Noneì´ ì•„ë‹ˆê³ 
         {
-            if (curActiveShortCut != _ShortCut) // ´©¸¥ ¹öÆ°ÀÌ Àü¿¡ ´©¸¥ ¹öÆ°ÀÌ ¾Æ´Ï¸é
+            if (curActiveShortCut != _ShortCut) // ì´ì „ì— ëˆ„ë¥¸ ë„êµ¬ ë²„íŠ¼ì´ ì•„ë‹ ê²½ìš°
             {
-                curActiveShortCut.GetComponent<Outline>().enabled = false; // Áö±İ ¹öÆ°ÀÇ ¾Æ¿ô¶óÀÎÀ» ²ô°í
-
-                _ShortCut.GetComponent<Outline>().enabled = true; //Áö±İ ´©¸¥ ¹öÆ°ÀÇ ¾Æ¿ô¶óÀÎÀ» ÄÑÁÖ°í
-                toolState = _tState; // µµ±¸ »óÅÂ¸¦ ¹Ù²ãÁØ´Ù
+                curActiveShortCut.GetComponent<Outline>().enabled = false; // ì´ì „ ë„êµ¬ ë²„íŠ¼ì˜ ì•„ì›ƒë¼ì¸ì„ ë„ê³ 
+                _ShortCut.GetComponent<Outline>().enabled = true; // ì§€ê¸ˆ ëˆ„ë¥¸ ë²„íŠ¼ì˜ ì•„ì›ƒë¼ì¸ì„ ì¼œê³ 
+                toolState = _tState; // ì¥ë¹„ ìƒíƒœë¥¼ ë°”ê¿”ì¤Œ
             }
-            else // Àü¿¡ ´­·¶´ø ¹öÆ°ÀÌ¶ó¸é
+            else // ì´ì „ì— ëˆ„ë¥¸ ë„êµ¬ ë²„íŠ¼ì„ ë‹¤ì‹œ ëˆŒë €ì„ ê²½ìš°
             {
-                curActiveShortCut.GetComponent<Outline>().enabled = false; // ¹öÆ°ÀÇ ¾Æ¿ô¶óÀÎÀ» ²ô°í
-                toolState = ToolState.None; // NoneÀ¸·Î »óÅÂ¸¦ ¹Ù²ãÁØ´Ù
+                curActiveShortCut.GetComponent<Outline>().enabled = false;
+                toolState = ToolState.None; // ë„êµ¬ ì¥ë¹„ í•´ì œ(None)
             }
         }
-        else // µµ±¸ »óÅÂ°¡ NoneÀÌ¶ó¸é
+        else // ì¥ë¹„ ìƒíƒœê°€ Noneì¸ ê²½ìš°
         {
-            toolState = _tState; // µµ±¸ »óÅÂ¸¦ ¹Ù²ãÁÖ°í
-            _ShortCut.GetComponent<Outline>().enabled = true; // ¾Æ¿ô¶óÀÎÀ» ÄÑÁØ´Ù
+            toolState = _tState;
+            _ShortCut.GetComponent<Outline>().enabled = true;
         }
 
-        curActiveShortCut = _ShortCut; // ¾î¶² °æ¿ìµç µé¾î¿Â ¿ÀºêÁ§Æ®¸¦ µî·ÏÇØÁØ´Ù
-        // °ÔÀÓ¸Å´ÏÀúÀÇ »óÅÂµµ ¹Ù²ãÁØ´Ù.
+        curActiveShortCut = _ShortCut; // ì–´ë–¤ ê²½ìš°ë“  ì•„ì›ƒë¼ì¸ ë¹„êµë¥¼ ìœ„í•´ ì €ì¥í•´ì¤Œ
         gameInstace.ChangeTool(toolState);
     }
 

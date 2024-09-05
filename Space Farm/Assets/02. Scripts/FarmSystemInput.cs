@@ -8,7 +8,7 @@ public enum ToolState
     trowel,
     watercan,
     sickle,
-    trakter,
+    traktor,
     sprinkler
  }
 public class FarmSystemInput : MonoBehaviour
@@ -77,14 +77,16 @@ public class FarmSystemInput : MonoBehaviour
 
     private void Update()
     {
-        if (UIinstance.toolState == ToolState.hoe && Input.GetMouseButtonDown(0))
-        {
-            previewObj.transform.position = grid.CellToWorld(cellPos);
+        if (UIinstance.toolState == ToolState.hoe)
+        {   previewObj.transform.position = grid.CellToWorld(cellPos);
             if (!isOverLapped)
             {
-                Vector3 fieldPos = grid.CellToWorld(cellPos);
-                Instantiate(originalField, fieldPos, Quaternion.identity);
-                Debug.Log("설치 완료");
+                if(Input.GetMouseButtonDown(0))
+                {
+                    Vector3 fieldPos = grid.CellToWorld(cellPos);
+                    Instantiate(originalField, fieldPos, Quaternion.identity);
+                    Debug.Log("설치 완료");
+                }
             }
             else
             {

@@ -16,4 +16,6 @@ MonoBehaviour:
   Price: 20
   Description: "\uAC70\uD488\uC774 \uC740\uD558\uB97C \uB2EE\uC558\uB2E4."
   Icon_Shop: {fileID: 21300000, guid: 98ffb0cbda8d0d24884541b8f7d6ab50, type: 3}
-  Icon_Item: {fileID: 0}
+  Icon_Item: {fileID: 21300000, guid: e989c63f1be7f634bae31d8b21d3d6b3, type: 3}
+  shortCutName: 
+  toolState: 0
