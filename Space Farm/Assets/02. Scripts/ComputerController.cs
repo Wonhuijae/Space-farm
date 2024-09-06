@@ -5,20 +5,22 @@ using UnityEngine;
 public class ComputerController : MonoBehaviour
 {
     public Camera cam;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public GameObject computerPanel;
+    public GameObject playPanel;
+    
 
     void OnMouseDown()
     {
+        playPanel.SetActive(false);
+        computerPanel.SetActive(true);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playPanel.SetActive(true);
+            computerPanel.SetActive(false);
+        }
     }
 }
