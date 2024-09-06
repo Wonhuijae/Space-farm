@@ -14,14 +14,14 @@ public class SeedItemContent : MonoBehaviour
     [SerializeField]
     private Button purchaseBTN;
 
-    [SerializeField]
     private SeedData[] itemData;
-
     private GameManager gmInstance;
 
     void OnEnable()
     {
         gmInstance = FindObjectOfType<GameManager>();
+
+        itemData = gmInstance.GetSeedData();
 
         foreach(Transform o in GetComponentInChildren<Transform>())
         {

@@ -15,10 +15,12 @@ MonoBehaviour:
   _code: Tool_6_Sprinkler
   _name: "\uC2A4\uD504\uB9C1\uD074\uB7EC"
   _description: "\uC790\uB3D9 \uAE09\uC218\uAE30"
-  _price: 15000
   _icon_shop: {fileID: 21300000, guid: a45c7b85d8ac7bf40a2cecdf6d9476ab, type: 3}
   _icon_shortcut: {fileID: 21300000, guid: a45c7b85d8ac7bf40a2cecdf6d9476ab, type: 3}
   _toolState: 6
   _toolModel: {fileID: 826329391420535984, guid: 2fe2ec8c1edee024990698a91dda064a,
     type: 3}
   _shortcutname: "\uC790\uB3D9\uAE09\uC218"
+  Price: 10000
+  Tier: 0
+  Durability: 100

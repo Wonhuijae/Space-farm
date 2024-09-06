@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Seed Data_1_Apple
   m_EditorClassIdentifier: 
   _code: Seed_1_Apple
-  _name: "\uC6B0\uC8FC \uC0AC\uACFC"
+  _name: "\uC6B0\uC8FC \uC0AC\uACFC \uC528\uC557"
   _description: "\uB9CC\uC720\uC778\uB825\uC744 \uBC1C\uACAC\uD55C \uC704\uB300\uD55C
     \uC0AC\uACFC. \uC678\uACC4\uC5D0\uC11C\uB3C4 \uC790\uB77C\uACE0 \uC788\uC5C8\uB2E4."
   _icon_shop: {fileID: 21300000, guid: f9f6dd9254335c04095e60a13ee13fa8, type: 3}
@@ -22,5 +22,5 @@ MonoBehaviour:
   _sprout: {fileID: 3065142337560695918, guid: 5b9ef9672643b6a4fa2a66d1b88ab391, type: 3}
   _adult: {fileID: 7300627311141983026, guid: 0ed299385ba14e240aa20a70a904d348, type: 3}
   _growday: 0
-  _Quantity: 0
   _price: 200
+  Quantity: 0

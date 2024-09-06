@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class ToolItemContent : MonoBehaviour
 {
@@ -15,7 +13,6 @@ public class ToolItemContent : MonoBehaviour
     [SerializeField]
     private Button purchaseBTN;
 
-    [SerializeField]
     private ToolData[] itemData;
 
     private GameManager gmInstance;
@@ -23,6 +20,7 @@ public class ToolItemContent : MonoBehaviour
     private void Awake()
     {
         gmInstance = FindObjectOfType<GameManager>();
+        itemData = gmInstance.GetToolData();
     }
 
     void OnEnable()

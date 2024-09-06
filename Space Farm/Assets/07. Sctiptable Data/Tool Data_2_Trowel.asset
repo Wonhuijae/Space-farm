@@ -15,10 +15,12 @@ MonoBehaviour:
   _code: Tool_2_Trowel
   _name: "\uBAA8\uC885\uC0BD"
   _description: "\uAE30\uBCF8 \uBAA8\uC885\uC0BD"
-  _price: 100
   _icon_shop: {fileID: 21300000, guid: 78e44e5db091f1c49b61519a2f46b531, type: 3}
   _icon_shortcut: {fileID: 21300000, guid: 78e44e5db091f1c49b61519a2f46b531, type: 3}
   _toolState: 2
   _toolModel: {fileID: 3844355804066867177, guid: 03b7ded755261b045917db3f408abea2,
     type: 3}
   _shortcutname: "\uBC2D \uAC08\uAE30"
+  Price: 100
+  Tier: 0
+  Durability: 10

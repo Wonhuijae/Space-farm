@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Seed Data_2_Tomato
   m_EditorClassIdentifier: 
   _code: Seed_2_Tomato
-  _name: "\uBCC4\uBE5B \uD1A0\uB9C8\uD1A0"
-  _description: "\uC801\uC0C9\uAC70\uC131 \uC0C9\uAE54"
+  _name: "\uBCC4\uBE5B \uD1A0\uB9C8\uD1A0 \uC528\uC557"
+  _description: "\uC801\uC0C9\uAC70\uC131 \uC0C9\uAE54."
   _icon_shop: {fileID: 21300000, guid: ae6c6e092086ed246bccc6dedd83f4c5, type: 3}
   _icon_inventory: {fileID: 21300000, guid: ae6c6e092086ed246bccc6dedd83f4c5, type: 3}
   _seed: {fileID: 2229522276050170207, guid: bdade7db8c110a441a78ce15fb064d29, type: 3}
   _sprout: {fileID: 7576932057021509050, guid: 1cf7e16c911a5804cbb07a3697de901b, type: 3}
   _adult: {fileID: 6807577625484037081, guid: 4852eab06a395144fbbf0a1b271d6c9e, type: 3}
   _growday: 0
-  _Quantity: 0
   _price: 50
+  Quantity: 0

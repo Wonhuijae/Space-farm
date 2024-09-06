@@ -15,10 +15,12 @@ MonoBehaviour:
   _code: Tool_1_Hoe
   _name: "\uAD2D\uC774"
   _description: "\uAE30\uBCF8 \uAD2D\uC774"
-  _price: 100
   _icon_shop: {fileID: 21300000, guid: 24fcb9cb27f97f145b6b8c086bba1fb6, type: 3}
   _icon_shortcut: {fileID: 21300000, guid: 24fcb9cb27f97f145b6b8c086bba1fb6, type: 3}
   _toolState: 1
   _toolModel: {fileID: 923510216103400584, guid: 9784a51fa8bde434093c1829deb246a7,
     type: 3}
   _shortcutname: "\uBC2D \uAC08\uAE30"
+  Price: 100
+  Tier: 0
+  Durability: 10

@@ -13,8 +13,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI timeText;
     public GameObject curActiveShortCut { get; private set; }
     public ToolState toolState {  get; private set; }
-    public GameObject[] showCase;
-    public GameObject[] contents;
+    public GameObject[] categoryBTNs;
+    public GameObject[] contentsShop;
 
     public GameObject PlayerPanel;
     public GameObject ComputerPanel;
@@ -44,10 +44,18 @@ public class UIManager : MonoBehaviour
     }
     private static UIManager m_Instance;
 
-    // Start is called before the first frame update
+    [SerializeField]
+    private TextMeshProUGUI playerLevel;
+    [SerializeField]
+    private TextMeshProUGUI playerEXP;
+    [SerializeField]
+    private TextMeshProUGUI[] playerCash;
+    [SerializeField]
+    private Slider expBar;
+
     void Awake()
     {
-        gmInstace = FindObjectOfType<GameManager>();
+        gmInstace = GameManager.Instance;
 
         if (instance != this)
         {
@@ -55,16 +63,36 @@ public class UIManager : MonoBehaviour
         }
 
         toolState = ToolState.None;
+        if (gmInstace != null)
+        {
+            gmInstace.onPurchasedItemSeed += UpdateUI;
+            gmInstace.onPurchasedItemTool += UpdateUI;
+            gmInstace.onGetItemCrops += UpdateUI;
+        }
+
+        GeneralUISetting();
     }
 
     private void OnEnable()
     {
-        SetHighLight(showCase[0], contents[0]);
+        SetHighLight(categoryBTNs[0], contentsShop[0], categoryBTNs, contentsShop);
     }
 
     public void CloseDetails()
     {
         panelDetails.SetActive(false);
+    }
+
+    void GeneralUISetting()
+    {
+        playerLevel.text = "Lv. " + gmInstace.level;
+        playerEXP.text = gmInstace.exp + " / " + gmInstace.maxExp;
+        expBar.value = gmInstace.exp;
+
+        foreach (var t in playerCash)
+        {
+            t.text = gmInstace.money.ToString("N0");
+        }
     }
 
     public void ChangeActiveShortCut(GameObject _ShortCut, ToolState _tState)
@@ -98,9 +126,15 @@ public class UIManager : MonoBehaviour
         timeText.text = $"{_h} : {_m}";
     }
 
-    public void SetHighLight(GameObject _text, GameObject _content)
+    // 활성화할 버튼, 스크롤뷰
+    // 버튼 그룹, 스크롤뷰 그룹
+    public void SetHighLight(
+                            GameObject _text, 
+                            GameObject _content,
+                            GameObject[] _CategoryBTNs, 
+                            GameObject[] _Contents)
     {
-        foreach(var o in showCase)
+        foreach(var o in _CategoryBTNs)
         {
             if (o == _text)
             {
@@ -113,7 +147,7 @@ public class UIManager : MonoBehaviour
             o.GetComponentInChildren<TextMeshProUGUI>().color = normalColor;
         }
 
-        foreach(var c in contents)
+        foreach(var c in _Contents)
         {
             if(c == _content)
             {
@@ -124,8 +158,19 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void GetItem(SeedData seed)
+    public void UpdateUI(SeedData _d)
     {
-        Debug.Log(gmInstace.GetItem(seed));
+
     }
+
+    public void UpdateUI(ToolData _d)
+    {
+        _d.Durability = 10;
+    }
+
+    public void UpdateUI(CropsData _d)
+    {
+
+    }
+    
 }

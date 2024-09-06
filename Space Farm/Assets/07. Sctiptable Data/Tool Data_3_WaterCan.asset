@@ -15,10 +15,12 @@ MonoBehaviour:
   _code: Tool_3_Watercan
   _name: "\uBB3C\uBFCC\uB9AC\uAC1C"
   _description: "\uAE30\uBCF8 \uBB3C\uBFCC\uB9AC\uAC1C"
-  _price: 100
   _icon_shop: {fileID: 21300000, guid: ae20d7cec96e36b4f972a9dcdd5fb3da, type: 3}
   _icon_shortcut: {fileID: 21300000, guid: ae20d7cec96e36b4f972a9dcdd5fb3da, type: 3}
   _toolState: 3
   _toolModel: {fileID: 7344041450742580113, guid: b853311b1e5c4a749a20d1ceee72d0d5,
     type: 3}
   _shortcutname: "\uBB3C \uC8FC\uAE30"
+  Price: 100
+  Tier: 0
+  Durability: 10

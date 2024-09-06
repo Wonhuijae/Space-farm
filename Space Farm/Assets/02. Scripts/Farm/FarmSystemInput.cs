@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,14 @@ public enum ToolState
     traktor,
     sprinkler
  }
+
+public enum Tier
+{
+    Basic,
+    Intermediate,
+    Advanced
+}
+
 public class FarmSystemInput : MonoBehaviour
 {
     public static FarmSystemInput instance

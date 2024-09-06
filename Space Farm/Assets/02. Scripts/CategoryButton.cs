@@ -11,7 +11,7 @@ public class CategoryButton : MonoBehaviour
 
     UIManager UIinstance;
 
-    public event Action<GameObject, GameObject> OnChangeCategory;
+    public event Action<GameObject, GameObject, GameObject[], GameObject[]> OnChangeCategory;
 
     private void Awake()
     {
@@ -23,6 +23,6 @@ public class CategoryButton : MonoBehaviour
     {
         showCase.SetActive(true);
         GetComponent<Outline>().enabled = true;
-        OnChangeCategory?.Invoke(gameObject, content);
+        OnChangeCategory?.Invoke(gameObject, content, UIinstance.categoryBTNs, UIinstance.contentsShop);
     }
 }

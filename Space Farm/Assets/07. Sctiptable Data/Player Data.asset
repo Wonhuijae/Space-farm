@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec493587c577a4d4baf86d36ca8c4153, type: 3}
   m_Name: Player Data
   m_EditorClassIdentifier: 
-  money: 2950
+  money: 3000
   energy: 0
   walkClip: {fileID: 0}
   color: {r: 0.08962262, g: 0.6852888, b: 1, a: 0}
   playerName: 
   level: 0
-  exp: 0
-  ToolState: 0
+  exp: 70
+  ToolState: 1

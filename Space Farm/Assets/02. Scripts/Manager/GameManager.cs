@@ -3,12 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class GameManager : MonoBehaviour
 {
-    public GameManager Instance;
+    public static GameManager Instance
+    {
+        get
+        {
+            if(m_Instance == null)
+            {
+                m_Instance = FindObjectOfType<GameManager>();
+            }
+            return m_Instance;
+        }
+    }
+    private static GameManager m_Instance;
+
+    public event Action<ToolData> onPurchasedItemTool;
+    public event Action<SeedData> onPurchasedItemSeed;
+    public event Action<CropsData> onGetItemCrops;
 
     [SerializeField]
     private PlayerData playerData;
+    [SerializeField]
+    private ToolData[] toolData;
+    [SerializeField]
+    private SeedData[] seedData;
 
     public int money
     {
@@ -19,8 +40,8 @@ public class GameManager : MonoBehaviour
         }
         private set
         {
-            playerData.money = value;
             _money = value;
+            playerData.money = value;
         }
     }
     private int _money;
@@ -28,6 +49,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
+            _level = playerData.level;
             return _level;
         }
         private set
@@ -36,10 +58,11 @@ public class GameManager : MonoBehaviour
         }
     }
     private int _level;
-    public int exp // 경험치
+    public int exp
     {
         get
         {
+            _exp = playerData.exp;
             return _exp;
         }
         private set
@@ -54,38 +77,50 @@ public class GameManager : MonoBehaviour
         }
     }
     private int _exp;
-    private int maxExp;
-    public ToolState toolState { get; private set; }
+    public int maxExp { get; private set; }
+    public ToolState toolState
+    {
+        get
+        {
+            _toolState = playerData.ToolState;
+            return _toolState;
+        }
+        private set
+        {
+            playerData.ToolState = value;
+        }
+    }
     private ToolState _toolState;
 
-    private Dictionary<ToolData, int> toolInven = new();
-    private Dictionary<SeedData, int> seedInven = new();
-    private Dictionary<CropsData, int> cropsInven = new();
-
-    public event Action onPurchased;
     private UIManager uiInstance;
 
-    // Start is called before the first frame update
     void Awake()
     {
-        if(Instance == null)
+        if(Instance != this)
         {
-            Instance = FindObjectOfType<GameManager>();
+            Destroy(gameObject);
         }
-
-        _money = playerData.money;
-        _level = playerData.level;
-        _exp = playerData.exp;
-        _toolState = playerData.ToolState;
 
         maxExp = 100;
 
         uiInstance = FindObjectOfType<UIManager>();
+
+        Debug.Log($"{level}, {exp}, {maxExp}, {money}");
     }
 
     public void GetExp(int _earnExp)
     {
         exp += _earnExp;
+    }
+
+    public SeedData[] GetSeedData()
+    {
+        return seedData;
+    }
+
+    public ToolData[] GetToolData()
+    {
+        return toolData;
     }
 
     public void ChangeTool(ToolState _toolState)
@@ -98,39 +133,37 @@ public class GameManager : MonoBehaviour
 
     public void TryToPurchaseSeed(SeedData _seed)
     {
-        Debug.Log(_seed.Code);
-        if(money > _seed.Price)
-        {
-            if (seedInven.ContainsKey(_seed))
-            {
-                Debug.Log(seedInven[_seed]);
-                seedInven[_seed] += 10;
-                Debug.Log(seedInven[_seed]);
-                uiInstance.GetItem(_seed);
-
-                playerData.money -= _seed.Price;
-                Debug.Log($"{_seed.Code} {seedInven[_seed]}");
-            }
-            else
-            {
-                seedInven.Add(_seed, 10);
-                Debug.Log($"{_seed.Code} {seedInven[_seed]}");
-            }
-            
-        }
+        if (money < _seed.Price) return;
         else
         {
-            Debug.Log("잔액 부족");
+            GetSeedItem(_seed);
         }
     }
-    
+
+    public void GetSeedItem(SeedData _seed)
+    {
+        if(Array.Exists(seedData, e => e == _seed))
+        {
+            _seed.Quantity += 10;
+        }
+
+        if (onPurchasedItemSeed != null) onPurchasedItemSeed?.Invoke(_seed);
+    } 
+
     public void TryToPurchaseTool(ToolData _Tool)
     {
-        
+        if (money < _Tool.Price) return;
+        else
+        {
+            GetToolItem(_Tool);
+        }
     }
 
-    public int GetItem(SeedData _seed)
+    private void GetToolItem(ToolData _tool)
     {
-        return seedInven[_seed];
+        if (Array.Exists(toolData, e => e == _tool)) 
+        {
+            if (onPurchasedItemTool != null) onPurchasedItemTool.Invoke(_tool);
+        }
     }
 }

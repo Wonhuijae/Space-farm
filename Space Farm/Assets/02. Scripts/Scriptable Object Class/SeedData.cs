@@ -11,7 +11,6 @@ public class SeedData : ItemData
     [SerializeField] private GameObject _sprout;
     [SerializeField] private GameObject _adult;
     [SerializeField] private int _growday;
-    [SerializeField] private int _Quantity;
     [SerializeField] private int _price;
 
 
@@ -21,7 +20,7 @@ public class SeedData : ItemData
     public GameObject Sprout => _sprout;
     public GameObject Adult => _adult;
     public int GrowDay => _growday;
-    public int Quantity => _Quantity;
+    public int Quantity;
     public int Price => _price;
 
     public override Item CreateItem()

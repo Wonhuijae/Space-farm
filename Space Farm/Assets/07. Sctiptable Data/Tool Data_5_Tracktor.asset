@@ -15,10 +15,12 @@ MonoBehaviour:
   _code: Tool_5_Tracktor
   _name: "\uD2B8\uB799\uD130"
   _description: "\uC790\uB3D9 \uC218\uD655 \uAE30\uAD6C"
-  _price: 20000
   _icon_shop: {fileID: 21300000, guid: bd80f96e0ac1aca43a937dfe0f729f86, type: 3}
   _icon_shortcut: {fileID: 21300000, guid: bd80f96e0ac1aca43a937dfe0f729f86, type: 3}
   _toolState: 5
   _toolModel: {fileID: 3416232962595142764, guid: 70ec5ba70504c114789d579d9bfa5abd,
     type: 3}
   _shortcutname: "\uC790\uB3D9\uC218\uD655"
+  Price: 20000
+  Tier: 0
+  Durability: 100
