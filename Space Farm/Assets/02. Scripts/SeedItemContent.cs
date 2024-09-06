@@ -56,8 +56,11 @@ public class SeedItemContent : MonoBehaviour
 
     void ShowDetails(int _idx)
     {
-
-        if (gmInstance != null) purchaseBTN.GetComponent<Button>().onClick.AddListener(() => gmInstance.TryToPurchaseSeed(itemData[_idx]));
+        if (gmInstance != null)
+        {
+            purchaseBTN.GetComponent<Button>().onClick.RemoveAllListeners();
+            purchaseBTN.GetComponent<Button>().onClick.AddListener(() => gmInstance.TryToPurchaseSeed(itemData[_idx]));
+        }
 
         detailPanel.SetActive(true);
         foreach (var t in detailPanel.GetComponentsInChildren<Image>())

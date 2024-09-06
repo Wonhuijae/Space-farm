@@ -98,24 +98,29 @@ public class GameManager : MonoBehaviour
 
     public void TryToPurchaseSeed(SeedData _seed)
     {
+        Debug.Log(_seed.Code);
         if(money > _seed.Price)
         {
             if (seedInven.ContainsKey(_seed))
             {
-                seedInven[_seed] = seedInven[_seed] + 10;
+                Debug.Log(seedInven[_seed]);
+                seedInven[_seed] += 10;
+                Debug.Log(seedInven[_seed]);
                 uiInstance.GetItem(_seed);
 
                 playerData.money -= _seed.Price;
+                Debug.Log($"{_seed.Code} {seedInven[_seed]}");
             }
             else
             {
                 seedInven.Add(_seed, 10);
+                Debug.Log($"{_seed.Code} {seedInven[_seed]}");
             }
             
         }
         else
         {
-
+            Debug.Log("ÀÜ¾× ºÎÁ·");
         }
     }
     

@@ -5,9 +5,11 @@ using UnityEngine.Rendering;
 
 public class FieldCycle : MonoBehaviour
 {
+    public GameObject popUp;
+
     GameObject seeds;
     GameObject sprout;
-    ICrops Crops;
+    GameObject adult;
 
     float time;
 
@@ -17,7 +19,7 @@ public class FieldCycle : MonoBehaviour
         none,
         seed,
         sprout,
-        crop
+        crops
     }
     State state;
 
@@ -28,7 +30,7 @@ public class FieldCycle : MonoBehaviour
 
         seeds = GetComponentInChildren<Seeds>().gameObject;
         sprout = GetComponentInChildren<Sprouts>().gameObject;
-        Crops = GetComponentInChildren<ICrops>();
+        //Crops = GetComponentInChildren<ICrops>();
 
         state = State.none;
         time = 0f;   
@@ -37,7 +39,7 @@ public class FieldCycle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (state == State.none || state == State.crop) return;
+        if (state == State.none || state == State.crops) return;
 
         time += Time.deltaTime;
 
@@ -49,10 +51,13 @@ public class FieldCycle : MonoBehaviour
         }
     }
 
-    public void Sowing()
+    public void Sowing(SeedData _seed)
     {
         state = State.seed;
-        seeds.GetComponent<Seeds>().Visulalize();
+
+        seeds = _seed.Seed;
+        sprout = _seed.Sprout;
+        adult = _seed.Adult;
     }
     void Grow()
     {
@@ -64,13 +69,15 @@ public class FieldCycle : MonoBehaviour
         }
         else if(state == State.sprout)
         {
-            Crops.Grow();
+            //Crops.Grow();
             sprout.GetComponent<Sprouts>().Invisibllize();
         }
     }
 
-    public void OnMouseDown()
+    private void OnMouseDown()
     {
-        if(gmInstace.toolState == ToolState.trowel) Sowing();
+        if (gmInstace.toolState != ToolState.trowel) return;
+        popUp.SetActive(true);
+        popUp.transform.position = Input.mousePosition;
     }
 }
