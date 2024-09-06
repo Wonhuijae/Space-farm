@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aa9f0566aefe5240bab916cfe243d0e, type: 3}
+  m_Name: Tool Data_2_Trowel
+  m_EditorClassIdentifier: 
+  _code: Tool_2_Trowel
+  _name: "\uBAA8\uC885\uC0BD"
+  _description: "\uAE30\uBCF8 \uBAA8\uC885\uC0BD"
+  _price: 100
+  _icon_shop: {fileID: 21300000, guid: 78e44e5db091f1c49b61519a2f46b531, type: 3}
+  _icon_shortcut: {fileID: 21300000, guid: 78e44e5db091f1c49b61519a2f46b531, type: 3}
+  _toolState: 2
+  _toolModel: {fileID: 3844355804066867177, guid: 03b7ded755261b045917db3f408abea2,
+    type: 3}
+  _shortcutname: "\uBC2D \uAC08\uAE30"

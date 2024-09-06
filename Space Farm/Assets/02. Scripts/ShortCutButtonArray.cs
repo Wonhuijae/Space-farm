@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ShortCutButtonArray : MonoBehaviour
 {
     [SerializeField]
-    public ItemData[] items_tool;
+    public ToolData[] items_tool;
 
     public GameObject buttonPrefab;
 
@@ -17,7 +17,7 @@ public class ShortCutButtonArray : MonoBehaviour
             Destroy(item.gameObject);
         }
         
-        foreach(ItemData item in items_tool)
+        foreach(ToolData item in items_tool)
         {
             GameObject tmpBtn = Instantiate(buttonPrefab, transform.position, Quaternion.identity);
             tmpBtn.transform.parent = gameObject.transform;
@@ -29,10 +29,10 @@ public class ShortCutButtonArray : MonoBehaviour
 
             foreach (Image img in tmpImage)
             {
-                if (img.gameObject.name == "Image") img.sprite = item.Icon_Item;
+                if (img.gameObject.name == "Image") img.sprite = item.Icon_ShortCut;
             }
 
-            tmpBtn.GetComponentInChildren<TextMeshProUGUI>().text = item.shortCutName;
+            tmpBtn.GetComponentInChildren<TextMeshProUGUI>().text = item.ShortcutName;
         }
     }
 }

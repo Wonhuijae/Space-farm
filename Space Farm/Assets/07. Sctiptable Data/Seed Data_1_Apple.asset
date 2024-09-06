@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082ae0038e0d2894793872a30e4093d9, type: 3}
+  m_Name: Seed Data_1_Apple
+  m_EditorClassIdentifier: 
+  _code: Seed_1_Apple
+  _name: "\uC6B0\uC8FC \uC0AC\uACFC"
+  _description: "\uB9CC\uC720\uC778\uB825\uC744 \uBC1C\uACAC\uD55C \uC704\uB300\uD55C
+    \uC0AC\uACFC. \uC678\uACC4\uC5D0\uC11C\uB3C4 \uC790\uB77C\uACE0 \uC788\uC5C8\uB2E4."
+  _price: 200
+  Icon_Shop: {fileID: 21300000, guid: f9f6dd9254335c04095e60a13ee13fa8, type: 3}
+  Icon_Inventory: {fileID: 21300000, guid: f9f6dd9254335c04095e60a13ee13fa8, type: 3}
+  Seed: {fileID: 0}
+  Sprout: {fileID: 0}
+  Adult: {fileID: 0}
+  GrowDay: 10
+  Quantity: 0
