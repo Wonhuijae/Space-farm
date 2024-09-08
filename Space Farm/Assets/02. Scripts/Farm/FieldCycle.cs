@@ -59,8 +59,8 @@ public class FieldCycle : MonoBehaviour
 
     void Sowing()
     {
-        isSeed = true;
         state = GrowState.seed;
+        isSeed = true;
         for(; posIdx < 2; posIdx++)
         {
             InstatatePrefab(seed.Sowing(), poses[posIdx]);
@@ -69,13 +69,9 @@ public class FieldCycle : MonoBehaviour
 
     void Sprouting()
     {
-        isSprout = true;
         state = GrowState.sprout;
-        foreach (var item in plants)
-        {
-            Destroy(item);
-        }
-        plants.Clear();
+        isSprout = true;
+        RemovingPrefab();
 
         for (; posIdx < 5;posIdx++)
         {
@@ -85,13 +81,10 @@ public class FieldCycle : MonoBehaviour
 
     void PlantingFruit()
     {
-        isCrops = true;
         state = GrowState.crops;
-        foreach (var item in plants)
-        {
-            Destroy(item);
-        }
-        plants.Clear();
+        isCrops = true;
+        
+        RemovingPrefab();
 
         for (; posIdx < poses.Count; posIdx++)
         {
@@ -99,19 +92,39 @@ public class FieldCycle : MonoBehaviour
         }
     }
 
+    public void Harvesting()
+    {
+        Debug.Log("Harvest");
+        RemovingPrefab();
+        isCrops = false;
+        isSprout = false;
+        isSeed = false;
+
+        state = GrowState.none;
+        gmInstace.GetCropsItem(seed.SeedData.cropsData);
+    }
+
     private void OnMouseDown()
     {
-        Debug.Log(gmInstace.toolState);
-        Debug.Log(gmInstace.seedState);
-        if (gmInstace.toolState != ToolState.trowel || state != GrowState.none) return;
-        if (gmInstace.seedState == SeedState.None) popUp.SetActive(true);
-        else
+        if (state == GrowState.none) // 아무것도 심어지지 않았다
         {
-            Debug.Log("sowing");
-            seed = new SeedItem(farmSystem.GetDict(gmInstace.seedState));
-            growDay = seed.GetGrowDay();
-            Sowing();
+            if (gmInstace.toolState == ToolState.trowel)
+            {
+                if (gmInstace.seedState == SeedState.None) popUp.SetActive(true);
+                else
+                {
+                    seed = new SeedItem(farmSystem.GetDict(gmInstace.seedState));
+                    growDay = seed.GetGrowDay();
+                    Sowing();
+                }
+            }
         }
+        else if (gmInstace.toolState == ToolState.sickle && state == GrowState.crops) // 다 자란 상태이고 낫을 들고 있다
+        {
+            Debug.Log("if문 진입");
+            Harvesting();
+        }
+        else return;
     }
 
     void InstatatePrefab(GameObject _prefab, GameObject _parent)
@@ -121,5 +134,14 @@ public class FieldCycle : MonoBehaviour
         tmp.transform.localPosition = Vector3.zero;
         tmp.transform.localScale = Vector3.one;
         plants.Add(tmp);
+    }
+
+    void RemovingPrefab()
+    {
+        foreach (var item in plants)
+        {
+            Destroy(item);
+        }
+        plants.Clear();
     }
 }

@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     private ToolData[] toolData;
     [SerializeField]
     private SeedData[] seedData;
+    [SerializeField]
+    private CropsData[] cropsData;
 
     public int money
     {
@@ -151,7 +153,12 @@ public class GameManager : MonoBehaviour
         }
 
         if (onPurchasedItemSeed != null) onPurchasedItemSeed?.Invoke(_seed);
-    } 
+    }
+    
+    public void GetCropsItem(CropsData _crops)
+    {
+        _crops.Quantity++;
+    }
 
     public void TryToPurchaseTool(ToolData _Tool)
     {
@@ -169,4 +176,6 @@ public class GameManager : MonoBehaviour
             if (onPurchasedItemTool != null) onPurchasedItemTool.Invoke(_tool);
         }
     }
+
+    
 }

@@ -24,4 +24,5 @@ MonoBehaviour:
   _growday: 30
   _price: 200
   _seedstate: 1
+  _cropsdata: {fileID: 11400000, guid: 0eca325ea9f85f045b60c93ea04e72e4, type: 2}
   Quantity: 0

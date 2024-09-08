@@ -13,6 +13,7 @@ public class SeedData : ItemData
     [SerializeField] private int _growday;
     [SerializeField] private int _price;
     [SerializeField] private SeedState _seedstate;
+    [SerializeField] private CropsData _cropsdata;
 
 
     public Sprite Icon_Shop => _icon_shop;
@@ -24,6 +25,7 @@ public class SeedData : ItemData
     public int Quantity;
     public int Price => _price;
     public SeedState seedState => _seedstate;
+    public CropsData cropsData => _cropsdata;
 
     public override Item CreateItem()
     {
