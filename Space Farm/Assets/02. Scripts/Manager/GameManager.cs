@@ -125,6 +125,11 @@ public class GameManager : MonoBehaviour
         return toolData;
     }
 
+    public CropsData[] GetCropsData()
+    {
+        return cropsData;
+    }
+
     public void ChangeTool(ToolState _toolState)
     {
         toolState = _toolState;

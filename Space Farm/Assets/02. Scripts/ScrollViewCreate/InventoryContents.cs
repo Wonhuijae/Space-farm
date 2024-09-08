@@ -18,7 +18,7 @@ public class InventoryContents : MonoBehaviour
 
     private SeedData[] seedData;
     private ToolData[] toolData;
-    private CropsData[] cropData;
+    private CropsData[] cropsData;
 
     private void Awake()
     {
@@ -30,8 +30,12 @@ public class InventoryContents : MonoBehaviour
         UIinstace.SetHighLight(categoryBTNs[0], contents[0], categoryBTNs, contents);
         seedData = gmInstace.GetSeedData();
         toolData = gmInstace.GetToolData();
+        cropsData = gmInstace.GetCropsData();
 
-        SeedContentsSetting();    }
+        SeedContentsSetting();
+        ToolContentsSetting();
+        CropsContentsSetting();
+    }
 
     public void SeedContentsSetting()
     {
@@ -83,27 +87,28 @@ public class InventoryContents : MonoBehaviour
 
     public void CropsContentsSetting()
     {
-        //UIinstace.SetHighLight(categoryBTNs[2], contents[2], categoryBTNs, contents);
-        //RemovingChildren(2);
+        UIinstace.SetHighLight(categoryBTNs[2], contents[2], categoryBTNs, contents);
+        RemovingChildren(2);
 
-        //foreach (var item in gmInstace.GetCropsData())
-        //{
-        //    GameObject tmpSlot = Instantiate(slotPrefab, transform.position, Quaternion.identity);
-        //    //tmpSlot.GetComponent<RectTransform>().SetParent(slotPrefab.GetComponent<RectTransform>(), false);
-        //    tmpSlot.transform.parent = contents[2].transform;
+        foreach (var item in gmInstace.GetCropsData())
+        {
+            if (item.Quantity == 0) continue;
+            GameObject tmpSlot = Instantiate(slotPrefab, transform.position, Quaternion.identity);
+            //tmpSlot.GetComponent<RectTransform>().SetParent(slotPrefab.GetComponent<RectTransform>(), false);
+            tmpSlot.transform.parent = contents[2].transform;
 
-        //    foreach (Image i in tmpSlot.GetComponentsInChildren<Image>())
-        //    {
-        //        if (i.gameObject == tmpSlot) continue;
-        //        i.sprite = item.Icon_Inventory;
-        //    }
+            foreach (Image i in tmpSlot.GetComponentsInChildren<Image>())
+            {
+                if (i.gameObject == tmpSlot) continue;
+                i.sprite = item.Icon_Inventory;
+            }
 
-        //    foreach (TextMeshProUGUI t in tmpSlot.GetComponentInChildren<TextMeshProUGUI>())
-        //    {
-        //        if (t.name == "Text_Name") t.text = item.Name;
-        //        else t.text = item.Quantity.ToString();
-        //    }
-        //}
+            foreach (TextMeshProUGUI t in tmpSlot.GetComponentsInChildren<TextMeshProUGUI>())
+            {
+                if (t.name == "Text_Name") t.text = item.Name;
+                else t.text = item.Quantity.ToString();
+            }
+        }
     }
 
     public void RemovingChildren(int _idx)
