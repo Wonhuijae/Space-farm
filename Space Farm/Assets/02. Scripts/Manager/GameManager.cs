@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour
         }
     }
     private ToolState _toolState;
+    public SeedState seedState { get; private set; }
 
     private UIManager uiInstance;
 
@@ -103,9 +104,8 @@ public class GameManager : MonoBehaviour
 
         maxExp = 100;
 
-        uiInstance = FindObjectOfType<UIManager>();
-
-        Debug.Log($"{level}, {exp}, {maxExp}, {money}");
+        uiInstance = UIManager.instance;
+        toolState = ToolState.None;
     }
 
     public void GetExp(int _earnExp)
@@ -127,8 +127,11 @@ public class GameManager : MonoBehaviour
     {
         toolState = _toolState;
         playerData.ToolState = toolState;
+    }
 
-        Debug.Log(toolState);
+    public void ChangeSeed(SeedState _seedState)
+    {
+        seedState = _seedState;
     }
 
     public void TryToPurchaseSeed(SeedData _seed)

@@ -1,26 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ComputerController : MonoBehaviour
 {
-    public Camera cam;
-    public GameObject computerPanel;
-    public GameObject playPanel;
-    
+    UIManager UIistance;
+
+    public event Action onCloseComputer;
+    public event Action onOpenComputer;
+
+    private void OnEnable()
+    {
+        UIistance = UIManager.instance;
+        if (UIistance != null)
+        {
+            onCloseComputer += UIistance.CloseComputer;
+            onOpenComputer += UIistance.OpenComputer;
+        }
+    }
 
     void OnMouseDown()
     {
-        playPanel.SetActive(false);
-        computerPanel.SetActive(true);
+        if (onOpenComputer != null) onOpenComputer?.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            playPanel.SetActive(true);
-            computerPanel.SetActive(false);
+            if(onCloseComputer != null) onCloseComputer?.Invoke();
         }
+    }
+
+    public void ClosePanel()
+    {
+        onCloseComputer?.Invoke();
     }
 }

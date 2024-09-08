@@ -27,9 +27,34 @@ public class ToolItem : Item, ITools
     }
 }
 
-public class SeedItem
+public class SeedItem : Item, ISeeds
 {
+    public SeedData SeedData { get; }
 
+    public SeedItem(SeedData _data) : base(_data)
+    {
+        SeedData = _data; // 씨앗 데이터를 갖고 있게 된다
+    }
+
+    public int GetGrowDay()
+    {
+        return SeedData.GrowDay;
+    }
+
+    public GameObject Sowing()
+    {
+        return SeedData.Seed;
+    }
+
+    public GameObject Sprouting()
+    {
+        return SeedData.Sprout;
+    }
+
+    public GameObject PlantingFruit()
+    {
+        return SeedData.Adult;
+    }
 }
 
 public class CropsItem

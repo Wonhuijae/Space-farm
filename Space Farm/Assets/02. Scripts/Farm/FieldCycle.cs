@@ -2,82 +2,124 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static UnityEditor.ShaderData;
 
 public class FieldCycle : MonoBehaviour
 {
-    public GameObject popUp;
-
-    GameObject seeds;
-    GameObject sprout;
-    GameObject adult;
-
-    float time;
-
-    GameManager gmInstace;
-    enum State
+    enum GrowState
     {
         none,
         seed,
         sprout,
         crops
     }
-    State state;
+    GrowState state;
 
-    // Start is called before the first frame update
+    private GameObject popUp;
+    public SeedItem seed;
+
+    private int growDay;
+    float time = 0;
+    bool isSeed = false;
+    bool isSprout = false ;
+    bool isCrops = false;
+
+    GameManager gmInstace;
+    FarmSystem farmSystem;
+
+    List<GameObject> poses = new();
+    List<GameObject> plants = new();
+    private int posIdx = 0;
+
     void Awake()
     {
-        gmInstace = FindObjectOfType<GameManager>();
+        state = GrowState.none;
 
-        seeds = GetComponentInChildren<Seeds>().gameObject;
-        sprout = GetComponentInChildren<Sprouts>().gameObject;
-        //Crops = GetComponentInChildren<ICrops>();
+        gmInstace = GameManager.Instance;
+        farmSystem = FarmSystem.instance;
+        popUp = farmSystem.SeedPopup;
 
-        state = State.none;
-        time = 0f;   
+        foreach (Transform t in GetComponentsInChildren<Transform>())
+        {
+            if (t == transform || t.name == "Seeds" || t.name == "Sprout" || t.name == "Adult" || t.name == "field") continue;
+            poses.Add(t.gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (state == State.none || state == State.crops) return;
+        if (state == GrowState.none || seed == null) return;
 
         time += Time.deltaTime;
 
-        if (time > 4f /* 4320 * Crops.GetGrowDay()*/)
+        if (time > growDay / 3 && state == GrowState.seed && !isSprout) Sprouting();
+        if (time > growDay && state == GrowState.sprout && !isCrops) PlantingFruit();
+        
+    }
+
+    void Sowing()
+    {
+        isSeed = true;
+        state = GrowState.seed;
+        for(; posIdx < 2; posIdx++)
         {
-            seeds.SetActive(false);
-            Grow();
-            time = 0f;
+            InstatatePrefab(seed.Sowing(), poses[posIdx]);
         }
     }
 
-    public void Sowing(SeedData _seed)
+    void Sprouting()
     {
-        state = State.seed;
-
-        seeds = _seed.Seed;
-        sprout = _seed.Sprout;
-        adult = _seed.Adult;
-    }
-    void Grow()
-    {
-        if (state == State.seed)
+        isSprout = true;
+        state = GrowState.sprout;
+        foreach (var item in plants)
         {
-            seeds.GetComponent<Seeds>().Invisibllize();
-            sprout.GetComponent<Sprouts>().Visulalize();
-            state = State.sprout;
+            Destroy(item);
         }
-        else if(state == State.sprout)
+        plants.Clear();
+
+        for (; posIdx < 5;posIdx++)
         {
-            //Crops.Grow();
-            sprout.GetComponent<Sprouts>().Invisibllize();
+            InstatatePrefab(seed.Sprouting(), poses[posIdx]);
+        }
+    }
+
+    void PlantingFruit()
+    {
+        isCrops = true;
+        state = GrowState.crops;
+        foreach (var item in plants)
+        {
+            Destroy(item);
+        }
+        plants.Clear();
+
+        for (; posIdx < poses.Count; posIdx++)
+        {
+            InstatatePrefab(seed.PlantingFruit(), poses[posIdx]);
         }
     }
 
     private void OnMouseDown()
     {
-        if (gmInstace.toolState != ToolState.trowel) return;
-        popUp.SetActive(true);
-        popUp.transform.position = Input.mousePosition;
+        Debug.Log(gmInstace.toolState);
+        Debug.Log(gmInstace.seedState);
+        if (gmInstace.toolState != ToolState.trowel || state != GrowState.none) return;
+        if (gmInstace.seedState == SeedState.None) popUp.SetActive(true);
+        else
+        {
+            Debug.Log("sowing");
+            seed = new SeedItem(farmSystem.GetDict(gmInstace.seedState));
+            growDay = seed.GetGrowDay();
+            Sowing();
+        }
+    }
+
+    void InstatatePrefab(GameObject _prefab, GameObject _parent)
+    {
+        GameObject tmp = Instantiate(_prefab, _parent.transform.position, _prefab.transform.rotation);
+        tmp.transform.parent = _parent.transform;
+        tmp.transform.localPosition = Vector3.zero;
+        tmp.transform.localScale = Vector3.one;
+        plants.Add(tmp);
     }
 }

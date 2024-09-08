@@ -20,6 +20,7 @@ MonoBehaviour:
   _seed: {fileID: 2229522276050170207, guid: bdade7db8c110a441a78ce15fb064d29, type: 3}
   _sprout: {fileID: 7576932057021509050, guid: 1cf7e16c911a5804cbb07a3697de901b, type: 3}
   _adult: {fileID: 6807577625484037081, guid: 4852eab06a395144fbbf0a1b271d6c9e, type: 3}
-  _growday: 0
+  _growday: 20
   _price: 50
+  _seedstate: 2
   Quantity: 0

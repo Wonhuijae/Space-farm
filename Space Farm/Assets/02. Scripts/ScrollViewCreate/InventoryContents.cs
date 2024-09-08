@@ -23,7 +23,7 @@ public class InventoryContents : MonoBehaviour
     private void Awake()
     {
         gmInstace = GameManager.Instance;
-        UIinstace = FindObjectOfType<UIManager>();
+        UIinstace = UIManager.instance;
     }
     private void OnEnable()
     {

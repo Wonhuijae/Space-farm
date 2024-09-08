@@ -23,11 +23,13 @@ public class CameraRotation : MonoBehaviour
 
         if(hInput != 0f)
         {
-            var oribitalTransposer = vCam.GetCinemachineComponent<CinemachineOrbitalTransposer>();
-            if(oribitalTransposer != null )
-            {
-                oribitalTransposer.m_XAxis.Value += hInput * rotationSpeed * Time.deltaTime;
-            }
+            transform.rotation = Quaternion.Euler(new Vector3(0, hInput * rotationSpeed, 0));
+
+            //var oribitalTransposer = vCam.GetCinemachineComponent<CinemachineOrbitalTransposer>();
+            //if(oribitalTransposer != null )
+            //{
+            //    oribitalTransposer.m_XAxis.Value += hInput * rotationSpeed * Time.deltaTime;
+            //}
         } 
         
         

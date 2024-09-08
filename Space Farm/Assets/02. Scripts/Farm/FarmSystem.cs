@@ -13,6 +13,14 @@ public enum ToolState
     sprinkler
  }
 
+public enum SeedState
+{
+    None,
+    Apple,
+    Tomato,
+    Wheat
+}
+
 public enum Tier
 {
     Basic,
@@ -20,22 +28,22 @@ public enum Tier
     Advanced
 }
 
-public class FarmSystemInput : MonoBehaviour
+public class FarmSystem : MonoBehaviour
 {
-    public static FarmSystemInput instance
+    public static FarmSystem instance
     {
         get
         {
-            if(_instance == null)
+            if (_instance == null)
             {
-                _instance = FindAnyObjectByType<FarmSystemInput>();
+                _instance = FindAnyObjectByType<FarmSystem>();
             }
 
             return _instance;
         }
     }
-
-    private static FarmSystemInput _instance;
+    private static FarmSystem _instance;
+    public GameManager gmInstace;
 
     // 메인 카메라
     public Camera cam;
@@ -61,7 +69,7 @@ public class FarmSystemInput : MonoBehaviour
         get
         {
             _cellPos = grid.WorldToCell(mousePos);
-            
+
 
             return _cellPos;
         }
@@ -70,23 +78,33 @@ public class FarmSystemInput : MonoBehaviour
     public LayerMask planeLayer;
     public GameObject previewObj;
     public GameObject originalField;
+    public GameObject SeedPopup;
 
     private Grid grid;
     private UIManager UIinstance;
     private bool isOverLapped;
 
-    public ToolState toolState;
+    private Dictionary<SeedState, SeedData> seedsDict = new();
 
     private void Awake()
     {
         grid = GetComponentInChildren<Grid>();
         UIinstance = FindObjectOfType<UIManager>();
         isOverLapped = false;
+
+        gmInstace = GameManager.Instance;
+        if (gmInstace != null)
+        {
+            foreach(SeedData s in gmInstace.GetSeedData())
+            {
+                seedsDict.Add(s.seedState, s);
+            }
+        }
     }
 
     private void Update()
     {
-        if (UIinstance.toolState == ToolState.hoe)
+        if (gmInstace.toolState == ToolState.hoe)
         {   previewObj.transform.position = grid.CellToWorld(cellPos);
             if (!isOverLapped)
             {
@@ -94,12 +112,11 @@ public class FarmSystemInput : MonoBehaviour
                 {
                     Vector3 fieldPos = grid.CellToWorld(cellPos);
                     Instantiate(originalField, fieldPos, Quaternion.identity);
-                    Debug.Log("설치 완료");
                 }
             }
             else
             {
-               Debug.Log("설치 불가");
+               
             }
         }
     }
@@ -108,9 +125,19 @@ public class FarmSystemInput : MonoBehaviour
     {
         isOverLapped = true;
     }
-    
+
     public void ChangeStateCollExit() // 충돌 상태가 아니게 된다
     {
         isOverLapped = false;
+    }
+
+    public void SetSeed(SeedState _s)
+    {
+        gmInstace.ChangeSeed(_s);
+    }
+
+    public SeedData GetDict(SeedState _s)
+    {
+        return seedsDict[_s];
     }
 }

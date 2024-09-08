@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     public GameObject panelDetails;
     public TextMeshProUGUI timeText;
     public GameObject curActiveShortCut { get; private set; }
-    public ToolState toolState {  get; private set; }
+
     public GameObject[] categoryBTNs;
     public GameObject[] contentsShop;
 
@@ -62,7 +62,6 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        toolState = ToolState.None;
         if (gmInstace != null)
         {
             gmInstace.onPurchasedItemSeed += UpdateUI;
@@ -71,6 +70,7 @@ public class UIManager : MonoBehaviour
         }
 
         GeneralUISetting();
+        PlayerPanel.SetActive(true);
     }
 
     private void OnEnable()
@@ -97,28 +97,29 @@ public class UIManager : MonoBehaviour
 
     public void ChangeActiveShortCut(GameObject _ShortCut, ToolState _tState)
     {
-        if (toolState != ToolState.None) // 도구 장비 상태가 None이 아니고
+        Debug.Log(gmInstace.toolState);
+        if (gmInstace.toolState != ToolState.None) // 도구 장비 상태가 None이 아니고
         {
             if (curActiveShortCut != _ShortCut) // 이전에 누른 도구 버튼이 아닐 경우
             {
                 curActiveShortCut.GetComponent<Outline>().enabled = false; // 이전 도구 버튼의 아웃라인을 끄고
                 _ShortCut.GetComponent<Outline>().enabled = true; // 지금 누른 버튼의 아웃라인을 켜고
-                toolState = _tState; // 장비 상태를 바꿔줌
+                gmInstace.ChangeTool(_tState); // 장비 상태를 바꿔줌
             }
             else // 이전에 누른 도구 버튼을 다시 눌렀을 경우
             {
                 curActiveShortCut.GetComponent<Outline>().enabled = false;
-                toolState = ToolState.None; // 도구 장비 해제(None)
+                gmInstace.ChangeTool(ToolState.None); // 도구 장비 해제(None)
+                gmInstace.ChangeSeed(SeedState.None);
             }
         }
         else // 장비 상태가 None인 경우
         {
-            toolState = _tState;
+            gmInstace.ChangeTool(_tState);
             _ShortCut.GetComponent<Outline>().enabled = true;
         }
 
-        curActiveShortCut = _ShortCut; // 어떤 경우든 아웃라인 비교를 위해 저장해줌
-        gmInstace.ChangeTool(toolState);
+        curActiveShortCut = _ShortCut; // 어떤 경우든 아웃라인 비교를 위해 저장해줌;
     }
 
     public void SetTime(int _h, int _m)
@@ -129,27 +130,27 @@ public class UIManager : MonoBehaviour
     // 활성화할 버튼, 스크롤뷰
     // 버튼 그룹, 스크롤뷰 그룹
     public void SetHighLight(
-                            GameObject _text, 
+                            GameObject _text,
                             GameObject _content,
-                            GameObject[] _CategoryBTNs, 
+                            GameObject[] _CategoryBTNs,
                             GameObject[] _Contents)
     {
-        foreach(var o in _CategoryBTNs)
+        foreach (var o in _CategoryBTNs)
         {
             if (o == _text)
             {
                 o.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
                 o.GetComponent<Outline>().enabled = true;
-                
+
                 continue;
             }
             o.GetComponent<Outline>().enabled = false;
             o.GetComponentInChildren<TextMeshProUGUI>().color = normalColor;
         }
 
-        foreach(var c in _Contents)
+        foreach (var c in _Contents)
         {
-            if(c == _content)
+            if (c == _content)
             {
                 c.SetActive(true);
                 continue;
@@ -172,5 +173,25 @@ public class UIManager : MonoBehaviour
     {
 
     }
-    
+
+    public void RemovingChildren(GameObject _contents)
+    {
+        foreach (Transform o in _contents.GetComponentInChildren<Transform>())
+        {
+            Debug.Log(o.name);
+            if (o != null) Destroy(o.gameObject);
+        }
+    }
+
+    public void CloseComputer()
+    {
+        PlayerPanel.SetActive(true);
+        ComputerPanel.SetActive(false);
+    }
+
+    public void OpenComputer()
+    {
+        PlayerPanel.SetActive(false);
+        ComputerPanel.SetActive(true);
+    }
 }

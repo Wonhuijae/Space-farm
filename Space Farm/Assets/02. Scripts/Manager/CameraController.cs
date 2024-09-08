@@ -37,11 +37,11 @@ public class CameraController: MonoBehaviour
         {
             Roof.SetActive(false);
             baseCam.SetActive(true);
-            baseVCam.SetActive(true);
+            //baseVCam.SetActive(true);
             farmCam.SetActive(false);
-            farmVCam.SetActive(false);
+            //farmVCam.SetActive(false);
 
-            activeCamera = farmVCam.GetComponent<CinemachineFreeLook>();
+            //activeCamera = farmVCam.GetComponent<CinemachineFreeLook>();
         }
     }
 
@@ -51,11 +51,16 @@ public class CameraController: MonoBehaviour
         {
             Roof.SetActive(true);
             baseCam.SetActive(false);
-            baseVCam.SetActive(false);
+            //baseVCam.SetActive(false);
             farmCam.SetActive(true);
-            farmVCam.SetActive(true);
+            //farmVCam.SetActive(true);
 
-            activeCamera = baseVCam.GetComponent<CinemachineFreeLook>();
+           // activeCamera = baseVCam.GetComponent<CinemachineFreeLook>();
         }
+    }
+
+    public void ScrollUP()
+    {
+
     }
 }

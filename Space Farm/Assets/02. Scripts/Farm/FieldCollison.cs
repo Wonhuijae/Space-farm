@@ -8,11 +8,11 @@ public class FieldCollison : MonoBehaviour
 {
     public event Action onCollEnterOthers;
     public event Action onCollLeaveOthers;
-    private FarmSystemInput FSInstance;
+    private FarmSystem FSInstance;
 
     private void Awake()
     {
-        FSInstance = FarmSystemInput.instance;
+        FSInstance = FarmSystem.instance;
         onCollEnterOthers += FSInstance.ChangeStateCollEnter;
         onCollLeaveOthers += FSInstance.ChangeStateCollExit;
     }

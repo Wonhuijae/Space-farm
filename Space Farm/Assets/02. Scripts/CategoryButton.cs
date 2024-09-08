@@ -22,6 +22,7 @@ public class CategoryButton : MonoBehaviour
     public void Open()
     {
         showCase.SetActive(true);
+        content.SetActive(true);
         GetComponent<Outline>().enabled = true;
         OnChangeCategory?.Invoke(gameObject, content, UIinstance.categoryBTNs, UIinstance.contentsShop);
     }

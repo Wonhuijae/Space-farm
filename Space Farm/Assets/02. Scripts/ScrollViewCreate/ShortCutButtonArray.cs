@@ -5,13 +5,16 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ShortCutButtonArray : MonoBehaviour
 {
-    [SerializeField]
-    public ToolData[] items_tool;
+    private ToolData[] items_tool;
 
     public GameObject buttonPrefab;
+    private GameManager gmInstance;
 
     private void OnEnable()
     {
+        gmInstance = GameManager.Instance;
+        items_tool = gmInstance.GetToolData();
+
         foreach (Transform item in GetComponentInChildren<Transform>())
         {
             Destroy(item.gameObject);

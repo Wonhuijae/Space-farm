@@ -19,7 +19,7 @@ public class ToolItemContent : MonoBehaviour
 
     private void Awake()
     {
-        gmInstance = FindObjectOfType<GameManager>();
+        gmInstance = GameManager.Instance;
         itemData = gmInstance.GetToolData();
     }
 

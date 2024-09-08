@@ -19,7 +19,7 @@ public class SeedItemContent : MonoBehaviour
 
     void OnEnable()
     {
-        gmInstance = FindObjectOfType<GameManager>();
+        gmInstance = GameManager.Instance;
 
         itemData = gmInstance.GetSeedData();
 
