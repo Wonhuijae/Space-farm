@@ -6226,8 +6226,8 @@ MonoBehaviour:
   - {fileID: 146334879}
   - {fileID: 120662696}
   contentsShop:
-  - {fileID: 1320543867}
-  - {fileID: 46958758}
+  - {fileID: 523201018}
+  - {fileID: 904595254}
   PlayerPanel: {fileID: 1904737080}
   ComputerPanel: {fileID: 78827519}
   InventoryPanel: {fileID: 2036593101}
@@ -7619,8 +7619,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 523201019}
   - {fileID: 146334880}
+  - {fileID: 523201019}
   - {fileID: 120662697}
   - {fileID: 904595255}
   m_Father: {fileID: 1682889075}
