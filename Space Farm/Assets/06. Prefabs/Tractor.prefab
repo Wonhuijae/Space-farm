@@ -15,6 +15,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f9ae5fa7a21ba674fa912ffc1e2f6b7e,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f9ae5fa7a21ba674fa912ffc1e2f6b7e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f9ae5fa7a21ba674fa912ffc1e2f6b7e,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f9ae5fa7a21ba674fa912ffc1e2f6b7e,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -63,6 +78,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f9ae5fa7a21ba674fa912ffc1e2f6b7e,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f9ae5fa7a21ba674fa912ffc1e2f6b7e,
         type: 3}
       propertyPath: m_Name
@@ -71,7 +91,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f9ae5fa7a21ba674fa912ffc1e2f6b7e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -80,7 +100,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f9ae5fa7a21ba674fa912ffc1e2f6b7e,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 9054184494510097681}
+      addedObject: {fileID: 7774381569072169915}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f9ae5fa7a21ba674fa912ffc1e2f6b7e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1045450811146711584}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f9ae5fa7a21ba674fa912ffc1e2f6b7e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1109512968636708007}
   m_SourcePrefab: {fileID: 100100000, guid: f9ae5fa7a21ba674fa912ffc1e2f6b7e, type: 3}
 --- !u!1 &3416232962595142764 stripped
 GameObject:
@@ -88,8 +116,8 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2569739090278449469}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &9054184494510097681
-MeshCollider:
+--- !u!65 &7774381569072169915
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,10 +131,48 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -3803550436978779197, guid: f9ae5fa7a21ba674fa912ffc1e2f6b7e, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 3.359697, y: 3.8554983, z: 4.556304}
+  m_Center: {x: -8.4703295e-22, y: 1.9277339, z: 0.00000023841864}
+--- !u!114 &1045450811146711584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3416232962595142764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e02dcf4933d2af4439abb0852e31ea2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &1109512968636708007
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3416232962595142764}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

@@ -24,4 +24,4 @@ MonoBehaviour:
   _price: 50
   _seedstate: 2
   _cropsdata: {fileID: 11400000, guid: f317466d404809d46ac1b02d9e22bdf3, type: 2}
-  Quantity: 0
+  Quantity: 10

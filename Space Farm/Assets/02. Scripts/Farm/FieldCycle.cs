@@ -48,15 +48,15 @@ public class FieldCycle : MonoBehaviour
             if (t == transform || t.name == "Seeds" || t.name == "Sprout" || t.name == "Adult" || t.name == "field") continue;
             if (t.GetComponent<RectTransform>() != null)
             {
-                if (t.GetComponent<Image>() != null)
+                if (t.GetComponent<Image>() != null && t.name == "Image")
                 {
-                    growImage = t.GetComponent<Image>();
-                    growImage.gameObject.SetActive(false);
+                   growImage = t.GetComponent<Image>();
+                   growImage.gameObject.SetActive(false);
                 }
                 else if (t.GetComponent<Slider>() != null)
                 {
-                    growSlider = t.GetComponent<Slider>();
-                    growSlider.gameObject.SetActive(false);
+                   growSlider = t.GetComponent<Slider>();
+                   growSlider.gameObject.SetActive(false);
                 }
             }
             else poses.Add(t.gameObject);
@@ -87,6 +87,7 @@ public class FieldCycle : MonoBehaviour
         growSlider.gameObject.SetActive(true);
         growSlider.value = 0;
         growSlider.maxValue = growDay;
+        Debug.Log(growSlider.IsActive());
 
         growImage.gameObject.SetActive(true);
         growImage.sprite = seed.SeedData.Icon_Shop;
@@ -132,6 +133,11 @@ public class FieldCycle : MonoBehaviour
         growSlider.gameObject.SetActive(false);
         growImage.gameObject.SetActive(false);
         posIdx = 0;
+    }
+
+    public bool IsCrops()
+    {
+        return isCrops;
     }
 
     private void OnMouseDown()
