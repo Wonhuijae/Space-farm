@@ -34,8 +34,8 @@ public class SeedSelector : MonoBehaviour
         foreach (SeedData s in seeds)
         {
             GameObject t = Instantiate(seedSelecteBTN, gameObject.transform.position, Quaternion.identity);
-            t.transform.localScale = Vector3.one;
             t.transform.parent = gameObject.transform;
+            t.transform.localScale = Vector3.one;
 
             t.GetComponent<Button>().onClick.AddListener(
                 () => {

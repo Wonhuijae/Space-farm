@@ -11,10 +11,6 @@ public class CropsData : ItemData // 작물 고유 데이터
 
     public override Item CreateItem()
     {
-        throw new System.NotImplementedException();
+        return new CropsItem(this);
     }
-
-    /*public GameObject Seed;
-    public GameObject Sprout;
-    public GameObject Adult;*/
 }

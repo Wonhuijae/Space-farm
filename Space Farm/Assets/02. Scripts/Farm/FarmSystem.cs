@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 public enum ToolState
 {
     None,
@@ -83,6 +84,7 @@ public class FarmSystem : MonoBehaviour
     private Grid grid;
     private UIManager UIinstance;
     private bool isOverLapped;
+    
 
     private Dictionary<SeedState, SeedData> seedsDict = new();
 
@@ -105,10 +107,12 @@ public class FarmSystem : MonoBehaviour
     private void Update()
     {
         if (gmInstace.toolState == ToolState.hoe)
-        {   previewObj.transform.position = grid.CellToWorld(cellPos);
+        {
+            previewObj.SetActive(true);
+            previewObj.transform.position = grid.CellToWorld(cellPos);
             if (!isOverLapped)
             {
-                if(Input.GetMouseButtonDown(0))
+                if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
                 {
                     Vector3 fieldPos = grid.CellToWorld(cellPos);
                     Instantiate(originalField, fieldPos, Quaternion.identity);
@@ -118,6 +122,10 @@ public class FarmSystem : MonoBehaviour
             {
                
             }
+        }
+        else
+        {
+            previewObj.SetActive(false);
         }
     }
 

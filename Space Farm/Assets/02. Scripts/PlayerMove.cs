@@ -7,7 +7,7 @@ using UnityEngine.TextCore.LowLevel;
 public class PlayerMove : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    public float rotateSpeed = 5f;
+    public float rotateSpeed = 180f;
 
     private Rigidbody playerRB;
     private AudioSource playerAS;
@@ -34,19 +34,55 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (playerInput.hValue != 0 || playerInput.vValue != 0)  Move();
+        if (playerInput.hValue != 0 || playerInput.vValue != 0)
+        {
+            Move();
+            Rotate();
+        }
         
         Jump();
+        float move = playerInput.vValue; //playerInput.hValue != 0 ? playerInput.hValue : playerInput.vValue;
+
+        playerAnim.SetFloat("Move", move);
+        Debug.Log(move);
     }
 
     // 이동 위치 = 현재 위치 + 방향 * 시간 * 속도
     void Move()
     {
-        // 이동 방향
-        Vector3 moveDirection = new Vector3(playerInput.hValue, 0, playerInput.vValue).normalized;
+        // 캐릭터 기준
+        Vector3 moveDirection = playerInput.vValue * transform.forward;
 
-        playerRB.rotation = Quaternion.LookRotation(moveDirection);
+        // 이동
         playerRB.MovePosition(playerRB.position + moveDirection * Time.deltaTime * moveSpeed);
+        /*
+        // 카메라 기준
+        // 이동 방향
+        //Vector3 camRight = Camera.main.transform.right;
+        //Vector3 camForward = Camera.main.transform.forward;
+
+        //camRight.y = 0;
+        //camForward.y = 0;
+
+        //Vector3 moveDirection = (playerInput.hValue * camRight + playerInput.vValue * camForward).normalized;
+
+        //if (moveDirection != Vector3.zero)
+        //{
+            
+        //    // 이동 방향으로 캐릭터 회전
+        //    Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+        //    playerRB.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+        //}
+        //playerRB.MovePosition(playerRB.position + moveDirection * Time.deltaTime * moveSpeed);
+        */
+    }
+
+    void Rotate()
+    {
+        float turn = playerInput.hValue * rotateSpeed * Time.deltaTime;
+
+        Quaternion targetRotation = Quaternion.Euler(0f, turn, 0f);
+        playerRB.rotation *= targetRotation; 
     }
 
     void Jump()

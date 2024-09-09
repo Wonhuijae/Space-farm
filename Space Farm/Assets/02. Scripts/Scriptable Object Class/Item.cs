@@ -29,7 +29,7 @@ public class ToolItem : Item, ITools
 
 public class SeedItem : Item, ISeeds
 {
-    public SeedData SeedData { get; }
+    public SeedData SeedData { get; private set; }
 
     public SeedItem(SeedData _data) : base(_data)
     {
@@ -57,7 +57,12 @@ public class SeedItem : Item, ISeeds
     }
 }
 
-public class CropsItem
+public class CropsItem : Item
 {
+    public CropsData cropsData { get; private set; }
 
+    public CropsItem(CropsData _data) : base(_data)
+    {
+        cropsData = _data;
+    }
 }

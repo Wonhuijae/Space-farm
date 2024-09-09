@@ -90,7 +90,7 @@ public class InventoryContents : MonoBehaviour
         UIinstace.SetHighLight(categoryBTNs[2], contents[2], categoryBTNs, contents);
         RemovingChildren(2);
 
-        foreach (var item in gmInstace.GetCropsData())
+        foreach (var item in cropsData)
         {
             if (item.Quantity == 0) continue;
             GameObject tmpSlot = Instantiate(slotPrefab, transform.position, Quaternion.identity);

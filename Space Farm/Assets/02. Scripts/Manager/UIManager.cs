@@ -166,7 +166,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateUI(ToolData _d)
     {
-        _d.Durability = 10;
+        
     }
 
     public void UpdateUI(CropsData _d)
@@ -193,5 +193,17 @@ public class UIManager : MonoBehaviour
     {
         PlayerPanel.SetActive(false);
         ComputerPanel.SetActive(true);
+    }
+
+    public void OpenTransporation()
+    {
+        PlayerPanel.SetActive(false);
+        ShippingPanel.SetActive(true);
+    }
+
+    public void CloseTransporation()
+    {
+        PlayerPanel.SetActive(true);
+        ShippingPanel.SetActive(false);
     }
 }

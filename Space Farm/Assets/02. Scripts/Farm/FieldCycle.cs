@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 using static UnityEditor.ShaderData;
 
 public class FieldCycle : MonoBehaviour
@@ -30,6 +32,8 @@ public class FieldCycle : MonoBehaviour
     List<GameObject> poses = new();
     List<GameObject> plants = new();
     private int posIdx = 0;
+    private Image growImage;
+    private Slider growSlider;
 
     void Awake()
     {
@@ -42,7 +46,20 @@ public class FieldCycle : MonoBehaviour
         foreach (Transform t in GetComponentsInChildren<Transform>())
         {
             if (t == transform || t.name == "Seeds" || t.name == "Sprout" || t.name == "Adult" || t.name == "field") continue;
-            poses.Add(t.gameObject);
+            if (t.GetComponent<RectTransform>() != null)
+            {
+                if (t.GetComponent<Image>() != null)
+                {
+                    growImage = t.GetComponent<Image>();
+                    growImage.gameObject.SetActive(false);
+                }
+                else if (t.GetComponent<Slider>() != null)
+                {
+                    growSlider = t.GetComponent<Slider>();
+                    growSlider.gameObject.SetActive(false);
+                }
+            }
+            else poses.Add(t.gameObject);
         }
     }
 
@@ -51,6 +68,7 @@ public class FieldCycle : MonoBehaviour
         if (state == GrowState.none || seed == null) return;
 
         time += Time.deltaTime;
+        growSlider.value = time;
 
         if (time > growDay / 3 && state == GrowState.seed && !isSprout) Sprouting();
         if (time > growDay && state == GrowState.sprout && !isCrops) PlantingFruit();
@@ -65,6 +83,13 @@ public class FieldCycle : MonoBehaviour
         {
             InstatatePrefab(seed.Sowing(), poses[posIdx]);
         }
+
+        growSlider.gameObject.SetActive(true);
+        growSlider.value = 0;
+        growSlider.maxValue = growDay;
+
+        growImage.gameObject.SetActive(true);
+        growImage.sprite = seed.SeedData.Icon_Shop;
     }
 
     void Sprouting()
@@ -99,13 +124,20 @@ public class FieldCycle : MonoBehaviour
         isCrops = false;
         isSprout = false;
         isSeed = false;
+        time = 0f;
 
         state = GrowState.none;
         gmInstace.GetCropsItem(seed.SeedData.cropsData);
+
+        growSlider.gameObject.SetActive(false);
+        growImage.gameObject.SetActive(false);
+        posIdx = 0;
     }
 
     private void OnMouseDown()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
         if (state == GrowState.none) // 아무것도 심어지지 않았다
         {
             if (gmInstace.toolState == ToolState.trowel)
@@ -113,7 +145,9 @@ public class FieldCycle : MonoBehaviour
                 if (gmInstace.seedState == SeedState.None) popUp.SetActive(true);
                 else
                 {
+                    Debug.Log(gmInstace.seedState);
                     seed = new SeedItem(farmSystem.GetDict(gmInstace.seedState));
+                    Debug.Log(seed.Sowing().name);
                     growDay = seed.GetGrowDay();
                     Sowing();
                 }
