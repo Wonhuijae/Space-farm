@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance
@@ -185,6 +183,7 @@ public class GameManager : MonoBehaviour
     public void GetCropsItem(CropsData _crops)
     {
         _crops.Quantity++;
+        playerData.exp += 20;
     }
 
     public void TryToPurchaseTool(ToolData _Tool)
@@ -194,6 +193,12 @@ public class GameManager : MonoBehaviour
         {
             GetToolItem(_Tool);
         }
+    }
+
+    public void SendCrops(int _salesQ, int salesPrice, CropsData _saleCrops)
+    {
+        playerData.money += salesPrice;
+        _saleCrops.Quantity -= _salesQ;
     }
 
     private void GetToolItem(ToolData _tool)

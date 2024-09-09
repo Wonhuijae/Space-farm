@@ -86,7 +86,7 @@ public class UIManager : MonoBehaviour
         panelDetails.SetActive(false);
     }
 
-    void GeneralUISetting()
+    public void GeneralUISetting()
     {
         playerLevel.text = "Lv. " + gmInstace.level;
         playerEXP.text = gmInstace.exp + " / " + gmInstace.maxExp;

@@ -1,47 +1,81 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class TransportationContents : MonoBehaviour
 {
     public GameObject scrollContent;
     public GameObject ButtonPrefab;
     public TextMeshProUGUI salesPrice;
+    public TextMeshProUGUI salesPriceSum;
+    public TextMeshProUGUI playerCash;
     public Image salesImage;
+    public HologramBTN hBtn;
+
+    public event Action OnItemSwitch;
 
     GameManager gmIstance;
     UIManager uiInstance;
     CropsData[] data;
+    CropsData select;
+
+    private int sum;
+    private int price;
 
     private void Awake()
     {
         gmIstance = GameManager.Instance;
         uiInstance = UIManager.instance;
         data = gmIstance.GetCropsData();
+
+        OnItemSwitch += hBtn.Reset;
+
+        InitPanel();
     }
 
     private void OnEnable()
+    {
+        ContentsSetting();
+    }
+
+    private void InitPanel()
+    {
+        salesImage.enabled = false;
+        salesPrice.enabled = false;
+
+        salesPriceSum.text = 0.ToString() + " G";
+    }
+
+    void ContentsSetting()
     {
         foreach (Transform t in scrollContent.GetComponentInChildren<Transform>())
         {
             Destroy(t.gameObject);
         }
 
-        ContentsSetting();
-    }
+        uiInstance.GeneralUISetting();
 
-    void ContentsSetting()
-    {
-        foreach(var item in data)
+        foreach (var item in data)
         {
             GameObject tmp = Instantiate(ButtonPrefab, scrollContent.transform.position, Quaternion.identity);
             tmp.transform.parent = scrollContent.gameObject.transform;
             tmp.transform.localScale = Vector3.one;
 
-            tmp.GetComponent<Button>().onClick.AddListener(() => SetStand(item));
+            tmp.GetComponent<Button>().onClick.AddListener
+                (() =>
+                {
+                    salesImage.enabled = true;
+                    salesPrice.enabled = true;
+                    SetStand(item);
+                    OnItemSwitch?.Invoke();
+                    price = item.SalePrice;
+                    hBtn.SetMax(item.Quantity);
+                    hBtn.InteractTrue();
+                    select = item;
+                });
 
             foreach(var i in tmp.GetComponentsInChildren<Image>())
             {
@@ -62,9 +96,27 @@ public class TransportationContents : MonoBehaviour
         salesPrice.text = _data.SalePrice + " G";
     }
 
+    public void SetSumPrice()
+    {
+        Debug.Log(hBtn.qNum);
+        sum = hBtn.qNum * price;
+        salesPriceSum.text = sum.ToString("N0") + " G";
+    }
+
+
     public void CloseBtn()
     {
         gameObject.SetActive(false);
         uiInstance.OpenPlayPanel();
+    }
+
+    public void Send()
+    {
+        gmIstance.SendCrops(hBtn.qNum, sum, select);
+        ContentsSetting();
+
+        hBtn.InteractFalse();
+
+        InitPanel();
     }
 }
