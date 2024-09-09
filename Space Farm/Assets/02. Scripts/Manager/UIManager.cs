@@ -100,7 +100,6 @@ public class UIManager : MonoBehaviour
 
     public void ChangeActiveShortCut(GameObject _ShortCut, ToolState _tState)
     {
-        Debug.Log(gmInstace.toolState);
         if (gmInstace.toolState != ToolState.None) // 도구 장비 상태가 None이 아니고
         {
             if (curActiveShortCut != _ShortCut) // 이전에 누른 도구 버튼이 아닐 경우
@@ -123,6 +122,7 @@ public class UIManager : MonoBehaviour
         }
 
         curActiveShortCut = _ShortCut; // 어떤 경우든 아웃라인 비교를 위해 저장해줌;
+        Debug.Log(gmInstace.toolState);
     }
 
     public void SetTime(int _h, int _m)

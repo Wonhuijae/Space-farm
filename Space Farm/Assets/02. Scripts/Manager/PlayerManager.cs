@@ -5,21 +5,41 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public PlayerData playerData;
+    public GameObject CameraPos;
+    public Transform ridePos;
+    public Transform normalPos;
+
     AudioSource playerAs;
     SkinnedMeshRenderer playerRD;
+    GameManager gmInstance;
 
-    // Start is called before the first frame update
+    public GameObject[] tools;
+
     void Awake()
     {
         playerAs = GetComponent<AudioSource>();
         playerRD = GetComponentInChildren<SkinnedMeshRenderer>();
 
         playerRD.materials[1].color= playerData.color;
+
+        gmInstance = GameManager.Instance;
+        gmInstance.onGetTracktor += Ride;
+        gmInstance.onDownTracktor += GetOff;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Ride()
     {
-        
+        Debug.Log("On");
+        playerRD.enabled = false;
+        CameraPos.transform.position = ridePos.position;
+        tools[4].GetComponent<ITools>().Use();
+    }
+    
+    public void GetOff()
+    {
+        Debug.Log("Off");
+        playerRD.enabled = true;
+        CameraPos.transform.position = normalPos.position;
+        tools[4].GetComponent<ITools>().UnUse();
     }
 }

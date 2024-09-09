@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
     public event Action<ToolData> onPurchasedItemTool;
     public event Action<SeedData> onPurchasedItemSeed;
     public event Action<CropsData> onGetItemCrops;
+    public event Action onGetTracktor;
+    public event Action onDownTracktor;
+
+    private bool isRide = false;
 
     [SerializeField]
     private PlayerData playerData;
@@ -132,6 +136,16 @@ public class GameManager : MonoBehaviour
 
     public void ChangeTool(ToolState _toolState)
     {
+        if (_toolState == ToolState.traktor && !isRide)
+        {
+            isRide = true;
+            onGetTracktor?.Invoke();
+        }
+        else if (_toolState == ToolState.None && isRide)
+        {
+            isRide = false;
+            onDownTracktor?.Invoke();
+        }
         toolState = _toolState;
         playerData.ToolState = toolState;
     }
@@ -189,6 +203,4 @@ public class GameManager : MonoBehaviour
             if (onPurchasedItemTool != null) onPurchasedItemTool.Invoke(_tool);
         }
     }
-
-    
 }
