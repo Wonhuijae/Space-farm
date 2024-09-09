@@ -159,6 +159,14 @@ public class GameManager : MonoBehaviour
 
         if (onPurchasedItemSeed != null) onPurchasedItemSeed?.Invoke(_seed);
     }
+
+    public void SetSeedItem(SeedData _seed)
+    {
+        if (Array.Exists(seedData, e => e == _seed))
+        {
+            _seed.Quantity--;
+        }
+    }
     
     public void GetCropsItem(CropsData _crops)
     {

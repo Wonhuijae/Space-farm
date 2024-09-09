@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public GameObject ComputerPanel;
     public GameObject InventoryPanel;
     public GameObject ShippingPanel;
+    private List<GameObject> PanelGroup = new();
 
     string normalColorCode = "#FFFFFF84";
     Color normalColor
@@ -71,6 +72,8 @@ public class UIManager : MonoBehaviour
 
         GeneralUISetting();
         PlayerPanel.SetActive(true);
+
+        PanelGroup.AddRange(new GameObject[] { PlayerPanel, ComputerPanel, InventoryPanel ,ShippingPanel });
     }
 
     private void OnEnable()
@@ -185,7 +188,7 @@ public class UIManager : MonoBehaviour
 
     public void CloseComputer()
     {
-        PlayerPanel.SetActive(true);
+        OpenPlayPanel();
         ComputerPanel.SetActive(false);
     }
 
@@ -193,17 +196,48 @@ public class UIManager : MonoBehaviour
     {
         PlayerPanel.SetActive(false);
         ComputerPanel.SetActive(true);
+
+        CloseOtherPanel(ComputerPanel);
     }
 
     public void OpenTransporation()
     {
         PlayerPanel.SetActive(false);
         ShippingPanel.SetActive(true);
+
+        CloseOtherPanel(ShippingPanel);
     }
 
     public void CloseTransporation()
     {
-        PlayerPanel.SetActive(true);
+        OpenPlayPanel();
         ShippingPanel.SetActive(false);
+    }
+
+    public void OpenInventory()
+    {
+        PlayerPanel.SetActive(false);
+        InventoryPanel.SetActive(true);
+
+        CloseOtherPanel(InventoryPanel);
+    }
+
+    public void CloseInventroty()
+    {
+        OpenPlayPanel();
+        InventoryPanel.SetActive(false);
+    }
+
+    public void CloseOtherPanel(GameObject o)
+    {
+        foreach(GameObject i in PanelGroup)
+        {
+            if(i != o) i.SetActive(false);
+        }
+    }
+
+    public void OpenPlayPanel()
+    {
+        PlayerPanel.SetActive(true);
     }
 }

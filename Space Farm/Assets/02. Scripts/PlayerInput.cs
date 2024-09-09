@@ -11,8 +11,7 @@ public class PlayerInput : MonoBehaviour
     public string moveHAxisName = "Horizontal";
     public string moveVAxisName = "Vertical";
     public string jumpKeyName = "Jump";
-
-    private UIManager UIinstance;
+    public VariableJoystick joystick;
 
     // 입력 값
     public float hValue { get; private set; }
@@ -37,15 +36,13 @@ public class PlayerInput : MonoBehaviour
         isMouseOneClick = false;
     }
 
-    private void Start()
-    {
-        UIinstance = FindObjectOfType<UIManager>();
-    }
-
     void Update()
     {
         hValue = Input.GetAxis(moveHAxisName);
         vValue = Input.GetAxis(moveVAxisName);
+
+        //hValue = joystick.Horizontal;
+        //vValue = joystick.Vertical;
 
         isJump = Input.GetButton("Jump");
 

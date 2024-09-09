@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class TransportationContents : MonoBehaviour
 {
@@ -12,11 +13,13 @@ public class TransportationContents : MonoBehaviour
     public Image salesImage;
 
     GameManager gmIstance;
+    UIManager uiInstance;
     CropsData[] data;
 
     private void Awake()
     {
         gmIstance = GameManager.Instance;
+        uiInstance = UIManager.instance;
         data = gmIstance.GetCropsData();
     }
 
@@ -62,5 +65,6 @@ public class TransportationContents : MonoBehaviour
     public void CloseBtn()
     {
         gameObject.SetActive(false);
+        uiInstance.OpenPlayPanel();
     }
 }

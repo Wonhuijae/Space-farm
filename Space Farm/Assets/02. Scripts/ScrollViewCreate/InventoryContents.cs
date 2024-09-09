@@ -20,6 +20,8 @@ public class InventoryContents : MonoBehaviour
     private ToolData[] toolData;
     private CropsData[] cropsData;
 
+    public Color color;
+
     private void Awake()
     {
         gmInstace = GameManager.Instance;
@@ -46,6 +48,7 @@ public class InventoryContents : MonoBehaviour
         {
             GameObject tmpSlot = Instantiate(slotPrefab, transform.position, Quaternion.identity);
             tmpSlot.transform.parent = contents[0].transform;
+            tmpSlot.transform.localScale = Vector3.one;
 
             foreach(Image i in tmpSlot.GetComponentsInChildren<Image>())
             {
@@ -70,6 +73,7 @@ public class InventoryContents : MonoBehaviour
         {
             GameObject tmpSlot = Instantiate(slotPrefab, transform.position, Quaternion.identity);
             tmpSlot.transform.parent = contents[1].transform;
+            tmpSlot.transform.localScale = Vector3.one;
 
             foreach (Image i in tmpSlot.GetComponentsInChildren<Image>())
             {
@@ -92,10 +96,12 @@ public class InventoryContents : MonoBehaviour
 
         foreach (var item in cropsData)
         {
-            if (item.Quantity == 0) continue;
             GameObject tmpSlot = Instantiate(slotPrefab, transform.position, Quaternion.identity);
             //tmpSlot.GetComponent<RectTransform>().SetParent(slotPrefab.GetComponent<RectTransform>(), false);
             tmpSlot.transform.parent = contents[2].transform;
+            tmpSlot.transform.localScale = Vector3.one;
+
+            if (item.Quantity == 0) tmpSlot.GetComponent<Image>().color = color;
 
             foreach (Image i in tmpSlot.GetComponentsInChildren<Image>())
             {
@@ -124,6 +130,8 @@ public class InventoryContents : MonoBehaviour
     public void CloseWindow()
     {
         gameObject.SetActive(false);
+
+        UIinstace.CloseInventroty();
     }
 
     string ToStringTier(Tier _t)

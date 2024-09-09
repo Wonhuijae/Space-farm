@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ComputerController : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class ComputerController : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (onOpenComputer != null) onOpenComputer?.Invoke();
+        if (onOpenComputer != null && !EventSystem.current.IsPointerOverGameObject()) onOpenComputer?.Invoke();
     }
 
     private void OnTriggerExit(Collider other)

@@ -17,12 +17,14 @@ public class SeedItemContent : MonoBehaviour
     private SeedData[] itemData;
     private GameManager gmInstance;
 
-    void OnEnable()
+    private void Awake()
     {
         gmInstance = GameManager.Instance;
-
         itemData = gmInstance.GetSeedData();
+    }
 
+    void OnEnable()
+    {
         foreach(Transform o in GetComponentInChildren<Transform>())
         {
             Destroy(o.gameObject);
@@ -50,6 +52,7 @@ public class SeedItemContent : MonoBehaviour
             if(t.gameObject.name == "Text_Name") t.text = _item.Name; // 이름
             else t.text = _item.Price + " G"; // 가격
         }
+        Debug.Log(tmpPanel.GetComponent<Button>().interactable);
 
         tmpPanel.GetComponent<Button>().onClick.AddListener(() => ShowDetails(_idx)); // 해당 아이템 데이터 넘김
     }

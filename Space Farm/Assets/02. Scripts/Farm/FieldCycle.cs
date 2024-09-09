@@ -145,9 +145,8 @@ public class FieldCycle : MonoBehaviour
                 if (gmInstace.seedState == SeedState.None) popUp.SetActive(true);
                 else
                 {
-                    Debug.Log(gmInstace.seedState);
                     seed = new SeedItem(farmSystem.GetDict(gmInstace.seedState));
-                    Debug.Log(seed.Sowing().name);
+                    gmInstace.SetSeedItem(seed.SeedData);
                     growDay = seed.GetGrowDay();
                     Sowing();
                 }

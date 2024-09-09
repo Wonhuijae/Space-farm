@@ -44,7 +44,6 @@ public class PlayerMove : MonoBehaviour
         float move = playerInput.vValue; //playerInput.hValue != 0 ? playerInput.hValue : playerInput.vValue;
 
         playerAnim.SetFloat("Move", move);
-        Debug.Log(move);
     }
 
     // 이동 위치 = 현재 위치 + 방향 * 시간 * 속도
