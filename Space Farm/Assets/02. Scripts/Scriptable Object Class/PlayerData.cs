@@ -11,6 +11,7 @@ public class PlayerData : ScriptableObject
     public string playerName;
     public int level;
     public int exp;
+    public int maxExp;
 
     public ToolState ToolState;
 }

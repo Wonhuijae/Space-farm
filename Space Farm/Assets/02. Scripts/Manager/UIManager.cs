@@ -89,8 +89,9 @@ public class UIManager : MonoBehaviour
     public void GeneralUISetting()
     {
         playerLevel.text = "Lv. " + gmInstace.level;
-        playerEXP.text = gmInstace.exp + " / " + gmInstace.maxExp;
+        playerEXP.text = gmInstace.exp.ToString("N0") + " / " + gmInstace.maxExp.ToString("N0");
         expBar.value = gmInstace.exp;
+        expBar.maxValue = gmInstace.maxExp;
 
         foreach (var t in playerCash)
         {

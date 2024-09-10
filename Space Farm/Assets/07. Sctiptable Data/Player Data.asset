@@ -17,6 +17,7 @@ MonoBehaviour:
   walkClip: {fileID: 0}
   color: {r: 0.08962262, g: 0.6852888, b: 1, a: 0}
   playerName: 
-  level: 0
-  exp: 70
-  ToolState: 1
+  level: 2
+  exp: 80
+  maxExp: 104
+  ToolState: 5

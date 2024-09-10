@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour
         private set
         {
             _level = value;
+            playerData.level = value;
+            uiInstance.GeneralUISetting();
         }
     }
     private int _level;
@@ -66,22 +68,38 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            _exp = playerData.exp;
-            return _exp;
+            return playerData.exp;
         }
         private set
         {
-            if (value >= maxExp)
+            playerData.exp = value;
+
+            if (playerData.exp > maxExp)
             {
                 level++;
-                value -= maxExp;
+                playerData.exp -= maxExp;
                 maxExp = (int)(1.05f * maxExp);
             }
-            _exp = value;
+            uiInstance.GeneralUISetting();
+            Debug.Log($" {exp}/{maxExp}");
         }
     }
-    private int _exp;
-    public int maxExp { get; private set; }
+    //private int _exp;
+    public int maxExp
+    {
+        get
+        {
+            _maxExp = playerData.maxExp;
+            return _maxExp;
+        }
+        private set
+        {
+            playerData.maxExp = value;
+            _maxExp = value;
+            uiInstance.GeneralUISetting();
+        }
+    }
+    private int _maxExp;
     public ToolState toolState
     {
         get
@@ -106,15 +124,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        maxExp = 100;
-
         uiInstance = UIManager.instance;
         toolState = ToolState.None;
-    }
-
-    public void GetExp(int _earnExp)
-    {
-        exp += _earnExp;
     }
 
     public SeedData[] GetSeedData()
@@ -174,7 +185,7 @@ public class GameManager : MonoBehaviour
 
     public void SetSeedItem(SeedData _seed)
     {
-        if (Array.Exists(seedData, e => e == _seed))
+        if (Array.Exists(seedData, e => e == _seed) && _seed.Quantity > 0)
         {
             _seed.Quantity--;
         }
@@ -183,7 +194,7 @@ public class GameManager : MonoBehaviour
     public void GetCropsItem(CropsData _crops)
     {
         _crops.Quantity++;
-        playerData.exp += 20;
+        exp += 20;
     }
 
     public void TryToPurchaseTool(ToolData _Tool)
