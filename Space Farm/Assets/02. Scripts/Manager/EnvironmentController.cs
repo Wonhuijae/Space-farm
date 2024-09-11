@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -30,9 +31,11 @@ public class EnvironmentController : MonoBehaviour
 
     private void Awake()
     {
+        dayCounter = 0.3f;
+
         UIinstance = FindAnyObjectByType<UIManager>();
         if (UIinstance != null) onChangeTime += UIinstance.SetTime;
-    }
+     }
 
     // Update is called once per frame
     void Update()

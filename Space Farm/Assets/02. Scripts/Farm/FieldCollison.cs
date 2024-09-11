@@ -25,6 +25,6 @@ public class FieldCollison : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-         onCollLeaveOthers?.Invoke();
+        if (other.CompareTag("PlacedField")) onCollLeaveOthers?.Invoke();
     }
 }

@@ -16,11 +16,13 @@ public class SprilkerCollision : MonoBehaviour
 
     private void Awake()
     {
+        
+
         farm = FarmSystem.instance;
 
-        p = GetComponentInChildren<ParticleSystem>();
+        if(gameObject.name != "Sprinkler_O") p = GetComponentInChildren<ParticleSystem>();
 
-        if (farm != null )
+        if (farm != null)
         {
             OnTriggerOthers += farm.ChangeStateCollEnterSprin;
             OffTriggerOthers += farm.ChangeStateCollExitSprin;
@@ -42,7 +44,11 @@ public class SprilkerCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Sprinkler")) OnTriggerOthers?.Invoke();
+        if (other.CompareTag("Sprinkler"))
+        {
+            OnTriggerOthers?.Invoke();
+        }
+        
     }
 
     private void OnTriggerExit(Collider other)

@@ -154,7 +154,13 @@ public class FarmSystem : MonoBehaviour
                     }
                     break;
                 case ToolState.sprinkler:
-                    if(!isOverLappedSprinkler) Instantiate(d.ToolModel, new Vector3(fieldPos.x, fieldPos.y + 0.385f, fieldPos.z), Quaternion.identity);
+                    Debug.Log(isOverLappedSprinkler);
+                    if (!isOverLappedSprinkler)
+                    {
+                       
+                        plInstace.GetAnim().SetTrigger(d.AnimTrigger);
+                        Instantiate(OriginalS, transform.position, Quaternion.identity);
+                    }
                     break;
             }
         }
