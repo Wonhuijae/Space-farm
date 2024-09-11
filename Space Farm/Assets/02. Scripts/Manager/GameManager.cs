@@ -180,10 +180,12 @@ public class GameManager : MonoBehaviour
 
     public void TryToPurchaseSeed(SeedData _seed)
     {
+        Debug.Log(_seed.Price);
         if (money < _seed.Price) return;
         else
         {
             GetSeedItem(_seed);
+            uiInstance.GeneralUISetting();
         }
     }
 
@@ -192,6 +194,7 @@ public class GameManager : MonoBehaviour
         if(Array.Exists(seedData, e => e == _seed))
         {
             _seed.Quantity += 10;
+            playerData.money -= _seed.Price;
         }
 
         if (onPurchasedItemSeed != null) onPurchasedItemSeed?.Invoke(_seed);
