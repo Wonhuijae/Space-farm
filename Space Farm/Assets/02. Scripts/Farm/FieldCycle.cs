@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using static UnityEditor.ShaderData;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class FieldCycle : MonoBehaviour
 {
@@ -25,9 +26,11 @@ public class FieldCycle : MonoBehaviour
     bool isSeed = false;
     bool isSprout = false ;
     bool isCrops = false;
+    bool isWatered= false ;
 
     GameManager gmInstace;
     FarmSystem farmSystem;
+    PlayerManager plInstance;
 
     List<GameObject> poses = new();
     List<GameObject> plants = new();
@@ -35,12 +38,15 @@ public class FieldCycle : MonoBehaviour
     private Image growImage;
     private Slider growSlider;
 
+    Vector3 FXPos;
+
     void Awake()
     {
         state = GrowState.none;
 
         gmInstace = GameManager.Instance;
         farmSystem = FarmSystem.instance;
+        plInstance = PlayerManager.instance;
         popUp = farmSystem.SeedPopup;
 
         foreach (Transform t in GetComponentsInChildren<Transform>())
@@ -61,6 +67,8 @@ public class FieldCycle : MonoBehaviour
             }
             else poses.Add(t.gameObject);
         }
+
+        FXPos = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
     }
 
     private void Update()
@@ -77,6 +85,7 @@ public class FieldCycle : MonoBehaviour
 
     void Sowing()
     {
+        Destroy(Instantiate(farmSystem.VFXs[4], FXPos, Quaternion.identity), 3f);
         state = GrowState.seed;
         isSeed = true;
         for(; posIdx < 2; posIdx++)
@@ -87,7 +96,6 @@ public class FieldCycle : MonoBehaviour
         growSlider.gameObject.SetActive(true);
         growSlider.value = 0;
         growSlider.maxValue = growDay;
-        Debug.Log(growSlider.IsActive());
 
         growImage.gameObject.SetActive(true);
         growImage.sprite = seed.SeedData.Icon_Shop;
@@ -95,6 +103,7 @@ public class FieldCycle : MonoBehaviour
 
     void Sprouting()
     {
+        Destroy(Instantiate(farmSystem.VFXs[4], FXPos, Quaternion.identity), 3f);
         state = GrowState.sprout;
         isSprout = true;
         RemovingPrefab();
@@ -107,6 +116,7 @@ public class FieldCycle : MonoBehaviour
 
     void PlantingFruit()
     {
+        Destroy(Instantiate(farmSystem.VFXs[4], FXPos, Quaternion.identity), 3f);
         state = GrowState.crops;
         isCrops = true;
         
@@ -118,13 +128,21 @@ public class FieldCycle : MonoBehaviour
         }
     }
 
+    public void Watering()
+    {
+        if (isWatered || isCrops || !isSeed) return;
+        Destroy(Instantiate(farmSystem.VFXs[2], FXPos, Quaternion.identity), 3f);
+        time += 7f;
+        isWatered = true;
+    }
     public void Harvesting()
     {
-        Debug.Log("Harvest");
+        Destroy(Instantiate(farmSystem.VFXs[3], FXPos, Quaternion.identity), 3f);
         RemovingPrefab();
         isCrops = false;
         isSprout = false;
         isSeed = false;
+        isWatered = false;
         time = 0f;
 
         state = GrowState.none;
@@ -151,17 +169,25 @@ public class FieldCycle : MonoBehaviour
                 if (gmInstace.seedState == SeedState.None) popUp.SetActive(true);
                 else
                 {
+                    plInstance.GetAnim().SetTrigger("Trowel");
                     seed = new SeedItem(farmSystem.GetDict(gmInstace.seedState));
                     gmInstace.SetSeedItem(seed.SeedData);
+                    Destroy(Instantiate(farmSystem.VFXs[1], FXPos, Quaternion.identity), 3f);
                     growDay = seed.GetGrowDay();
                     Sowing();
                 }
             }
         }
+        else if (gmInstace.toolState == ToolState.watercan)
+        {
+            plInstance.GetAnim().SetTrigger("Watering");
+            plInstance.Watercan.Play();
+            Watering();
+        }
         else if (gmInstace.toolState == ToolState.sickle && state == GrowState.crops) // 다 자란 상태이고 낫을 들고 있다
         {
-            Debug.Log("if문 진입");
             Harvesting();
+            plInstance.GetAnim().SetTrigger("Sickle");
         }
         else return;
     }

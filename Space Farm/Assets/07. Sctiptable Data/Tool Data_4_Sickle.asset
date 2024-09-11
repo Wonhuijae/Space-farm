@@ -21,6 +21,7 @@ MonoBehaviour:
   _toolModel: {fileID: 1745903291864818265, guid: 36efdecd873c68d4eb7cd73badb8ff1c,
     type: 3}
   _shortcutname: "\uC218\uD655\uD558\uAE30"
+  _animtrigger: Sickle
   Price: 100
   Tier: 0
   Durability: 10

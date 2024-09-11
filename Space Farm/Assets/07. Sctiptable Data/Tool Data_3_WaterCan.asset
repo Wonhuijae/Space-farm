@@ -21,6 +21,7 @@ MonoBehaviour:
   _toolModel: {fileID: 7344041450742580113, guid: b853311b1e5c4a749a20d1ceee72d0d5,
     type: 3}
   _shortcutname: "\uBB3C \uC8FC\uAE30"
+  _animtrigger: Watering
   Price: 100
   Tier: 0
   Durability: 10

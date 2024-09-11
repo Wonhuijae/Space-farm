@@ -44,7 +44,9 @@ public class FarmSystem : MonoBehaviour
         }
     }
     private static FarmSystem _instance;
-    public GameManager gmInstace;
+    private GameManager gmInstace;
+    private PlayerManager plInstace;
+    public GameObject[] VFXs;
 
     // 메인 카메라
     public Camera cam;
@@ -81,62 +83,102 @@ public class FarmSystem : MonoBehaviour
     public GameObject originalField;
     public GameObject SeedPopup;
 
+    public GameObject previewS;
+    public GameObject OriginalS;
+
     private Grid grid;
     private UIManager UIinstance;
-    private bool isOverLapped;
-    
+    private bool isOverLappedField;
+    private bool isOverLappedSprinkler;
 
+    private Dictionary<ToolState, ToolData> toolsDict = new();
     private Dictionary<SeedState, SeedData> seedsDict = new();
 
     private void Awake()
     {
         grid = GetComponentInChildren<Grid>();
         UIinstance = FindObjectOfType<UIManager>();
-        isOverLapped = false;
+        isOverLappedField = false;
 
         gmInstace = GameManager.Instance;
+        plInstace = PlayerManager.instance;
+        Debug.Log(plInstace == null);
+
         if (gmInstace != null)
         {
             foreach(SeedData s in gmInstace.GetSeedData())
             {
                 seedsDict.Add(s.seedState, s);
             }
+
+            foreach(ToolData t in gmInstace.GetToolData())
+            {
+                toolsDict.Add(t.toolState, t);
+            }
         }
     }
 
     private void Update()
     {
+        if (gmInstace.toolState == ToolState.None) return;
+
         if (gmInstace.toolState == ToolState.hoe)
         {
             previewObj.SetActive(true);
             previewObj.transform.position = grid.CellToWorld(cellPos);
-            if (!isOverLapped)
-            {
-                if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-                {
-                    Vector3 fieldPos = grid.CellToWorld(cellPos);
-                    Instantiate(originalField, fieldPos, Quaternion.identity);
-                }
-            }
-            else
-            {
-               
-            }
+        }
+        else if(gmInstace.toolState ==ToolState.sprinkler)
+        {
+            previewS.SetActive(true);
+            previewS.transform.position = grid.CellToWorld(cellPos);
         }
         else
         {
             previewObj.SetActive(false);
+            previewS.SetActive(false);
+        }
+
+        ToolData d = toolsDict[gmInstace.toolState];
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            Vector3 fieldPos = grid.CellToWorld(cellPos);
+
+            switch (gmInstace.toolState)
+            {
+                case ToolState.hoe:
+                    if (!isOverLappedField)
+                    {
+                        plInstace.GetAnim().SetTrigger(d.AnimTrigger);
+                        Instantiate(originalField, fieldPos, Quaternion.identity);
+                        Destroy(Instantiate(VFXs[0], new Vector3(fieldPos.x, fieldPos.y + 0.385f, fieldPos.z), Quaternion.identity), 5f);
+                    }
+                    break;
+                case ToolState.sprinkler:
+                    if(!isOverLappedSprinkler) Instantiate(d.ToolModel, new Vector3(fieldPos.x, fieldPos.y + 0.385f, fieldPos.z), Quaternion.identity);
+                    break;
+            }
         }
     }
 
+
     public void ChangeStateCollEnter() // 충돌 상태가 된다
     {
-        isOverLapped = true;
+        isOverLappedField = true;
     }
 
     public void ChangeStateCollExit() // 충돌 상태가 아니게 된다
     {
-        isOverLapped = false;
+        isOverLappedField = false;
+    }
+    
+    public void ChangeStateCollEnterSprin() // 충돌 상태가 된다
+    {
+        isOverLappedSprinkler = true;
+    }
+
+    public void ChangeStateCollExitSprin() // 충돌 상태가 아니게 된다
+    {
+        isOverLappedSprinkler = false;
     }
 
     public void SetSeed(SeedState _s)

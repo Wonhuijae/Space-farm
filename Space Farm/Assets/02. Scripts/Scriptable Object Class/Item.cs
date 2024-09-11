@@ -25,11 +25,6 @@ public class ToolItem : Item, ITools
     {
         return toolData.toolState;
     }
-
-    public void UnUse()
-    {
-        throw new System.NotImplementedException();
-    }
 }
 
 public class SeedItem : Item, ISeeds

@@ -21,10 +21,10 @@ public class GameManager : MonoBehaviour
     public event Action<ToolData> onPurchasedItemTool;
     public event Action<SeedData> onPurchasedItemSeed;
     public event Action<CropsData> onGetItemCrops;
-    public event Action onGetTracktor;
-    public event Action onDownTracktor;
+    public event Action<int> onToolsOn;
+    public event Action onAllToolsOff;
 
-    private bool isRide = false;
+    public GameObject[] OnTools;
 
     [SerializeField]
     private PlayerData playerData;
@@ -145,15 +145,29 @@ public class GameManager : MonoBehaviour
 
     public void ChangeTool(ToolState _toolState)
     {
-        if (_toolState == ToolState.traktor && !isRide)
+        switch(_toolState)
         {
-            isRide = true;
-            onGetTracktor?.Invoke();
-        }
-        else if (_toolState == ToolState.None && isRide)
-        {
-            isRide = false;
-            onDownTracktor?.Invoke();
+            case ToolState.None:
+                onAllToolsOff?.Invoke();
+                break;
+            case ToolState.hoe:
+                onToolsOn?.Invoke(0);
+                break;
+            case ToolState.trowel:
+                onToolsOn?.Invoke(1);
+                break;
+            case ToolState.watercan:
+                onToolsOn?.Invoke(2);
+                break;
+            case ToolState.sickle:
+                onToolsOn?.Invoke(3);
+                break;
+            case ToolState.traktor:
+                onToolsOn?.Invoke(4);
+                break;
+            case ToolState.sprinkler:
+                onToolsOn?.Invoke(5);
+                break;
         }
         toolState = _toolState;
         playerData.ToolState = toolState;

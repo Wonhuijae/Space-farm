@@ -43,10 +43,14 @@ public class TransportationContents : MonoBehaviour
 
     private void InitPanel()
     {
+        sum = 0;
+        price = 0;
         salesImage.enabled = false;
         salesPrice.enabled = false;
 
         salesPriceSum.text = 0.ToString() + " G";
+
+        hBtn.Reset();
     }
 
     void ContentsSetting()

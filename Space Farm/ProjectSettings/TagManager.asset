@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - PlacedField
+  - Sprinkler
   layers:
   - Default
   - TransparentFX

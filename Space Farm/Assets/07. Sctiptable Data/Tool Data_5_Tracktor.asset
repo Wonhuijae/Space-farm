@@ -21,6 +21,7 @@ MonoBehaviour:
   _toolModel: {fileID: 3416232962595142764, guid: 70ec5ba70504c114789d579d9bfa5abd,
     type: 3}
   _shortcutname: "\uC790\uB3D9\uC218\uD655"
+  _animtrigger: None
   Price: 20000
   Tier: 0
   Durability: 100

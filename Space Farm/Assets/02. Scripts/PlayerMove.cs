@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.TextCore.LowLevel;
 
 public class PlayerMove : MonoBehaviour
@@ -18,9 +19,6 @@ public class PlayerMove : MonoBehaviour
     public int jumpCount;
     public bool isGround;
 
-    bool IKActive;
-    public Transform handPos;
-    public Transform toolPos;
 
     // Start is called before the first frame update
     void Awake()
@@ -103,30 +101,6 @@ public class PlayerMove : MonoBehaviour
         {
             jumpCount = 1;
             isGround = true;
-        }
-    }
-
-    private void OnAnimatorIK()
-    {
-        if(playerAnim)
-        {
-            if(IKActive)
-            {
-                if(toolPos != null)
-                {
-                    playerAnim.SetLookAtWeight(1);
-                    playerAnim.SetLookAtPosition(toolPos.position);
-                }
-
-                if(handPos != null)
-                {
-                    playerAnim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
-                    playerAnim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
-
-                    playerAnim.SetIKPosition(AvatarIKGoal.RightHand, handPos.position);
-                    playerAnim.SetIKRotation(AvatarIKGoal.RightHand, handPos.rotation);
-                }
-            }
         }
     }
 }

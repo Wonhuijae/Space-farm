@@ -21,6 +21,7 @@ MonoBehaviour:
   _toolModel: {fileID: 826329391420535984, guid: 2fe2ec8c1edee024990698a91dda064a,
     type: 3}
   _shortcutname: "\uC790\uB3D9\uAE09\uC218"
+  _animtrigger: Sprinkle
   Price: 10000
   Tier: 0
   Durability: 100
