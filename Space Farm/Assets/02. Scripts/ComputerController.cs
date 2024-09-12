@@ -23,7 +23,9 @@ public class ComputerController : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (onOpenComputer != null && !EventSystem.current.IsPointerOverGameObject()) onOpenComputer?.Invoke();
+        //if (onOpenComputer != null && !EventSystem.current.IsPointerOverGameObject()) onOpenComputer?.Invoke();
+        if (onOpenComputer != null && !EventSystem.current.IsPointerOverGameObject() &&
+                EventSystem.current.currentSelectedGameObject == null) onOpenComputer?.Invoke();
     }
 
     private void OnTriggerExit(Collider other)

@@ -1,21 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
-using static UnityEditor.ShaderData;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+
+[System.Serializable]
+public class FieldData
+{
+    public GrowState state;
+    public SeedItem seed;
+
+    float time;
+    bool isSeed;
+    bool isSprout;
+    bool isCrops;
+    bool isWatered;
+
+    int posIdx;
+
+    Vector3 pos;
+}
+public enum GrowState
+{
+    none,
+    seed,
+    sprout,
+    crops
+}
 
 public class FieldCycle : MonoBehaviour
 {
-    enum GrowState
-    {
-        none,
-        seed,
-        sprout,
-        crops
-    }
     GrowState state;
 
     private GameObject popUp;
@@ -108,7 +123,7 @@ public class FieldCycle : MonoBehaviour
         isSprout = true;
         RemovingPrefab();
 
-        for (; posIdx < 5;posIdx++)
+        for (; posIdx < 5; posIdx++) 
         {
             InstatatePrefab(seed.Sprouting(), poses[posIdx]);
         }
@@ -160,9 +175,10 @@ public class FieldCycle : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        //if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) return;
 
-        if (state == GrowState.none) // 아무것도 심어지지 않았다
+            if (state == GrowState.none) // 아무것도 심어지지 않았다
         {
             if (gmInstace.toolState == ToolState.trowel)
             {

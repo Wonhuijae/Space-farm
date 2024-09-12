@@ -18,16 +18,6 @@ public class CameraController: MonoBehaviour
         playerInput = FindObjectOfType<PlayerInput>();
     }
 
-    private void FixedUpdate()
-    {
-        if (playerInput != null)
-        {
-            //Debug.Log($"{playerInput.rX} , {playerInput.rY}");
-            //activeCamera.inputAxisValue = playerInput.rX;
-            //activeCamera.m_YAxis.Value = playerInput.rY;
-        }
-    }
-
     private void OnTriggerStay(Collider other)
     {
         if(other.CompareTag("Player"))
@@ -46,10 +36,5 @@ public class CameraController: MonoBehaviour
             baseCam.SetActive(false);
             farmCam.SetActive(true);
         }
-    }
-
-    public void ScrollUP()
-    {
-
     }
 }

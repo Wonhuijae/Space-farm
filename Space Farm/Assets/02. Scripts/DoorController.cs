@@ -44,14 +44,9 @@ public class DoorController : MonoBehaviour
         rightOpenPosition = new Vector3(0, 0, openDistance);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other) 
     {
+        Debug.Log(other.tag);
         if(other.gameObject.CompareTag("Player"))
         {
             Debug.Log(doorStatus);
@@ -89,6 +84,7 @@ public class DoorController : MonoBehaviour
 
     IEnumerator OpenDoor()
     {
+        Debug.Log("opendoor");
         float t = 0f;
 
         Vector3 _LCPos = leftCurPosition;

@@ -120,8 +120,6 @@ public class FarmSystem : MonoBehaviour
 
     private void Update()
     {
-        if (gmInstace.toolState == ToolState.None) return;
-
         if (gmInstace.toolState == ToolState.hoe)
         {
             previewObj.SetActive(true);
@@ -141,34 +139,39 @@ public class FarmSystem : MonoBehaviour
         }
 
         ToolData d = toolsDict[gmInstace.toolState];
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        //if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.touchCount > 0)
         {
-            Vector3 fieldPos = grid.CellToWorld(cellPos);
-
-            switch (gmInstace.toolState)
+            if (!EventSystem.current.IsPointerOverGameObject() &&
+                EventSystem.current.currentSelectedGameObject == null)
             {
-                case ToolState.hoe:
-                    if (!isOverLappedField)
-                    {
-                        plInstace.GetAnim().SetTrigger(d.AnimTrigger);
-                        Instantiate(originalField, fieldPos, Quaternion.identity);
-                        Destroy(Instantiate(VFXs[0], new Vector3(fieldPos.x, fieldPos.y + 0.385f, fieldPos.z), Quaternion.identity), 5f);
-                    }
-                    break;
-                case ToolState.sprinkler:
-                    Debug.Log(isOverLappedSprinkler);
-                    if (!isOverLappedSprinkler)
-                    {
-                        Vector3 newPos = new Vector3(fieldPos.x - 1.5f, fieldPos.y + 0.385f, fieldPos.z - 1f);
+                Vector3 fieldPos = grid.CellToWorld(cellPos);
+                fieldPos.y = 0;
 
-                        plInstace.GetAnim().SetTrigger(d.AnimTrigger);
-                        Instantiate(OriginalS, newPos, Quaternion.identity);
-                    }
-                    break;
+                switch (gmInstace.toolState)
+                {
+                    case ToolState.hoe:
+                        if (!isOverLappedField)
+                        {
+                            plInstace.GetAnim().SetTrigger(d.AnimTrigger);
+                            Instantiate(originalField, fieldPos, Quaternion.identity);
+                            Destroy(Instantiate(VFXs[0], new Vector3(fieldPos.x, fieldPos.y + 0.385f, fieldPos.z), Quaternion.identity), 5f);
+                        }
+                        break;
+                    case ToolState.sprinkler:
+                        Debug.Log(isOverLappedSprinkler);
+                        if (!isOverLappedSprinkler)
+                        {
+                            Vector3 newPos = new Vector3(fieldPos.x - 1.5f, fieldPos.y + 0.385f, fieldPos.z - 1f);
+
+                            plInstace.GetAnim().SetTrigger(d.AnimTrigger);
+                            Instantiate(OriginalS, newPos, Quaternion.identity);
+                        }
+                        break;
+                }
             }
         }
     }
-
 
     public void ChangeStateCollEnter() // 충돌 상태가 된다
     {

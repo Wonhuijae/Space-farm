@@ -38,11 +38,11 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        hValue = Input.GetAxis(moveHAxisName);
-        vValue = Input.GetAxis(moveVAxisName);
+        // hValue = Input.GetAxis(moveHAxisName);
+        // vValue = Input.GetAxis(moveVAxisName);
 
-        //hValue = joystick.Horizontal;
-        //vValue = joystick.Vertical;
+        hValue = joystick.Horizontal;
+        vValue = joystick.Vertical;
 
         isJump = Input.GetButton("Jump");
 
