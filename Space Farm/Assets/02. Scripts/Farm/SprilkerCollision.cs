@@ -10,7 +10,7 @@ public class SprilkerCollision : MonoBehaviour
     public event Action OnTriggerOthers;
     public event Action OffTriggerOthers;
 
-    ParticleSystem p;
+    ParticleSystem[] p;
 
     float time = 20f;
 
@@ -20,7 +20,7 @@ public class SprilkerCollision : MonoBehaviour
 
         farm = FarmSystem.instance;
 
-        if(gameObject.name != "Sprinkler_O") p = GetComponentInChildren<ParticleSystem>();
+        if(gameObject.name != "Sprinkler_O") p = GetComponentsInChildren<ParticleSystem>();
 
         if (farm != null)
         {
@@ -35,9 +35,13 @@ public class SprilkerCollision : MonoBehaviour
 
         time -= Time.deltaTime;
 
-        if (time < 0)
+        if (time <= 0)
         {
-            p.Play();
+            foreach(ParticleSystem o in p)
+            {
+                o.Play();
+            }
+            time = 20;
             WateringSphere();
         }
     }

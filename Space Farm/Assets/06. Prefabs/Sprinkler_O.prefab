@@ -78,10 +78,25 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2985410559853050438, guid: e65de43fbe6b21c4e8f565e06881908a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2797864980895152918, guid: e65de43fbe6b21c4e8f565e06881908a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e65de43fbe6b21c4e8f565e06881908a,
         type: 3}
       propertyPath: m_Name
       value: Sprinkler_O
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e65de43fbe6b21c4e8f565e06881908a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e65de43fbe6b21c4e8f565e06881908a,
         type: 3}
@@ -92,6 +107,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Sprinkler
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953606483559150473, guid: e65de43fbe6b21c4e8f565e06881908a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -141,8 +161,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.006, y: 0.003, z: 0.006}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.006, y: 0.0005, z: 0.006}
+  m_Center: {x: 0, y: 0.0005, z: 0}
 --- !u!114 &7100102686972577271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +183,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8531734342214912993}
     m_Modifications:
+    - target: {fileID: 5011937586018748712, guid: 5e210ab7ccb691c488699d3c0737a9bb,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011937586018748712, guid: 5e210ab7ccb691c488699d3c0737a9bb,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5011937586018748714, guid: 5e210ab7ccb691c488699d3c0737a9bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -217,6 +247,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FX_Sprinkler
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011937586018748717, guid: 5e210ab7ccb691c488699d3c0737a9bb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011937587393820131, guid: 5e210ab7ccb691c488699d3c0737a9bb,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011937587393820131, guid: 5e210ab7ccb691c488699d3c0737a9bb,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011937587393820132, guid: 5e210ab7ccb691c488699d3c0737a9bb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

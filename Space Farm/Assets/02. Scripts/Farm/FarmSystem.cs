@@ -125,10 +125,12 @@ public class FarmSystem : MonoBehaviour
         if (gmInstace.toolState == ToolState.hoe)
         {
             previewObj.SetActive(true);
+            previewS.SetActive(false);
             previewObj.transform.position = grid.CellToWorld(cellPos);
         }
-        else if(gmInstace.toolState ==ToolState.sprinkler)
+        else if(gmInstace.toolState == ToolState.sprinkler)
         {
+            previewObj.SetActive(false);
             previewS.SetActive(true);
             previewS.transform.position = grid.CellToWorld(cellPos);
         }
@@ -157,9 +159,10 @@ public class FarmSystem : MonoBehaviour
                     Debug.Log(isOverLappedSprinkler);
                     if (!isOverLappedSprinkler)
                     {
-                       
+                        Vector3 newPos = new Vector3(fieldPos.x - 1.5f, fieldPos.y + 0.385f, fieldPos.z - 1f);
+
                         plInstace.GetAnim().SetTrigger(d.AnimTrigger);
-                        Instantiate(OriginalS, transform.position, Quaternion.identity);
+                        Instantiate(OriginalS, newPos, Quaternion.identity);
                     }
                     break;
             }
