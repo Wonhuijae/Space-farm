@@ -84,7 +84,6 @@ public class DoorController : MonoBehaviour
 
     IEnumerator OpenDoor()
     {
-        Debug.Log("opendoor");
         float t = 0f;
 
         Vector3 _LCPos = leftCurPosition;
@@ -121,6 +120,7 @@ public class DoorController : MonoBehaviour
 
             leftCurPosition = leftDoor.localPosition;
             rightCurPosition = rightDoor.localPosition;
+            Debug.Log(t);
 
             yield return null;
         }

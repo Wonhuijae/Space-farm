@@ -94,6 +94,8 @@ public class FarmSystem : MonoBehaviour
     private Dictionary<ToolState, ToolData> toolsDict = new();
     private Dictionary<SeedState, SeedData> seedsDict = new();
 
+    ToolData d;
+
     private void Awake()
     {
         grid = GetComponentInChildren<Grid>();
@@ -125,12 +127,31 @@ public class FarmSystem : MonoBehaviour
             previewObj.SetActive(true);
             previewS.SetActive(false);
             previewObj.transform.position = grid.CellToWorld(cellPos);
+            if (-5 <= cellPos.x && cellPos.x <= 5 &&
+                        -10 <= cellPos.z && cellPos.z <= 11)
+            {
+                previewObj.GetComponent<OutlineShader>().OutlineColor = Color.green;
+            }
+            else
+            {
+                previewObj.GetComponent<OutlineShader>().OutlineColor = Color.red;
+            }
         }
         else if(gmInstace.toolState == ToolState.sprinkler)
         {
             previewObj.SetActive(false);
             previewS.SetActive(true);
             previewS.transform.position = grid.CellToWorld(cellPos);
+
+            if (-5 <= cellPos.x && cellPos.x <= 5 &&
+                        -10 <= cellPos.z && cellPos.z <= 11)
+            {
+                previewS.GetComponent<OutlineShader>().OutlineColor = Color.green;
+            }
+            else
+            {
+                previewS.GetComponent<OutlineShader>().OutlineColor = Color.red;
+            }
         }
         else
         {
@@ -138,39 +159,41 @@ public class FarmSystem : MonoBehaviour
             previewS.SetActive(false);
         }
 
-        ToolData d = toolsDict[gmInstace.toolState];
-        //if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-        if (Input.touchCount > 0)
+        if (gmInstace.toolState != ToolState.None) d = toolsDict[gmInstace.toolState];
+
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        { 
+       /* if (Input.touchCount > 0)
         {
             if (!EventSystem.current.IsPointerOverGameObject() &&
                 EventSystem.current.currentSelectedGameObject == null)
-            {
+            {*/
                 Vector3 fieldPos = grid.CellToWorld(cellPos);
                 fieldPos.y = 0;
+            Debug.Log(cellPos); // -5 x 5  -10 z 11
 
                 switch (gmInstace.toolState)
                 {
                     case ToolState.hoe:
-                        if (!isOverLappedField)
-                        {
-                            plInstace.GetAnim().SetTrigger(d.AnimTrigger);
-                            Instantiate(originalField, fieldPos, Quaternion.identity);
-                            Destroy(Instantiate(VFXs[0], new Vector3(fieldPos.x, fieldPos.y + 0.385f, fieldPos.z), Quaternion.identity), 5f);
-                        }
+                    if (!isOverLappedField)
+                    {
+                        plInstace.GetAnim().SetTrigger(d.AnimTrigger);
+                        Instantiate(originalField, fieldPos, Quaternion.identity);
+                        Destroy(Instantiate(VFXs[0], new Vector3(fieldPos.x, fieldPos.y + 0.385f, fieldPos.z), Quaternion.identity), 5f);
+                    }
                         break;
                     case ToolState.sprinkler:
-                        Debug.Log(isOverLappedSprinkler);
-                        if (!isOverLappedSprinkler)
-                        {
-                            Vector3 newPos = new Vector3(fieldPos.x - 1.5f, fieldPos.y + 0.385f, fieldPos.z - 1f);
+                    if (!isOverLappedSprinkler)
+                    {
+                        Vector3 newPos = new Vector3(fieldPos.x - 1.5f, fieldPos.y + 0.385f, fieldPos.z - 1f);
 
-                            plInstace.GetAnim().SetTrigger(d.AnimTrigger);
-                            Instantiate(OriginalS, newPos, Quaternion.identity);
-                        }
+                        plInstace.GetAnim().SetTrigger(d.AnimTrigger);
+                        Instantiate(OriginalS, newPos, Quaternion.identity);
+                    }
                         break;
                 }
             }
-        }
+        //}
     }
 
     public void ChangeStateCollEnter() // 충돌 상태가 된다

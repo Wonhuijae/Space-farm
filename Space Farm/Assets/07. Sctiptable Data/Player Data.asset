@@ -15,7 +15,7 @@ MonoBehaviour:
   money: 4520
   energy: 0
   walkClip: {fileID: 0}
-  color: {r: 0.08962262, g: 0.6852888, b: 1, a: 0}
+  color: {r: 1, g: 1, b: 1, a: 0}
   playerName: 
   level: 2
   exp: 80
