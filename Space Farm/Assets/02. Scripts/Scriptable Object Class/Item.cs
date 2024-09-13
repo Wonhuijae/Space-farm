@@ -27,6 +27,7 @@ public class ToolItem : Item, ITools
     }
 }
 
+[System.Serializable]
 public class SeedItem : Item, ISeeds
 {
     public SeedData SeedData { get; private set; }

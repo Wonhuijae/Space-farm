@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(menuName = "SctiptableData/SeedData", fileName = "Seed Data")]
 public class SeedData : ItemData
 {

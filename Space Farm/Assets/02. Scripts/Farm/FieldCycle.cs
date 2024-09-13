@@ -1,32 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.UI.CanvasScaler;
 
 [System.Serializable]
 public class FieldData
 {
     public GrowState state;
-    public SeedItem seed;
+    public SeedState seed;
 
-    float time;
-    bool isSeed;
-    bool isSprout;
-    bool isCrops;
-    bool isWatered;
+    public float time;
+    public bool isSeed;
+    public bool isSprout;
+    public bool isCrops;
+    public bool isWatered;
 
-    int posIdx;
+    public int posIdx;
 
-    Vector3 pos;
+    public Vector3ToSeriallize pos;
 }
+
+[System.Serializable]
 public enum GrowState
 {
     none,
     seed,
     sprout,
     crops
+}
+
+[System.Serializable]
+public class Vector3ToSeriallize
+{
+    public float x;
+    public float y;
+    public float z;
+
+    public Vector3ToSeriallize(Vector3 _v)
+    {
+        x = _v.x;
+        y = _v.y;
+        z = _v.z;
+    }
+
+    public Vector3 toVector3()
+    {
+        return new Vector3(x, y, z);
+    }
 }
 
 public class FieldCycle : MonoBehaviour
@@ -42,6 +66,7 @@ public class FieldCycle : MonoBehaviour
     bool isSprout = false ;
     bool isCrops = false;
     bool isWatered= false ;
+    FieldData saveData;
 
     GameManager gmInstace;
     FarmSystem farmSystem;
@@ -82,8 +107,10 @@ public class FieldCycle : MonoBehaviour
             }
             else poses.Add(t.gameObject);
         }
+        saveData = new();
 
         FXPos = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
+        StartCoroutine(AutoSave());
     }
 
     private void Update()
@@ -95,12 +122,58 @@ public class FieldCycle : MonoBehaviour
 
         if (time > growDay / 3 && state == GrowState.seed && !isSprout) Sprouting();
         if (time > growDay && state == GrowState.sprout && !isCrops) PlantingFruit();
-        
+    }
+
+    IEnumerator AutoSave()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(20f);
+            SaveDataStart();
+        }
+    }
+
+    private void OnMouseDown()
+    {
+#if UNITY_EDITOR
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+#else
+        if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) return;
+#endif
+
+        if (state == GrowState.none) // 아무것도 심어지지 않았다
+        {
+            if (gmInstace.toolState == ToolState.trowel)
+            {
+                if (gmInstace.seedState == SeedState.None) popUp.SetActive(true);
+                else
+                {
+                    plInstance.GetAnim().SetTrigger("Trowel");
+                    gmInstace.SetSeedItem(seed.SeedData);
+                    Destroy(Instantiate(farmSystem.VFXs[1], FXPos, Quaternion.identity), 3f);
+                    Init(farmSystem.GetDict(gmInstace.seedState));
+                    Sowing();
+                }
+            }
+        }
+        else if (gmInstace.toolState == ToolState.watercan)
+        {
+            plInstance.GetAnim().SetTrigger("Watering");
+            plInstance.Watercan.Play();
+            Watering();
+        }
+        else if (gmInstace.toolState == ToolState.sickle && state == GrowState.crops) // 다 자란 상태이고 낫을 들고 있다
+        {
+            Harvesting();
+            plInstance.GetAnim().SetTrigger("Sickle");
+        }
+        else return;
     }
 
     void Sowing()
     {
         Destroy(Instantiate(farmSystem.VFXs[4], FXPos, Quaternion.identity), 3f);
+
         state = GrowState.seed;
         isSeed = true;
         for(; posIdx < 2; posIdx++)
@@ -139,6 +212,8 @@ public class FieldCycle : MonoBehaviour
 
         for (; posIdx < poses.Count; posIdx++)
         {
+            Debug.Log(poses[posIdx] == null);
+            Debug.Log(seed.PlantingFruit() == null);
             InstatatePrefab(seed.PlantingFruit(), poses[posIdx]);
         }
     }
@@ -154,6 +229,7 @@ public class FieldCycle : MonoBehaviour
     {
         Destroy(Instantiate(farmSystem.VFXs[3], FXPos, Quaternion.identity), 3f);
         RemovingPrefab();
+        seed = null;
         isCrops = false;
         isSprout = false;
         isSeed = false;
@@ -173,43 +249,6 @@ public class FieldCycle : MonoBehaviour
         return isCrops;
     }
 
-    private void OnMouseDown()
-    {
-#if UNITY_EDITOR
-        if (EventSystem.current.IsPointerOverGameObject()) return;
-#else
-        if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) return;
-#endif
-
-        if (state == GrowState.none) // 아무것도 심어지지 않았다
-        {
-            if (gmInstace.toolState == ToolState.trowel)
-            {
-                if (gmInstace.seedState == SeedState.None) popUp.SetActive(true);
-                else
-                {
-                    plInstance.GetAnim().SetTrigger("Trowel");
-                    seed = new SeedItem(farmSystem.GetDict(gmInstace.seedState));
-                    gmInstace.SetSeedItem(seed.SeedData);
-                    Destroy(Instantiate(farmSystem.VFXs[1], FXPos, Quaternion.identity), 3f);
-                    growDay = seed.GetGrowDay();
-                    Sowing();
-                }
-            }
-        }
-        else if (gmInstace.toolState == ToolState.watercan)
-        {
-            plInstance.GetAnim().SetTrigger("Watering");
-            plInstance.Watercan.Play();
-            Watering();
-        }
-        else if (gmInstace.toolState == ToolState.sickle && state == GrowState.crops) // 다 자란 상태이고 낫을 들고 있다
-        {
-            Harvesting();
-            plInstance.GetAnim().SetTrigger("Sickle");
-        }
-        else return;
-    }
 
     void InstatatePrefab(GameObject _prefab, GameObject _parent)
     {
@@ -228,4 +267,90 @@ public class FieldCycle : MonoBehaviour
         }
         plants.Clear();
     }
+
+    public void SaveDataTrigger()
+    {
+        SaveDataStart();
+    }
+
+    void SaveDataStart()
+    {
+        FieldData oldData = new();
+
+        if (saveData != null)
+        {
+            oldData = saveData;
+        }
+
+        saveData.state = state;
+        saveData.pos = new Vector3ToSeriallize(transform.position);
+
+        if (seed != null)
+        {
+            saveData.time = time;
+            if (seed.SeedData != null)
+            {
+                saveData.seed = seed.SeedData.seedState;
+            }
+            else
+            {
+                saveData.seed = SeedState.None;
+            }
+            saveData.isSeed = isSeed;
+            saveData.isSprout = isSprout;
+            saveData.isCrops = isCrops;
+            saveData.isWatered = isWatered;
+
+            saveData.posIdx = posIdx;
+        }
+
+        DataManager.instance.SaveDataToList(oldData, saveData);
+    }
+
+    public void GetFieldData(FieldData f)
+    {
+        saveData = f;
+        LoadData();
+    }
+
+    void LoadData()
+    {
+        if(saveData != null)
+        {
+            state = saveData.state;
+            transform.position = saveData.pos.toVector3();
+        }
+        
+        time = saveData.time;
+        if (saveData.seed != SeedState.None)
+        {
+            Init(farmSystem.GetDict(saveData.seed));
+        }
+
+        isSeed = saveData.isSeed;
+        isSprout = saveData.isSprout;
+        isCrops = saveData.isCrops;
+        isWatered = saveData.isWatered;
+
+        posIdx = saveData.posIdx;
+
+        switch(state)
+        {
+            case GrowState.seed:
+                Sowing();
+                break;
+            case GrowState.sprout:
+                Sprouting();
+                break;
+            case GrowState.crops:
+                PlantingFruit();
+                break;
+        }
+    }
+    
+    void Init(SeedData _s)
+        {
+            seed = new SeedItem(_s);
+            growDay = seed.GetGrowDay();
+        }
 }

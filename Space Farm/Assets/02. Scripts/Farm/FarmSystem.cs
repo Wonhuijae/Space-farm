@@ -14,6 +14,7 @@ public enum ToolState
     sprinkler
  }
 
+[System.Serializable]
 public enum SeedState
 {
     None,
@@ -37,7 +38,7 @@ public class FarmSystem : MonoBehaviour
         {
             if (_instance == null)
             {
-                _instance = FindAnyObjectByType<FarmSystem>();
+                _instance = FindObjectOfType<FarmSystem>();
             }
 
             return _instance;
@@ -104,7 +105,6 @@ public class FarmSystem : MonoBehaviour
 
         gmInstace = GameManager.Instance;
         plInstace = PlayerManager.instance;
-        Debug.Log(plInstace == null);
 
         if (gmInstace != null)
         {
@@ -187,15 +187,17 @@ public class FarmSystem : MonoBehaviour
                 switch (gmInstace.toolState)
                 {
                     case ToolState.hoe:
-                    if (!isOverLappedField)
+                    if (!isOverLappedField && -5 <= cellPos.x && cellPos.x <= 5 &&
+                            -10 <= cellPos.z && cellPos.z <= 11)
                     {
                         plInstace.GetAnim().SetTrigger(d.AnimTrigger);
-                        Instantiate(originalField, fieldPos, Quaternion.identity);
+                        Instantiate(originalField, fieldPos, Quaternion.identity).GetComponent<FieldCycle>().SaveDataTrigger();
                         Destroy(Instantiate(VFXs[0], new Vector3(fieldPos.x, fieldPos.y + 0.385f, fieldPos.z), Quaternion.identity), 5f);
                     }
                         break;
                     case ToolState.sprinkler:
-                    if (!isOverLappedSprinkler)
+                    if (!isOverLappedSprinkler && -5 <= cellPos.x && cellPos.x <= 5 &&
+                            -10 <= cellPos.z && cellPos.z <= 11)
                     {
                         Vector3 newPos = new Vector3(fieldPos.x - 1.5f, fieldPos.y + 0.385f, fieldPos.z - 1f);
 
@@ -204,6 +206,20 @@ public class FarmSystem : MonoBehaviour
                     }
                         break;
                 }
+        }
+    }
+
+    public void LoadFields(FieldDataList _Fields)
+    {
+        foreach(var f in _Fields.fields)
+        {
+            GameObject o  = Instantiate(originalField, f.pos.toVector3(), Quaternion.identity);
+            FieldCycle fc = o.GetComponent<FieldCycle>();
+
+            if(fc != null)
+            {
+                fc.GetFieldData(f);
+            }
         }
     }
 
