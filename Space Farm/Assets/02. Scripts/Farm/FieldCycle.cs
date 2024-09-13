@@ -175,10 +175,13 @@ public class FieldCycle : MonoBehaviour
 
     private void OnMouseDown()
     {
-        //if (EventSystem.current.IsPointerOverGameObject()) return;
+#if UNITY_EDITOR
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+#else
         if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) return;
+#endif
 
-            if (state == GrowState.none) // 아무것도 심어지지 않았다
+        if (state == GrowState.none) // 아무것도 심어지지 않았다
         {
             if (gmInstace.toolState == ToolState.trowel)
             {

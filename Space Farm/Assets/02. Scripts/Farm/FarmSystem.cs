@@ -126,31 +126,41 @@ public class FarmSystem : MonoBehaviour
         {
             previewObj.SetActive(true);
             previewS.SetActive(false);
-            previewObj.transform.position = grid.CellToWorld(cellPos);
-            if (-5 <= cellPos.x && cellPos.x <= 5 &&
-                        -10 <= cellPos.z && cellPos.z <= 11)
+            if (-6 <= cellPos.x && cellPos.x <= 6 &&
+                        -11 <= cellPos.z && cellPos.z <= 12)
             {
-                previewObj.GetComponent<OutlineShader>().OutlineColor = Color.green;
-            }
-            else
-            {
-                previewObj.GetComponent<OutlineShader>().OutlineColor = Color.red;
+                previewObj.transform.position = grid.CellToWorld(cellPos);
+                if (-5 <= cellPos.x && cellPos.x <= 5 &&
+                            -10 <= cellPos.z && cellPos.z <= 11)
+                {
+                    previewObj.GetComponent<OutlineShader>().OutlineColor = Color.green;
+                }
+                else
+                {
+                    previewObj.GetComponent<OutlineShader>().OutlineColor = Color.red;
+                }
             }
         }
         else if(gmInstace.toolState == ToolState.sprinkler)
         {
             previewObj.SetActive(false);
             previewS.SetActive(true);
-            previewS.transform.position = grid.CellToWorld(cellPos);
 
-            if (-5 <= cellPos.x && cellPos.x <= 5 &&
-                        -10 <= cellPos.z && cellPos.z <= 11)
+            if (-6 <= cellPos.x && cellPos.x <= 6 &&
+                       -11 <= cellPos.z && cellPos.z <= 12)
             {
-                previewS.GetComponent<OutlineShader>().OutlineColor = Color.green;
-            }
-            else
-            {
-                previewS.GetComponent<OutlineShader>().OutlineColor = Color.red;
+
+                previewS.transform.position = grid.CellToWorld(cellPos);
+
+                if (-5 <= cellPos.x && cellPos.x <= 5 &&
+                            -10 <= cellPos.z && cellPos.z <= 11)
+                {
+                    previewS.GetComponent<OutlineShader>().OutlineColor = Color.green;
+                }
+                else
+                {
+                    previewS.GetComponent<OutlineShader>().OutlineColor = Color.red;
+                }
             }
         }
         else
@@ -161,14 +171,16 @@ public class FarmSystem : MonoBehaviour
 
         if (gmInstace.toolState != ToolState.None) d = toolsDict[gmInstace.toolState];
 
+#if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+
+#else
+        if (Input.touchCount > 0 && !EventSystem.current.IsPointerOverGameObject() &&
+                     EventSystem.current.currentSelectedGameObject == null)
+                 
+#endif
         { 
-       /* if (Input.touchCount > 0)
-        {
-            if (!EventSystem.current.IsPointerOverGameObject() &&
-                EventSystem.current.currentSelectedGameObject == null)
-            {*/
-                Vector3 fieldPos = grid.CellToWorld(cellPos);
+            Vector3 fieldPos = grid.CellToWorld(cellPos);
                 fieldPos.y = 0;
             Debug.Log(cellPos); // -5 x 5  -10 z 11
 
@@ -192,8 +204,7 @@ public class FarmSystem : MonoBehaviour
                     }
                         break;
                 }
-            }
-        //}
+        }
     }
 
     public void ChangeStateCollEnter() // 충돌 상태가 된다

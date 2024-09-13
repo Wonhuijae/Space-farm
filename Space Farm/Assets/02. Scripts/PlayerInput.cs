@@ -38,12 +38,13 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        // hValue = Input.GetAxis(moveHAxisName);
-        // vValue = Input.GetAxis(moveVAxisName);
-
+#if UNITY_EDITOR
+        hValue = Input.GetAxis(moveHAxisName);
+        vValue = Input.GetAxis(moveVAxisName);
+#else
         hValue = joystick.Horizontal;
         vValue = joystick.Vertical;
-
+#endif
         isJump = Input.GetButton("Jump");
 
         isMouseDown = Input.GetMouseButton(0);

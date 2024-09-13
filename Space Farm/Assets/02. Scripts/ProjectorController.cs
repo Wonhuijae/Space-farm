@@ -14,12 +14,12 @@ public class ProjectorController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        //if (!EventSystem.current.IsPointerOverGameObject())
-        //{
-        //    UIinstance.OpenTransporation();
-        //}
-        if (!EventSystem.current.IsPointerOverGameObject() &&
+#if UNITY_EDITOR
+        if (!EventSystem.current.IsPointerOverGameObject())
+#else
+            if (!EventSystem.current.IsPointerOverGameObject() &&
                 EventSystem.current.currentSelectedGameObject == null)
+#endif
         {
             UIinstance.OpenTransporation();
         }

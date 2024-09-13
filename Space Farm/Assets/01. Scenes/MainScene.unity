@@ -754,7 +754,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -150, y: -100}
+  m_AnchoredPosition: {x: -150, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &76990864
@@ -905,8 +905,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
+  outlineMode: 1
+  outlineColor: {r: 0.12156863, g: 0.1254902, b: 0.23529412, a: 0.6666667}
   outlineWidth: 10
   precomputeOutline: 0
   bakeKeys: []
@@ -3178,7 +3178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
+  outlineMode: 1
   outlineColor: {r: 1, g: 0, b: 0, a: 1}
   outlineWidth: 10
   precomputeOutline: 0
@@ -6610,7 +6610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
+  outlineMode: 1
   outlineColor: {r: 0.12156863, g: 0.1254902, b: 0.23529412, a: 0.6666667}
   outlineWidth: 10
   precomputeOutline: 0
@@ -6640,7 +6640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
+  outlineMode: 1
   outlineColor: {r: 0.12156863, g: 0.1254902, b: 0.23529412, a: 0.6666667}
   outlineWidth: 10
   precomputeOutline: 0
@@ -7227,7 +7227,7 @@ GameObject:
   - component: {fileID: 829540951}
   - component: {fileID: 829540950}
   m_Layer: 5
-  m_Name: Button_Inventory (1)
+  m_Name: Button_Setting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7250,7 +7250,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1270, y: 120}
+  m_AnchoredPosition: {x: 1270, y: 170}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &829540950
@@ -10341,7 +10341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
+  outlineMode: 1
   outlineColor: {r: 0.12156863, g: 0.1254902, b: 0.23529412, a: 0.6666667}
   outlineWidth: 10
   precomputeOutline: 0
@@ -15007,7 +15007,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1270, y: 320}
+  m_AnchoredPosition: {x: 1270, y: 370}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1624669195
@@ -16133,7 +16133,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -50}
+  m_AnchoredPosition: {x: 225, y: -50}
   m_SizeDelta: {x: 150, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1744231851
@@ -22201,7 +22201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
+  outlineMode: 1
   outlineColor: {r: 0.80784315, g: 1, b: 0, a: 1}
   outlineWidth: 5
   precomputeOutline: 0
@@ -22219,7 +22219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
+  outlineMode: 1
   outlineColor: {r: 0.7206082, g: 0.5707547, b: 1, a: 1}
   outlineWidth: 5
   precomputeOutline: 0
@@ -22393,7 +22393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
+  outlineMode: 1
   outlineColor: {r: 1, g: 0, b: 0, a: 1}
   outlineWidth: 10
   precomputeOutline: 0
