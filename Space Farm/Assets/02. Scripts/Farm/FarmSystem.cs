@@ -146,21 +146,11 @@ public class FarmSystem : MonoBehaviour
             previewObj.SetActive(false);
             previewS.SetActive(true);
 
-            if (-6 <= cellPos.x && cellPos.x <= 6 &&
-                       -11 <= cellPos.z && cellPos.z <= 12)
+            if (-5 <= cellPos.x && cellPos.x <= 5 &&
+                       -10 <= cellPos.z && cellPos.z <= 11)
             {
 
                 previewS.transform.position = grid.CellToWorld(cellPos);
-
-                if (-5 <= cellPos.x && cellPos.x <= 5 &&
-                            -10 <= cellPos.z && cellPos.z <= 11)
-                {
-                    previewS.GetComponent<OutlineShader>().OutlineColor = Color.green;
-                }
-                else
-                {
-                    previewS.GetComponent<OutlineShader>().OutlineColor = Color.red;
-                }
             }
         }
         else

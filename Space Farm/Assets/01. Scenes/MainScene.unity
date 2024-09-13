@@ -3166,24 +3166,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1280497316}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &298192910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298192906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 1
-  outlineColor: {r: 1, g: 0, b: 0, a: 1}
-  outlineWidth: 10
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!1 &301032609
 GameObject:
   m_ObjectHideFlags: 0
@@ -7053,6 +7035,7 @@ MonoBehaviour:
   CameraPos: {fileID: 347288165}
   ridePos: {fileID: 1777996405}
   normalPos: {fileID: 1557206125}
+  playerRD: {fileID: 1475604709}
   tools:
   - {fileID: 783653187}
   - {fileID: 182339344}
@@ -11856,19 +11839,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sprinkler
       objectReference: {fileID: 0}
-    - target: {fileID: 826329391420535984, guid: 2fe2ec8c1edee024990698a91dda064a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 826329391420535984, guid: 2fe2ec8c1edee024990698a91dda064a,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 298192910}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fe2ec8c1edee024990698a91dda064a, type: 3}
 --- !u!1001 &1281130986
 PrefabInstance:
@@ -13381,6 +13355,12 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4579542, y: 1.2336017, z: 5.6370425}
   m_Center: {x: 0.0000006109478, y: 0.6134446, z: 0}
+--- !u!137 &1475604709 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13700000, guid: 02dd6406ed1ebc248b2fafd0485e0de9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1385769045}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1490933181
 GameObject:
   m_ObjectHideFlags: 0

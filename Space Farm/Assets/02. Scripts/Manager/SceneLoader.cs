@@ -3,66 +3,81 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class SceneLoader : MonoBehaviour
 {
     public GameObject spaceShip;
     public GameObject player;
     public float moveSpeed = 0.025f;
+    public AudioClip fireClip;
 
+    public GameObject loadingPanel;
     public Slider progressBar;
 
-    Rigidbody playerRB;
     Animator playerAnim;
+    AudioSource audioSource;
     Vector3 targetDirection;
-    
+
     float t = 0f;
-    Vector3 startPos;
     Vector3 targetPos;
     private void Awake()
     {
-        targetDirection = - player.transform.position + spaceShip.transform.position;
-        playerRB = player.GetComponent<Rigidbody>();
+        targetDirection = -player.transform.position + spaceShip.transform.position;
         playerAnim = player.GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
-        startPos = player.transform.position;
-        targetPos =spaceShip.transform.position;
+        targetPos = spaceShip.transform.position;
     }
 
     public void GameStart()
     {
-        //playerAnim.SetTrigger("IsStart");
-        //StartCoroutine(RotateCharacter());
-        StartCoroutine(LoadSceneProgress("MainScene"));
-    }
+        playerAnim.SetTrigger("IsStart");
+        audioSource.Stop();
 
-    IEnumerator RotateCharacter()
-    {
         Quaternion lookRotation = Quaternion.LookRotation(targetDirection);
+        Vector3 targetRotation = lookRotation.eulerAngles;
 
-        while (Quaternion.Angle(player.transform.rotation, lookRotation) > 0.1f)
-        {
-            player.transform.rotation = Quaternion.Slerp(player.transform.rotation, lookRotation, 0.025f);
-            yield return null;
-        }
-
-       StartCoroutine(MoveCharacter());
+        player.transform.DORotate(targetRotation, 1f);
+        Invoke("Move", 0.8f);
     }
 
-    IEnumerator MoveCharacter()
+    void Move()
     {
-        while(t < 1f)
+        player.transform.DOMove(targetPos, 3.5f);
+        Invoke("Ride", 3.8f);
+    }
+
+    void Ride()
+    {
+        playerAnim.SetTrigger("IsStop");
+        Vector3 ridePos = player.transform.position;
+        ridePos.y += 3;
+        player.transform.DOMove(ridePos, 2f);
+
+        Invoke("Depart", 2.5f);
+    }
+
+    void Depart()
+    {
+        player.SetActive(false);
+        audioSource.PlayOneShot(fireClip);
+        foreach (ParticleSystem p in spaceShip.GetComponentsInChildren<ParticleSystem>())
         {
-            t += (Time.deltaTime * moveSpeed);
-
-            player.transform.position = Vector3.Lerp(startPos, targetPos, t);
-
-            yield return null;
+            p.Play();
         }
+        Vector3 departPos = spaceShip.transform.position;
+        departPos.y += 23;
+        spaceShip.transform.DOMove(departPos, 2f);
+        
+        StartCoroutine(LoadSceneProgress("MainScene"));
     }
 
     IEnumerator LoadSceneProgress(string _sceneName)
     {
+        yield return new WaitForSeconds(1.5f);
+        spaceShip.SetActive(false);
+        loadingPanel.SetActive(true);
         progressBar.value = 0f;
 
         AsyncOperation loading = SceneManager.LoadSceneAsync(_sceneName);

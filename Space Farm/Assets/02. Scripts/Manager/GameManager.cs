@@ -126,6 +126,8 @@ public class GameManager : MonoBehaviour
 
         uiInstance = UIManager.instance;
         toolState = ToolState.None;
+
+        ChangeTool(toolState);
     }
 
     public SeedData[] GetSeedData()

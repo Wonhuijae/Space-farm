@@ -24,7 +24,7 @@ public class PlayerManager : MonoBehaviour
     public Transform normalPos;
 
     AudioSource playerAs;
-    SkinnedMeshRenderer playerRD;
+    public SkinnedMeshRenderer playerRD;
     GameManager gmInstance;
     Animator plAnim;
 
@@ -39,7 +39,6 @@ public class PlayerManager : MonoBehaviour
         }
 
         playerAs = GetComponent<AudioSource>();
-        playerRD = GetComponentInChildren<SkinnedMeshRenderer>();
 
         playerRD.materials[1].color= playerData.color;
         plAnim = GetComponent<Animator>();
@@ -65,8 +64,6 @@ public class PlayerManager : MonoBehaviour
             playerRD.enabled = false;
             CameraPos.transform.position = ridePos.position;
         }
-
-        
     }
 
     public void AllToolsOff()

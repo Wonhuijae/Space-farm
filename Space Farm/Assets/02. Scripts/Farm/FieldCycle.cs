@@ -115,9 +115,8 @@ public class FieldCycle : MonoBehaviour
 
     private void Update()
     {
-        if (state == GrowState.none || seed == null || state == GrowState.crops)
+        if (state == GrowState.crops || seed == null || state == GrowState.none)
         {
-            time = 0f;
             return;
         }
 
@@ -153,9 +152,9 @@ public class FieldCycle : MonoBehaviour
                 else
                 {
                     plInstance.GetAnim().SetTrigger("Trowel");
+                    Init(farmSystem.GetDict(gmInstace.seedState));
                     gmInstace.SetSeedItem(seed.SeedData);
                     Destroy(Instantiate(farmSystem.VFXs[1], FXPos, Quaternion.identity), 3f);
-                    Init(farmSystem.GetDict(gmInstace.seedState));
                     Sowing();
                 }
             }
@@ -197,6 +196,7 @@ public class FieldCycle : MonoBehaviour
     {
         Destroy(Instantiate(farmSystem.VFXs[4], FXPos, Quaternion.identity), 3f);
         state = GrowState.sprout;
+        isSeed = false;
         isSprout = true;
         RemovingPrefab();
 
@@ -210,6 +210,7 @@ public class FieldCycle : MonoBehaviour
     {
         Destroy(Instantiate(farmSystem.VFXs[4], FXPos, Quaternion.identity), 3f);
         state = GrowState.crops;
+        isSprout = false;
         isCrops = true;
         
         RemovingPrefab();
@@ -233,7 +234,7 @@ public class FieldCycle : MonoBehaviour
     {
         Destroy(Instantiate(farmSystem.VFXs[3], FXPos, Quaternion.identity), 3f);
         RemovingPrefab();
-        seed = null;
+        
         isCrops = false;
         isSprout = false;
         isSeed = false;
@@ -246,6 +247,7 @@ public class FieldCycle : MonoBehaviour
         growSlider.gameObject.SetActive(false);
         growImage.gameObject.SetActive(false);
         posIdx = 0;
+        seed = null;
     }
 
     public bool IsCrops()
@@ -332,6 +334,11 @@ public class FieldCycle : MonoBehaviour
             growSlider.gameObject.SetActive(true);
             growImage.gameObject.SetActive(true);
         }
+        else
+        {
+            growSlider.gameObject.SetActive(false);
+            growImage.gameObject.SetActive(false);
+        }
 
         isSeed = saveData.isSeed;
         isSprout = saveData.isSprout;
@@ -343,7 +350,7 @@ public class FieldCycle : MonoBehaviour
         switch(state)
         {
             case GrowState.seed:
-                posIdx-=2;
+                posIdx -= 2;
                 Sowing();
                 break;
             case GrowState.sprout:
@@ -361,6 +368,10 @@ public class FieldCycle : MonoBehaviour
     {
         seed = new SeedItem(_s);
         growDay = seed.GetGrowDay();
+
         growSlider.maxValue = growDay;
+        if (state == GrowState.crops) growSlider.value = growDay;
+        growImage.sprite = seed.SeedData.Icon_Shop;
+        time = 0f;
     }
 }

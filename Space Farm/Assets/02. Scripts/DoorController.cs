@@ -46,11 +46,8 @@ public class DoorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-        Debug.Log(other.tag);
         if(other.gameObject.CompareTag("Player"))
         {
-            Debug.Log(doorStatus);
-
             switch(doorStatus)
             {
                 case Status.open: // 열린 상태면 대기 코루틴을 중지한다
