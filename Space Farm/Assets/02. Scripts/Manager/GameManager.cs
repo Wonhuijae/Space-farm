@@ -198,8 +198,6 @@ public class GameManager : MonoBehaviour
             _seed.Quantity += 10;
             playerData.money -= _seed.Price;
         }
-
-        if (onPurchasedItemSeed != null) onPurchasedItemSeed?.Invoke(_seed);
     }
 
     public void SetSeedItem(SeedData _seed)

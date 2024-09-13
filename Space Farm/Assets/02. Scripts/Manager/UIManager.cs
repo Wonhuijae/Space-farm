@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
@@ -61,13 +62,6 @@ public class UIManager : MonoBehaviour
         if (instance != this)
         {
             Destroy(gameObject);
-        }
-
-        if (gmInstace != null)
-        {
-            gmInstace.onPurchasedItemSeed += UpdateUI;
-            gmInstace.onPurchasedItemTool += UpdateUI;
-            gmInstace.onGetItemCrops += UpdateUI;
         }
 
         GeneralUISetting();
@@ -161,21 +155,6 @@ public class UIManager : MonoBehaviour
             }
             c.SetActive(false);
         }
-    }
-
-    public void UpdateUI(SeedData _d)
-    {
-
-    }
-
-    public void UpdateUI(ToolData _d)
-    {
-        
-    }
-
-    public void UpdateUI(CropsData _d)
-    {
-
     }
 
     public void RemovingChildren(GameObject _contents)

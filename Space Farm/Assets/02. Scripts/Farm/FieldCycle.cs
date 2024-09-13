@@ -328,7 +328,8 @@ public class FieldCycle : MonoBehaviour
         }
         
         time = saveData.time;
-        if (saveData.seed != SeedState.None)
+        Debug.Log(state);
+        if (saveData.seed != SeedState.None && state != GrowState.none) // 아무것도 심어져 있지 않고 상태가 none이면
         {
             Init(farmSystem.GetDict(saveData.seed));
             growSlider.gameObject.SetActive(true);
@@ -368,10 +369,14 @@ public class FieldCycle : MonoBehaviour
     {
         seed = new SeedItem(_s);
         growDay = seed.GetGrowDay();
-
-        growSlider.maxValue = growDay;
-        if (state == GrowState.crops) growSlider.value = growDay;
+        
         growImage.sprite = seed.SeedData.Icon_Shop;
-        time = 0f;
+        growSlider.maxValue = growDay;
+
+        if (state == GrowState.crops)
+        {
+            growSlider.value = growDay;
+            time = 0f;
+        }
     }
 }
