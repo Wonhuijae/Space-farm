@@ -78,9 +78,8 @@ public class DataManager : MonoBehaviour
             Directory.CreateDirectory(directoryPath);
         }
 
-        string json = JsonUtility.ToJson(saveFieldData, true); // ¡ŸπŸ≤ﬁ π◊ µÈø©æ≤±‚ ø…º«
+        string json = JsonUtility.ToJson(saveFieldData, true); // Ï§ÑÎ∞îÍøà Î∞è Îì§Ïó¨Ïì∞Í∏∞
         File.WriteAllText(filePath, json);
-        Debug.Log("¿˙¿Â øœ∑·");
     }
 
     void LoadData()
@@ -93,10 +92,6 @@ public class DataManager : MonoBehaviour
 
         if (LoadFieldData != null)
         {
-            foreach(var i in LoadFieldData.fields)
-            {
-                Debug.Log(i.seed.ToString());
-            }
             saveFieldData.fields = LoadFieldData.fields;
             OnLoadData?.Invoke(LoadFieldData);
         }

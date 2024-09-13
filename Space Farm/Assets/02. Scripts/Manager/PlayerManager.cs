@@ -47,7 +47,6 @@ public class PlayerManager : MonoBehaviour
         gmInstance = GameManager.Instance;
         gmInstance.onToolsOn += ToolsOn;
         gmInstance.onAllToolsOff += AllToolsOff;
-        Debug.Log(instance == null);
     }
 
     public Animator GetAnim()

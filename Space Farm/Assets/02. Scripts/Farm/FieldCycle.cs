@@ -115,7 +115,11 @@ public class FieldCycle : MonoBehaviour
 
     private void Update()
     {
-        if (state == GrowState.none || seed == null) return;
+        if (state == GrowState.none || seed == null || state == GrowState.crops)
+        {
+            time = 0f;
+            return;
+        }
 
         time += Time.deltaTime;
         growSlider.value = time;
@@ -325,6 +329,8 @@ public class FieldCycle : MonoBehaviour
         if (saveData.seed != SeedState.None)
         {
             Init(farmSystem.GetDict(saveData.seed));
+            growSlider.gameObject.SetActive(true);
+            growImage.gameObject.SetActive(true);
         }
 
         isSeed = saveData.isSeed;
@@ -337,20 +343,24 @@ public class FieldCycle : MonoBehaviour
         switch(state)
         {
             case GrowState.seed:
+                posIdx-=2;
                 Sowing();
                 break;
             case GrowState.sprout:
+                posIdx -= 3;
                 Sprouting();
                 break;
             case GrowState.crops:
+                posIdx -= 3;
                 PlantingFruit();
                 break;
         }
     }
     
     void Init(SeedData _s)
-        {
-            seed = new SeedItem(_s);
-            growDay = seed.GetGrowDay();
-        }
+    {
+        seed = new SeedItem(_s);
+        growDay = seed.GetGrowDay();
+        growSlider.maxValue = growDay;
+    }
 }

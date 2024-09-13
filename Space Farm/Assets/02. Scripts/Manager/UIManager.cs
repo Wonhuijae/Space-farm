@@ -160,7 +160,6 @@ public class UIManager : MonoBehaviour
                 continue;
             }
             c.SetActive(false);
-            Debug.Log(c.name);
         }
     }
 
