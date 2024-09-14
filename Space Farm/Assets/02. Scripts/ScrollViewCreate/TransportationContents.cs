@@ -102,7 +102,6 @@ public class TransportationContents : MonoBehaviour
 
     public void SetSumPrice()
     {
-        Debug.Log(hBtn.qNum);
         sum = hBtn.qNum * price;
         salesPriceSum.text = sum.ToString("N0") + " G";
     }

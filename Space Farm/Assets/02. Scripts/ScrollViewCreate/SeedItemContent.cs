@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class SeedItemContent : MonoBehaviour
 {
+    public AudioSource audioSource;
+    public AudioClip clickClip;
+
     [SerializeField]
     private GameObject prefabPanel;
     [SerializeField]
@@ -52,9 +55,12 @@ public class SeedItemContent : MonoBehaviour
             if(t.gameObject.name == "Text_Name") t.text = _item.Name; // 이름
             else t.text = _item.Price + " G"; // 가격
         }
-        Debug.Log(tmpPanel.GetComponent<Button>().interactable);
 
-        tmpPanel.GetComponent<Button>().onClick.AddListener(() => ShowDetails(_idx)); // 해당 아이템 데이터 넘김
+        tmpPanel.GetComponent<Button>().onClick.AddListener(
+            () => { 
+                ShowDetails(_idx); // 해당 아이템 데이터 넘김
+                audioSource.PlayOneShot(clickClip);
+            }); 
     }
 
     void ShowDetails(int _idx)

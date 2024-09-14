@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class ToolItemContent : MonoBehaviour
 {
+    public AudioSource audioSource;
+    public AudioClip clickClip;
+
     [SerializeField]
     private GameObject prefabPanel;
     [SerializeField]
@@ -53,12 +56,15 @@ public class ToolItemContent : MonoBehaviour
             else t.text = _item.Price + " G"; // 가격
         }
 
-        tmpPanel.GetComponent<Button>().onClick.AddListener(() => ShowDetails(_idx)); // 해당 아이템 데이터 넘김
+        tmpPanel.GetComponent<Button>().onClick.AddListener(
+            () => {
+                ShowDetails(_idx); // 해당 아이템 데이터 넘김
+                audioSource.PlayOneShot(clickClip);
+            });
     }
     void ShowDetails(int _idx)
     {
         if (gmInstance != null) purchaseBTN.GetComponent<Button>().onClick.AddListener(() => gmInstance.TryToPurchaseTool(itemData[_idx]));
-        else Debug.Log("게임매니저 없음");
 
         detailPanel.SetActive(true);
         foreach (var t in detailPanel.GetComponentsInChildren<Image>())

@@ -11,8 +11,10 @@ public class SceneLoader : MonoBehaviour
     public GameObject player;
     public float moveSpeed = 0.025f;
     public AudioClip fireClip;
+    public AudioClip walkClip;
 
     public GameObject loadingPanel;
+    public GameObject titleImage;
     public Slider progressBar;
 
     Animator playerAnim;
@@ -44,12 +46,26 @@ public class SceneLoader : MonoBehaviour
 
     void Move()
     {
+        audioSource.PlayOneShot(walkClip);
         player.transform.DOMove(targetPos, 3.5f);
+        StartCoroutine(WalkSound());
         Invoke("Ride", 3.8f);
+    }
+
+    IEnumerator WalkSound()
+    {
+        for (int i = 0; i < 3; i++) 
+        {
+            audioSource.PlayOneShot(walkClip);
+            yield return new WaitForSeconds(1f);
+        }
     }
 
     void Ride()
     {
+        audioSource.Stop();
+        audioSource.loop= false;
+
         playerAnim.SetTrigger("IsStop");
         Vector3 ridePos = player.transform.position;
         ridePos.y += 3;
@@ -75,6 +91,7 @@ public class SceneLoader : MonoBehaviour
 
     IEnumerator LoadSceneProgress(string _sceneName)
     {
+        titleImage.SetActive(false);
         yield return new WaitForSeconds(1.5f);
         spaceShip.SetActive(false);
         loadingPanel.SetActive(true);

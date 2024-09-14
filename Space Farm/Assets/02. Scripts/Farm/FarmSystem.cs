@@ -87,6 +87,11 @@ public class FarmSystem : MonoBehaviour
     public GameObject previewS;
     public GameObject OriginalS;
 
+    public AudioSource audioSource;
+    public AudioClip wateringClip;
+    public AudioClip sprinklerClip;
+    public AudioClip hoeClip;
+
     private Grid grid;
     private UIManager UIinstance;
     private bool isOverLappedField;
@@ -171,8 +176,7 @@ public class FarmSystem : MonoBehaviour
 #endif
         { 
             Vector3 fieldPos = grid.CellToWorld(cellPos);
-                fieldPos.y = 0;
-            Debug.Log(cellPos); // -5 x 5  -10 z 11
+                fieldPos.y = 0;// -5 x 5  -10 z 11
 
                 switch (gmInstace.toolState)
                 {
@@ -180,6 +184,7 @@ public class FarmSystem : MonoBehaviour
                     if (!isOverLappedField && -5 <= cellPos.x && cellPos.x <= 5 &&
                             -10 <= cellPos.z && cellPos.z <= 11)
                     {
+                        audioSource.PlayOneShot(hoeClip);
                         plInstace.GetAnim().SetTrigger(d.AnimTrigger);
                         Instantiate(originalField, fieldPos, Quaternion.identity).GetComponent<FieldCycle>().SaveDataTrigger();
                         Destroy(Instantiate(VFXs[0], new Vector3(fieldPos.x, fieldPos.y + 0.385f, fieldPos.z), Quaternion.identity), 5f);

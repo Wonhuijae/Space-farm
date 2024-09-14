@@ -81,7 +81,6 @@ public class GameManager : MonoBehaviour
                 maxExp = (int)(1.05f * maxExp);
             }
             uiInstance.GeneralUISetting();
-            Debug.Log($" {exp}/{maxExp}");
         }
     }
     //private int _exp;
@@ -182,7 +181,6 @@ public class GameManager : MonoBehaviour
 
     public void TryToPurchaseSeed(SeedData _seed)
     {
-        Debug.Log(_seed.Price);
         if (money < _seed.Price) return;
         else
         {

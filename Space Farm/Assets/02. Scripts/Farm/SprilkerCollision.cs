@@ -39,6 +39,7 @@ public class SprilkerCollision : MonoBehaviour
         {
             foreach(ParticleSystem o in p)
             {
+                farm.audioSource.PlayOneShot(farm.sprinklerClip);
                 o.Play();
             }
             time = 20;
@@ -65,7 +66,10 @@ public class SprilkerCollision : MonoBehaviour
         Collider[] hits = Physics.OverlapSphere(transform.position, 3.25f);
         foreach(Collider c in hits)
         {
-            if (c.GetComponent<FieldCycle>() != null) c.GetComponent<FieldCycle>().Watering();
+            if (c.GetComponent<FieldCycle>() != null)
+            {
+                c.GetComponent<FieldCycle>().Watering();
+            }
         }
     }
 }

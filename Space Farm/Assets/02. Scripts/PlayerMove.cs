@@ -18,9 +18,6 @@ public class PlayerMove : MonoBehaviour
 
     public int jumpCount;
     public bool isGround;
-
-
-    // Start is called before the first frame update
     void Awake()
     {
         playerRB = GetComponent<Rigidbody>();
@@ -32,7 +29,6 @@ public class PlayerMove : MonoBehaviour
         isGround = true;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         if (playerInput.hValue != 0 || playerInput.vValue != 0)

@@ -12,6 +12,10 @@ public class UIManager : MonoBehaviour
 
     public GameObject panelDetails;
     public TextMeshProUGUI timeText;
+    public AudioSource audioSource;
+    public AudioClip closeClip;
+    public AudioClip computerClip;
+    public AudioClip projectorClip;
     public GameObject curActiveShortCut { get; private set; }
 
     public GameObject[] categoryBTNs;
@@ -78,6 +82,7 @@ public class UIManager : MonoBehaviour
     public void CloseDetails()
     {
         panelDetails.SetActive(false);
+        audioSource.PlayOneShot(closeClip);
     }
 
     public void GeneralUISetting()
@@ -117,7 +122,6 @@ public class UIManager : MonoBehaviour
         }
 
         curActiveShortCut = _ShortCut; // 어떤 경우든 아웃라인 비교를 위해 저장해줌;
-        Debug.Log(gmInstace.toolState);
     }
 
     public void SetTime(int _h, int _m)
@@ -161,7 +165,6 @@ public class UIManager : MonoBehaviour
     {
         foreach (Transform o in _contents.GetComponentInChildren<Transform>())
         {
-            Debug.Log(o.name);
             if (o != null) Destroy(o.gameObject);
         }
     }
@@ -175,6 +178,7 @@ public class UIManager : MonoBehaviour
     public void OpenComputer()
     {
         PlayerPanel.SetActive(false);
+        if (!ComputerPanel.activeSelf) audioSource.PlayOneShot(computerClip);
         ComputerPanel.SetActive(true);
 
         CloseOtherPanel(ComputerPanel);
@@ -183,6 +187,7 @@ public class UIManager : MonoBehaviour
     public void OpenTransporation()
     {
         PlayerPanel.SetActive(false);
+        if (!ShippingPanel.activeSelf) audioSource.PlayOneShot(projectorClip);
         ShippingPanel.SetActive(true);
 
         CloseOtherPanel(ShippingPanel);

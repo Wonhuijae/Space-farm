@@ -163,6 +163,7 @@ public class FieldCycle : MonoBehaviour
         {
             plInstance.GetAnim().SetTrigger("Watering");
             plInstance.Watercan.Play();
+            farmSystem.audioSource.PlayOneShot(farmSystem.wateringClip);
             Watering();
         }
         else if (gmInstace.toolState == ToolState.sickle && state == GrowState.crops) // 다 자란 상태이고 낫을 들고 있다
@@ -217,8 +218,6 @@ public class FieldCycle : MonoBehaviour
 
         for (; posIdx < poses.Count; posIdx++)
         {
-            Debug.Log(poses[posIdx] == null);
-            Debug.Log(seed.PlantingFruit() == null);
             InstatatePrefab(seed.PlantingFruit(), poses[posIdx]);
         }
     }
@@ -328,7 +327,6 @@ public class FieldCycle : MonoBehaviour
         }
         
         time = saveData.time;
-        Debug.Log(state);
         if (saveData.seed != SeedState.None && state != GrowState.none) // 아무것도 심어져 있지 않고 상태가 none이면
         {
             Init(farmSystem.GetDict(saveData.seed));
