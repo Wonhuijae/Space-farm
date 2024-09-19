@@ -1,14 +1,18 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using UnityEngine;
 
 public class FieldDataList
 {
     public List<FieldData> fields = new List<FieldData>();
 }
+
+public class PlayerDataList
+{
+    public PlayerRunTimeData info = new();
+}
+
 
 public class DataManager : MonoBehaviour
 {
@@ -30,10 +34,14 @@ public class DataManager : MonoBehaviour
     public event Action<FieldDataList> OnLoadData;
 
     string directoryPath;
-    string filePath;
+    string fieldFilePath;
+    string playerFilePath;
 
     FieldDataList saveFieldData;
-    FieldDataList LoadFieldData;
+    FieldDataList loadFieldData;
+
+    PlayerDataList savePlayerData;
+    PlayerDataList loadPlayerData;
 
     private void Awake()
     {
@@ -49,18 +57,23 @@ public class DataManager : MonoBehaviour
         }
 
         directoryPath = Application.persistentDataPath + "/SaveData/";
-        filePath = directoryPath + "SaveData.json";
+        fieldFilePath = directoryPath + "SaveData.json";
+        playerFilePath = directoryPath + "PlayerData.json";
 
         saveFieldData = new FieldDataList();
-        LoadFieldData = new FieldDataList();
+        loadFieldData = new FieldDataList();
+
+        savePlayerData = new PlayerDataList();
+        loadPlayerData = new PlayerDataList();
     }
 
     private void Start()
     {
-        LoadData();
+        LoadPlayer();
+        LoadFields();
     }
 
-    public void SaveDataToList(FieldData _oldD, FieldData _d)
+    public void SaveDataToFieldsList(FieldData _oldD, FieldData _d)
     {
         if (saveFieldData.fields.Contains(_oldD))
         {
@@ -68,32 +81,64 @@ public class DataManager : MonoBehaviour
         }
         else saveFieldData.fields.Add(_d);
 
-        SaveData();
+        SaveData(saveFieldData, fieldFilePath);
     }
 
-    public void SaveData()
+    public void SaveDataToPlayerList(PlayerRunTimeData _d)
+    {
+        savePlayerData.info = _d;
+
+        SaveData(savePlayerData, playerFilePath);
+    }
+
+    public void SaveData<T>(T _list, string _fliepath) where T : class
     {
         if(!Directory.Exists(directoryPath))
         {
             Directory.CreateDirectory(directoryPath);
         }
 
-        string json = JsonUtility.ToJson(saveFieldData, true); // 줄바꿈 및 들여쓰기
-        File.WriteAllText(filePath, json);
+        string json = JsonUtility.ToJson(_list, true); // 줄바꿈 및 들여쓰기
+        
+        File.WriteAllText(_fliepath, json);
+        Debug.Log(_fliepath) ;
     }
 
-    void LoadData()
+    public T LoadData<T>(string _filePath) where T : class // T는 클래스
     {
-        if (!File.Exists(filePath)) return;
+        if (!File.Exists(_filePath)) return null;
 
-        string json = File.ReadAllText(filePath);
+        string json = File.ReadAllText(_filePath);
 
-        LoadFieldData = JsonUtility.FromJson<FieldDataList>(json);
+        T loadData = JsonUtility.FromJson<T>(json);
 
-        if (LoadFieldData != null)
+        return loadData;
+    }
+
+
+    void LoadFields()
+    {
+        loadFieldData = LoadData<FieldDataList>(fieldFilePath);
+
+        if (loadFieldData != null)
         {
-            saveFieldData.fields = LoadFieldData.fields;
-            OnLoadData?.Invoke(LoadFieldData);
+            saveFieldData.fields = loadFieldData.fields;
+            OnLoadData?.Invoke(loadFieldData);
         }
+    }
+
+    void LoadPlayer()
+    {
+        loadPlayerData = LoadData<PlayerDataList>(playerFilePath);
+
+        if (loadPlayerData != null)
+        {
+            savePlayerData.info = loadPlayerData.info;
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        
     }
 }

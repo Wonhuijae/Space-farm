@@ -226,7 +226,7 @@ public class FieldCycle : MonoBehaviour
     {
         if (isWatered || isCrops || !isSeed) return;
         Destroy(Instantiate(farmSystem.VFXs[2], FXPos, Quaternion.identity), 3f);
-        time += 7f;
+        time += 15f;
         isWatered = true;
     }
     public void Harvesting()
@@ -309,7 +309,7 @@ public class FieldCycle : MonoBehaviour
             saveData.posIdx = posIdx;
         }
 
-        DataManager.instance.SaveDataToList(oldData, saveData);
+        DataManager.instance.SaveDataToFieldsList(oldData, saveData);
     }
 
     public void GetFieldData(FieldData f)

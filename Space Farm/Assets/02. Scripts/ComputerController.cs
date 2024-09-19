@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class ComputerController : MonoBehaviour
 {
     UIManager UIistance;
+    PlayerManager playerInstance;
 
     public event Action onCloseComputer;
     public event Action onOpenComputer;
@@ -14,6 +15,7 @@ public class ComputerController : MonoBehaviour
     private void OnEnable()
     {
         UIistance = UIManager.instance;
+        playerInstance = PlayerManager.instance;
         if (UIistance != null)
         {
             onCloseComputer += UIistance.CloseComputer;
@@ -27,8 +29,7 @@ public class ComputerController : MonoBehaviour
         if (onOpenComputer != null &&
             !EventSystem.current.IsPointerOverGameObject()) onOpenComputer?.Invoke();
 #else
-        if (onOpenComputer != null && !EventSystem.current.IsPointerOverGameObject() &&
-            EventSystem.current.currentSelectedGameObject == null)
+        if(!playerInstance.IsPointerOverUIObject())
 #endif
 
         {

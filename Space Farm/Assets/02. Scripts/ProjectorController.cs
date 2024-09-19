@@ -6,10 +6,12 @@ using UnityEngine.EventSystems;
 public class ProjectorController : MonoBehaviour
 {
     UIManager UIinstance;
+    PlayerManager playerInstance;
 
     private void Awake()
     {
         UIinstance = UIManager.instance;
+        playerInstance = PlayerManager.instance;
     }
 
     private void OnMouseDown()
@@ -17,8 +19,7 @@ public class ProjectorController : MonoBehaviour
 #if UNITY_EDITOR
         if (!EventSystem.current.IsPointerOverGameObject())
 #else
-            if (!EventSystem.current.IsPointerOverGameObject() &&
-                EventSystem.current.currentSelectedGameObject == null)
+        if(!playerInstance.IsPointerOverUIObject())
 #endif
         {
             UIinstance.OpenTransporation();

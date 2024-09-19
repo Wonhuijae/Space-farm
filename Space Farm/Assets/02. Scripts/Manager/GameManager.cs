@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
         }
     }
     private static GameManager m_Instance;
+    private DataManager dInstance;
 
     public event Action<ToolData> onPurchasedItemTool;
     public event Action<SeedData> onPurchasedItemSeed;
@@ -35,17 +36,20 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private CropsData[] cropsData;
 
+    private bool _WaitForExit = false;
+
     public int money
     {
         get
         {
-            _money = playerData.money;
             return _money;
         }
         private set
         {
             _money = value;
-            playerData.money = value;
+            runtimeData.money = value;
+            uiInstance.GeneralUISetting();
+            PlayerSettingSave();
         }
     }
     private int _money;
@@ -53,14 +57,14 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            _level = playerData.level;
             return _level;
         }
         private set
         {
             _level = value;
-            playerData.level = value;
+            runtimeData.level = value;
             uiInstance.GeneralUISetting();
+            PlayerSettingSave();
         }
     }
     private int _level;
@@ -68,19 +72,20 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            return playerData.exp;
+            return runtimeData.exp;
         }
         private set
         {
-            playerData.exp = value;
+            runtimeData.exp = value;
 
-            if (playerData.exp > maxExp)
+            if (runtimeData.exp > maxExp)
             {
                 level++;
-                playerData.exp -= maxExp;
+                runtimeData.exp -= maxExp;
                 maxExp = (int)(1.05f * maxExp);
             }
             uiInstance.GeneralUISetting();
+            PlayerSettingSave();
         }
     }
     //private int _exp;
@@ -88,14 +93,15 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            _maxExp = playerData.maxExp;
+            _maxExp = runtimeData.maxExp;
             return _maxExp;
         }
         private set
         {
-            playerData.maxExp = value;
             _maxExp = value;
+            runtimeData.maxExp = value;
             uiInstance.GeneralUISetting();
+            PlayerSettingSave();
         }
     }
     private int _maxExp;
@@ -116,6 +122,8 @@ public class GameManager : MonoBehaviour
 
     private UIManager uiInstance;
 
+    private PlayerRunTimeData runtimeData;
+
     void Awake()
     {
         if(Instance != this)
@@ -125,8 +133,58 @@ public class GameManager : MonoBehaviour
 
         uiInstance = UIManager.instance;
         toolState = ToolState.None;
+        dInstance = DataManager.instance;
+
+        runtimeData = new();
+        runtimeData.Init(playerData.money, playerData.color, playerData.level, playerData.exp, playerData.maxExp);
+
+        dInstance.SaveDataToPlayerList(runtimeData);
 
         ChangeTool(toolState);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_WaitForExit == false)
+            {
+                showAndroidToastMessage("종료하시려면 한 번 더 누르세요");
+                StartCoroutine(WaitInput());
+            }
+            else
+            {
+                Application.Quit();
+            }
+        }
+    }
+
+    private IEnumerator WaitInput()
+    {
+        _WaitForExit = true;
+        yield return new WaitForSecondsRealtime(2.5f);
+        _WaitForExit = false;
+    }
+
+    private void showAndroidToastMessage(string message)
+    {
+        AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject unityActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+
+        if (unityActivity != null)
+        {
+            AndroidJavaClass toastClass = new AndroidJavaClass("android.widget.Toast");
+            unityActivity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
+            {
+                AndroidJavaObject toastObject = toastClass.CallStatic<AndroidJavaObject>("makeText", unityActivity, message, 0);
+                toastObject.Call("show");
+            }));
+        }
+    }
+
+    public void PlayerSettingSave()
+    {
+        dInstance.SaveDataToPlayerList(runtimeData);
     }
 
     public SeedData[] GetSeedData()
@@ -233,5 +291,15 @@ public class GameManager : MonoBehaviour
         {
             if (onPurchasedItemTool != null) onPurchasedItemTool.Invoke(_tool);
         }
+    }
+
+    public void SetColor(Color _c)
+    {
+        runtimeData.color = new ColorToSeriallize(_c);
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

@@ -170,11 +170,10 @@ public class FarmSystem : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
 
 #else
-        if (Input.touchCount > 0 && !EventSystem.current.IsPointerOverGameObject() &&
-                     EventSystem.current.currentSelectedGameObject == null)
+        if(!plInstace.IsPointerOverUIObject())
                  
 #endif
-        { 
+        {
             Vector3 fieldPos = grid.CellToWorld(cellPos);
                 fieldPos.y = 0;// -5 x 5  -10 z 11
 

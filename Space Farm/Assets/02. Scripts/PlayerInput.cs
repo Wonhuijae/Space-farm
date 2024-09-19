@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -54,5 +55,17 @@ public class PlayerInput : MonoBehaviour
             rX = Input.GetAxis("Mouse X");
             rY = Input.GetAxis("Mouse Y");
         }
+    }
+    public bool IsPoinerOverUIObject() // UI 요소와 상호작용하는 지점인지 판단
+    {
+        PointerEventData eventPos = new PointerEventData(EventSystem.current);
+        eventPos.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        List<RaycastResult> results = new List<RaycastResult>();
+
+        // 모든 UI 요소에 Raycast함
+        EventSystem.current.RaycastAll(eventPos, results);
+
+        return results.Count > 0;
     }
 }

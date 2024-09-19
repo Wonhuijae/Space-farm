@@ -19,6 +19,7 @@ public class PlayerManager : MonoBehaviour
     private static PlayerManager m_instance;
 
     public PlayerData playerData;
+    private PlayerInput playerInput;
     public GameObject CameraPos;
     public Transform ridePos;
     public Transform normalPos;
@@ -46,6 +47,8 @@ public class PlayerManager : MonoBehaviour
         gmInstance = GameManager.Instance;
         gmInstance.onToolsOn += ToolsOn;
         gmInstance.onAllToolsOff += AllToolsOff;
+
+        playerInput = GetComponent<PlayerInput>();
     }
 
     public Animator GetAnim()
@@ -74,5 +77,17 @@ public class PlayerManager : MonoBehaviour
             playerRD.enabled = true;
             CameraPos.transform.position = normalPos.position;
         }
+    }
+
+    public void SetColor(Color _color)
+    {
+        playerRD.materials[1].color = _color;
+        playerData.color = _color;
+        gmInstance.SetColor(_color);
+    }
+
+    public bool IsPointerOverUIObject()
+    {
+        return playerInput.IsPoinerOverUIObject();
     }
 }

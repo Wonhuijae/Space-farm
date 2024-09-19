@@ -17,6 +17,8 @@ public class SceneLoader : MonoBehaviour
     public GameObject titleImage;
     public Slider progressBar;
 
+    public Text dots;
+
     Animator playerAnim;
     AudioSource audioSource;
     Vector3 targetDirection;
@@ -91,8 +93,9 @@ public class SceneLoader : MonoBehaviour
 
     IEnumerator LoadSceneProgress(string _sceneName)
     {
-        titleImage.SetActive(false);
+        dots.DOText("...", 1f).SetLoops(-1, LoopType.Restart);
         yield return new WaitForSeconds(1.5f);
+        titleImage.SetActive(false);
         spaceShip.SetActive(false);
         loadingPanel.SetActive(true);
         progressBar.value = 0f;

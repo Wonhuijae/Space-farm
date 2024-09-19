@@ -9,6 +9,7 @@ using DG.Tweening;
 public class UIManager : MonoBehaviour
 {
     private GameManager gmInstace;
+    private PlayerManager playerInstance;
 
     public GameObject panelDetails;
     public TextMeshProUGUI timeText;
@@ -62,6 +63,7 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         gmInstace = GameManager.Instance;
+        playerInstance = PlayerManager.instance;
 
         if (instance != this)
         {
@@ -100,7 +102,7 @@ public class UIManager : MonoBehaviour
 
     public void ChangeActiveShortCut(GameObject _ShortCut, ToolState _tState)
     {
-        if (gmInstace.toolState != ToolState.None) // 도구 장비 상태가 None이 아니고
+        if (gmInstace.toolState != ToolState.None && curActiveShortCut != null) // 도구 장비 상태가 None이 아니고
         {
             if (curActiveShortCut != _ShortCut) // 이전에 누른 도구 버튼이 아닐 경우
             {
@@ -121,7 +123,7 @@ public class UIManager : MonoBehaviour
             _ShortCut.GetComponent<Outline>().enabled = true;
         }
 
-        curActiveShortCut = _ShortCut; // 어떤 경우든 아웃라인 비교를 위해 저장해줌;
+        curActiveShortCut = _ShortCut; // 어떤 경우든 아웃라인 비교를 위해 저장해줌
     }
 
     public void SetTime(int _h, int _m)

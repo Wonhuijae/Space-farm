@@ -20,8 +20,8 @@ MonoBehaviour:
   _seed: {fileID: 8377149901438010489, guid: afe9ec537c108a44ea8fb85af8e6ac0b, type: 3}
   _sprout: {fileID: 9160377428222018391, guid: 75d2e54ef1725f64e887f244729ecbc0, type: 3}
   _adult: {fileID: 6078115445602709741, guid: 464b5968167c1dd4a99d3374c9126dde, type: 3}
-  _growday: 15
+  _growday: 40
   _price: 20
   _seedstate: 3
   _cropsdata: {fileID: 11400000, guid: df9f658f5faafec4ebe25a0c184912d7, type: 2}
-  Quantity: 30
+  Quantity: 0
