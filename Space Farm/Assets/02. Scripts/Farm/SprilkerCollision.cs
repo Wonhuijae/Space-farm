@@ -69,7 +69,9 @@ public class SprilkerCollision : MonoBehaviour
             if (c.GetComponent<FieldCycle>() != null)
             {
                 c.GetComponent<FieldCycle>().Watering();
+                
             }
+            Debug.Log(c.gameObject.name);
         }
     }
 }

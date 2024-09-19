@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class FieldDataList
 {
@@ -31,6 +32,8 @@ public class DataManager : MonoBehaviour
     private static DataManager m_instance;
     private FarmSystem fmInstance;
 
+    private GameManager gmInstance;
+
     public event Action<FieldDataList> OnLoadData;
 
     string directoryPath;
@@ -55,6 +58,8 @@ public class DataManager : MonoBehaviour
         {
             OnLoadData += fmInstance.LoadFields;
         }
+
+        gmInstance = GameManager.Instance;
 
         directoryPath = Application.persistentDataPath + "/SaveData/";
         fieldFilePath = directoryPath + "SaveData.json";
@@ -101,7 +106,6 @@ public class DataManager : MonoBehaviour
         string json = JsonUtility.ToJson(_list, true); // 줄바꿈 및 들여쓰기
         
         File.WriteAllText(_fliepath, json);
-        Debug.Log(_fliepath) ;
     }
 
     public T LoadData<T>(string _filePath) where T : class // T는 클래스
@@ -135,10 +139,21 @@ public class DataManager : MonoBehaviour
         {
             savePlayerData.info = loadPlayerData.info;
         }
+        else
+        {
+            SaveDataToPlayerList(gmInstance.Init());
+        }
+    }
+
+    public PlayerRunTimeData GetPlayerInfo()
+    {
+        LoadPlayer();
+        return savePlayerData.info;
     }
 
     private void OnApplicationQuit()
     {
-        
+        SaveData<FieldDataList>(saveFieldData, fieldFilePath);
+        SaveData<PlayerDataList>(savePlayerData, playerFilePath);
     }
 }

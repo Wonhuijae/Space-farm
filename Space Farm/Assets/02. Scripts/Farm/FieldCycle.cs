@@ -131,7 +131,7 @@ public class FieldCycle : MonoBehaviour
     {
         while(true)
         {
-            yield return new WaitForSeconds(20f);
+            yield return new WaitForSeconds(3f);
             SaveDataStart();
         }
     }
@@ -224,7 +224,7 @@ public class FieldCycle : MonoBehaviour
 
     public void Watering()
     {
-        if (isWatered || isCrops || !isSeed) return;
+        if (isWatered || isCrops || seed == null) return;
         Destroy(Instantiate(farmSystem.VFXs[2], FXPos, Quaternion.identity), 3f);
         time += 15f;
         isWatered = true;
@@ -240,6 +240,8 @@ public class FieldCycle : MonoBehaviour
         isWatered = false;
         time = 0f;
 
+        Debug.Log(isWatered);
+
         state = GrowState.none;
         gmInstace.GetCropsItem(seed.SeedData.cropsData);
 
@@ -247,6 +249,8 @@ public class FieldCycle : MonoBehaviour
         growImage.gameObject.SetActive(false);
         posIdx = 0;
         seed = null;
+
+        SaveDataStart();
     }
 
     public bool IsCrops()
@@ -327,13 +331,13 @@ public class FieldCycle : MonoBehaviour
         }
         
         time = saveData.time;
-        if (saveData.seed != SeedState.None && state != GrowState.none) // 아무것도 심어져 있지 않고 상태가 none이면
+        if (saveData.seed != SeedState.None && state != GrowState.none)
         {
             Init(farmSystem.GetDict(saveData.seed));
             growSlider.gameObject.SetActive(true);
             growImage.gameObject.SetActive(true);
         }
-        else
+        else // 아무것도 심어져 있지 않거나 상태가 none이면
         {
             growSlider.gameObject.SetActive(false);
             growImage.gameObject.SetActive(false);

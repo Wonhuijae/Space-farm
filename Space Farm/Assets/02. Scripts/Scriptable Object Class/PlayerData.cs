@@ -22,13 +22,13 @@ public class PlayerRunTimeData
     public int exp;
     public int maxExp;
 
-    public void Init(int _money, Color _color, int _level, int _exp, int _maxExp)
+    public void Init(PlayerData _pData)
     {
-        money= _money;
-        color = new ColorToSeriallize(_color);
-        level= _level;
-        exp= _exp;
-        maxExp= _maxExp;
+        money= _pData.money;
+        color = new ColorToSeriallize(_pData.color);
+        level= _pData.level;
+        exp= _pData.exp;
+        maxExp= _pData.maxExp;
     }
 }
 

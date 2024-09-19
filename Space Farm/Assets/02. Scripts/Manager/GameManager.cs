@@ -72,28 +72,29 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            return runtimeData.exp;
+            return _exp;
         }
         private set
         {
-            runtimeData.exp = value;
+            _exp = value;
 
-            if (runtimeData.exp > maxExp)
+            if (_exp > maxExp)
             {
                 level++;
-                runtimeData.exp -= maxExp;
+                _exp -= maxExp;
                 maxExp = (int)(1.05f * maxExp);
             }
+
+            runtimeData.exp = _exp;
             uiInstance.GeneralUISetting();
             PlayerSettingSave();
         }
     }
-    //private int _exp;
+    private int _exp;
     public int maxExp
     {
         get
         {
-            _maxExp = runtimeData.maxExp;
             return _maxExp;
         }
         private set
@@ -122,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     private UIManager uiInstance;
 
-    private PlayerRunTimeData runtimeData;
+    private PlayerRunTimeData runtimeData = new();
 
     void Awake()
     {
@@ -132,14 +133,21 @@ public class GameManager : MonoBehaviour
         }
 
         uiInstance = UIManager.instance;
-        toolState = ToolState.None;
         dInstance = DataManager.instance;
 
-        runtimeData = new();
-        runtimeData.Init(playerData.money, playerData.color, playerData.level, playerData.exp, playerData.maxExp);
+        toolState = ToolState.None;
 
-        dInstance.SaveDataToPlayerList(runtimeData);
+        runtimeData = dInstance.GetPlayerInfo();
 
+        Debug.Log(runtimeData.maxExp);
+
+        money = runtimeData.money;
+        level = runtimeData.level;
+        maxExp = runtimeData.maxExp;
+        exp = runtimeData.exp;
+        
+
+        Debug.Log(runtimeData.maxExp);
         ChangeTool(toolState);
     }
 
@@ -149,7 +157,7 @@ public class GameManager : MonoBehaviour
         {
             if (_WaitForExit == false)
             {
-                showAndroidToastMessage("Á¾·áÇÏ½Ã·Á¸é ÇÑ ¹ø ´õ ´©¸£¼¼¿ä");
+                showAndroidToastMessage("ì¢…ë£Œí•˜ë ¤ë©´ í•œ ë²ˆ ë” ëˆ„ë¥´ì„¸ìš”");
                 StartCoroutine(WaitInput());
             }
             else
@@ -252,7 +260,7 @@ public class GameManager : MonoBehaviour
         if(Array.Exists(seedData, e => e == _seed))
         {
             _seed.Quantity += 10;
-            playerData.money -= _seed.Price;
+            money -= _seed.Price;
         }
     }
 
@@ -281,7 +289,7 @@ public class GameManager : MonoBehaviour
 
     public void SendCrops(int _salesQ, int salesPrice, CropsData _saleCrops)
     {
-        playerData.money += salesPrice;
+        money += salesPrice;
         _saleCrops.Quantity -= _salesQ;
     }
 
@@ -296,10 +304,19 @@ public class GameManager : MonoBehaviour
     public void SetColor(Color _c)
     {
         runtimeData.color = new ColorToSeriallize(_c);
+        dInstance.SaveDataToPlayerList(runtimeData);
     }
 
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public PlayerRunTimeData Init()
+    {
+        runtimeData.Init(playerData);
+        runtimeData.color = new ColorToSeriallize(playerData.color);
+
+        return runtimeData;
     }
 }

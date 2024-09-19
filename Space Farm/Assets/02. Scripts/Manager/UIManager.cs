@@ -69,8 +69,6 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        GeneralUISetting();
         PlayerPanel.SetActive(true);
 
         PanelGroup.AddRange(new GameObject[] { PlayerPanel, ComputerPanel, InventoryPanel ,ShippingPanel });
@@ -78,6 +76,7 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
+        GeneralUISetting();
         SetHighLight(categoryBTNs[0], contentsShop[0], categoryBTNs, contentsShop);
     }
 

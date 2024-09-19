@@ -154,7 +154,6 @@ public class FarmSystem : MonoBehaviour
             if (-5 <= cellPos.x && cellPos.x <= 5 &&
                        -10 <= cellPos.z && cellPos.z <= 11)
             {
-
                 previewS.transform.position = grid.CellToWorld(cellPos);
             }
         }
