@@ -16,14 +16,13 @@ public class SeedData : ItemData
     [SerializeField] private SeedState _seedstate;
     [SerializeField] private CropsData _cropsdata;
 
-
     public Sprite Icon_Shop => _icon_shop;
     public Sprite Icon_Inventory => _icon_inventory;
     public GameObject Seed => _seed;
     public GameObject Sprout => _sprout;
     public GameObject Adult => _adult;
     public int GrowDay => _growday;
-    public int Quantity;
+    [SerializeField] public int Quantity;
     public int Price => _price;
     public SeedState seedState => _seedstate;
     public CropsData cropsData => _cropsdata;

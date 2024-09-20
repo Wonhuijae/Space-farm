@@ -17,7 +17,7 @@ public class TransportationContents : MonoBehaviour
 
     public event Action OnItemSwitch;
 
-    GameManager gmIstance;
+    GameManager gmInstance;
     UIManager uiInstance;
     CropsData[] data;
     CropsData select;
@@ -27,9 +27,9 @@ public class TransportationContents : MonoBehaviour
 
     private void Awake()
     {
-        gmIstance = GameManager.Instance;
+        gmInstance = GameManager.Instance;
         uiInstance = UIManager.instance;
-        data = gmIstance.GetCropsData();
+        data = gmInstance.GetCropsData();
 
         OnItemSwitch += hBtn.Reset;
 
@@ -76,7 +76,7 @@ public class TransportationContents : MonoBehaviour
                     SetStand(item);
                     OnItemSwitch?.Invoke();
                     price = item.SalePrice;
-                    hBtn.SetMax(item.Quantity);
+                    hBtn.SetMax(gmInstance.GetQuantity(item.Code));
                     hBtn.InteractTrue();
                     select = item;
                 });
@@ -89,7 +89,7 @@ public class TransportationContents : MonoBehaviour
             foreach(var t in tmp.GetComponentsInChildren<TextMeshProUGUI>())
             {
                 if (t.name == "Text_Name") t.text = item.Name;
-                else t.text = item.Quantity.ToString("N0");
+                else t.text = gmInstance.GetQuantity(item.Code).ToString("N0");
             }
         }
     }
@@ -115,7 +115,7 @@ public class TransportationContents : MonoBehaviour
 
     public void Send()
     {
-        gmIstance.SendCrops(hBtn.qNum, sum, select);
+        gmInstance.SendCrops(hBtn.qNum, sum, select);
         ContentsSetting();
 
         hBtn.InteractFalse();

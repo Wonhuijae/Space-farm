@@ -240,8 +240,6 @@ public class FieldCycle : MonoBehaviour
         isWatered = false;
         time = 0f;
 
-        Debug.Log(isWatered);
-
         state = GrowState.none;
         gmInstace.GetCropsItem(seed.SeedData.cropsData);
 
@@ -296,22 +294,21 @@ public class FieldCycle : MonoBehaviour
 
         if (seed != null)
         {
-            saveData.time = time;
-            if (seed.SeedData != null)
-            {
-                saveData.seed = seed.SeedData.seedState;
-            }
-            else
-            {
-                saveData.seed = SeedState.None;
-            }
-            saveData.isSeed = isSeed;
-            saveData.isSprout = isSprout;
-            saveData.isCrops = isCrops;
-            saveData.isWatered = isWatered;
-
-            saveData.posIdx = posIdx;
+            if(seed.SeedData != null) saveData.seed = seed.SeedData.seedState;
+            else saveData.seed = SeedState.None;
         }
+        else
+        {
+            saveData.seed = SeedState.None;
+        }
+
+        saveData.time = time;
+        saveData.isSeed = isSeed;
+        saveData.isSprout = isSprout;
+        saveData.isCrops = isCrops;
+        saveData.isWatered = isWatered;
+
+        saveData.posIdx = posIdx;
 
         DataManager.instance.SaveDataToFieldsList(oldData, saveData);
     }

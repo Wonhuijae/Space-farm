@@ -43,7 +43,7 @@ public class SeedSelector : MonoBehaviour
                     farmSystem.SetSeed(s.seedState);
                     seedPopup.SetActive(false);
                       });
-            if (s.Quantity <= 0) b.interactable = false;
+            if (gmInstance.GetQuantity(s.Code) <= 0) b.interactable = false;
 
                 t.GetComponentInChildren<Image>().sprite = s.Icon_Inventory;
             t.GetComponentInChildren<TextMeshProUGUI>().text = s.Name;

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class FieldDataList
 {
@@ -11,7 +10,25 @@ public class FieldDataList
 
 public class PlayerDataList
 {
-    public PlayerRunTimeData info = new();
+    public PlayerRunTimeData info = new PlayerRunTimeData();
+}
+
+public class InventoryData
+{
+    public List<ItemDataJson> info = new List<ItemDataJson>();
+}
+
+[System.Serializable]
+public class ItemDataJson
+{
+    public string code;
+    public int quantity;
+
+    public ItemDataJson(string _code, int _q)
+    {
+        code = _code;
+        quantity = _q;
+    }
 }
 
 
@@ -39,9 +56,14 @@ public class DataManager : MonoBehaviour
     string directoryPath;
     string fieldFilePath;
     string playerFilePath;
+    string inventoryFilePath;
 
     FieldDataList saveFieldData;
     FieldDataList loadFieldData;
+
+    InventoryData saveInventoryData;
+    InventoryData loadInventoryData;
+    Dictionary<string, int> inven = new();
 
     PlayerDataList savePlayerData;
     PlayerDataList loadPlayerData;
@@ -64,18 +86,23 @@ public class DataManager : MonoBehaviour
         directoryPath = Application.persistentDataPath + "/SaveData/";
         fieldFilePath = directoryPath + "SaveData.json";
         playerFilePath = directoryPath + "PlayerData.json";
+        inventoryFilePath = directoryPath + "InventoryData.json";
 
         saveFieldData = new FieldDataList();
         loadFieldData = new FieldDataList();
 
         savePlayerData = new PlayerDataList();
         loadPlayerData = new PlayerDataList();
+
+        saveInventoryData = new InventoryData();
+        loadInventoryData = new InventoryData();
     }
 
     private void Start()
     {
         LoadPlayer();
         LoadFields();
+        LoadInven();
     }
 
     public void SaveDataToFieldsList(FieldData _oldD, FieldData _d)
@@ -89,6 +116,25 @@ public class DataManager : MonoBehaviour
         SaveData(saveFieldData, fieldFilePath);
     }
 
+    public void SaveDataToInventoryList(string _code, int _q)
+    {
+        
+        ItemDataJson item = saveInventoryData.info.Find(i => i.code == _code);
+
+        if(item != null)
+        {
+            item.quantity += _q;
+            inven[_code] += _q;
+        }
+        else
+        {
+            saveInventoryData.info.Add(new ItemDataJson(_code, _q));
+            inven.Add(_code, _q);
+        }
+        
+        SaveData(saveInventoryData, inventoryFilePath);
+    }
+
     public void SaveDataToPlayerList(PlayerRunTimeData _d)
     {
         savePlayerData.info = _d;
@@ -96,7 +142,7 @@ public class DataManager : MonoBehaviour
         SaveData(savePlayerData, playerFilePath);
     }
 
-    public void SaveData<T>(T _list, string _fliepath) where T : class
+    void SaveData<T>(T _list, string _fliepath) where T : class
     {
         if(!Directory.Exists(directoryPath))
         {
@@ -108,7 +154,7 @@ public class DataManager : MonoBehaviour
         File.WriteAllText(_fliepath, json);
     }
 
-    public T LoadData<T>(string _filePath) where T : class // T는 클래스
+    T LoadData<T>(string _filePath) where T : class // T는 클래스
     {
         if (!File.Exists(_filePath)) return null;
 
@@ -118,7 +164,6 @@ public class DataManager : MonoBehaviour
 
         return loadData;
     }
-
 
     void LoadFields()
     {
@@ -145,6 +190,20 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    void LoadInven()
+    {
+        loadInventoryData = LoadData<InventoryData>(inventoryFilePath);
+
+        if(loadInventoryData != null)
+        {
+            saveInventoryData.info = loadInventoryData.info;
+            foreach(var l in saveInventoryData.info)
+            {
+                inven.Add(l.code, l.quantity);
+            }
+        }
+    }
+
     public PlayerRunTimeData GetPlayerInfo()
     {
         LoadPlayer();
@@ -155,5 +214,17 @@ public class DataManager : MonoBehaviour
     {
         SaveData<FieldDataList>(saveFieldData, fieldFilePath);
         SaveData<PlayerDataList>(savePlayerData, playerFilePath);
+        SaveData<InventoryData>(saveInventoryData, inventoryFilePath);
+    }
+
+    public int getQuantity(string _code)
+    {
+        if(inven.ContainsKey(_code)) return inven[_code];
+        else
+        {
+            saveInventoryData.info.Add(new ItemDataJson(_code, 0));
+            inven.Add(_code, 0);
+            return 0;
+        }
     }
 }

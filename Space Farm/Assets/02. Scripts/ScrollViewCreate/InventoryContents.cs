@@ -59,7 +59,7 @@ public class InventoryContents : MonoBehaviour
             foreach (TextMeshProUGUI t in tmpSlot.GetComponentsInChildren<TextMeshProUGUI>())
             {
                 if (t.name == "Text_Name") t.text = item.Name;
-                else t.text = item.Quantity.ToString();
+                else t.text = gmInstace.GetQuantity(item.Code).ToString();
             }
         }
     }
@@ -112,7 +112,7 @@ public class InventoryContents : MonoBehaviour
             foreach (TextMeshProUGUI t in tmpSlot.GetComponentsInChildren<TextMeshProUGUI>())
             {
                 if (t.name == "Text_Name") t.text = item.Name;
-                else t.text = item.Quantity.ToString();
+                else t.text = gmInstace.GetQuantity(item.Code).ToString();
             }
         }
     }
@@ -121,7 +121,6 @@ public class InventoryContents : MonoBehaviour
     {
         foreach(Transform o in contents[_idx].GetComponentInChildren<Transform>())
         {
-            Debug.Log(o.name);
             //if (o.gameObject == contents[_idx]) continue;
             if (o != null )Destroy(o.gameObject);
         }

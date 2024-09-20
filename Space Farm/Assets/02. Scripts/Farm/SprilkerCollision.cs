@@ -71,7 +71,6 @@ public class SprilkerCollision : MonoBehaviour
                 c.GetComponent<FieldCycle>().Watering();
                 
             }
-            Debug.Log(c.gameObject.name);
         }
     }
 }

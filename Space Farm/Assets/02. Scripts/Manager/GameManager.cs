@@ -139,15 +139,11 @@ public class GameManager : MonoBehaviour
 
         runtimeData = dInstance.GetPlayerInfo();
 
-        Debug.Log(runtimeData.maxExp);
-
         money = runtimeData.money;
         level = runtimeData.level;
         maxExp = runtimeData.maxExp;
         exp = runtimeData.exp;
         
-
-        Debug.Log(runtimeData.maxExp);
         ChangeTool(toolState);
     }
 
@@ -259,7 +255,7 @@ public class GameManager : MonoBehaviour
     {
         if(Array.Exists(seedData, e => e == _seed))
         {
-            _seed.Quantity += 10;
+            dInstance.SaveDataToInventoryList(_seed.Code, 10);
             money -= _seed.Price;
         }
     }
@@ -268,13 +264,13 @@ public class GameManager : MonoBehaviour
     {
         if (Array.Exists(seedData, e => e == _seed) && _seed.Quantity > 0)
         {
-            _seed.Quantity--;
+            dInstance.SaveDataToInventoryList(_seed.Code, -1);
         }
     }
     
     public void GetCropsItem(CropsData _crops)
     {
-        _crops.Quantity++;
+        dInstance.SaveDataToInventoryList(_crops.Code, 1);
         exp += 20;
     }
 
@@ -290,7 +286,7 @@ public class GameManager : MonoBehaviour
     public void SendCrops(int _salesQ, int salesPrice, CropsData _saleCrops)
     {
         money += salesPrice;
-        _saleCrops.Quantity -= _salesQ;
+        dInstance.SaveDataToInventoryList(_saleCrops.Code, -_salesQ);
     }
 
     private void GetToolItem(ToolData _tool)
@@ -318,5 +314,10 @@ public class GameManager : MonoBehaviour
         runtimeData.color = new ColorToSeriallize(playerData.color);
 
         return runtimeData;
+    }
+
+    public int GetQuantity(string _code)
+    {
+        return dInstance.getQuantity(_code);
     }
 }
