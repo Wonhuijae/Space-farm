@@ -169,7 +169,7 @@ public class FarmSystem : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
 
 #else
-        if(!plInstace.IsPointerOverUIObject())
+        if (Input.GetMouseButtonDown(0) && !plInstace.IsPointerOverUIObject())
                  
 #endif
         {
