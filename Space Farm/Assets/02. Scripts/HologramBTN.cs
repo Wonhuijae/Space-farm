@@ -28,6 +28,7 @@ public class HologramBTN : MonoBehaviour
     private int maxQ;
     public Button PlusBtn;
     public Button MinusBtn;
+    public Button sendBtn;
 
     private void Awake()
     {
@@ -36,6 +37,8 @@ public class HologramBTN : MonoBehaviour
 
         qNum = 0;
         textQ.text = 0.ToString();
+
+        sendBtn.interactable = false;
 
         InteractFalse();
     }
@@ -49,6 +52,8 @@ public class HologramBTN : MonoBehaviour
             PlusBtn.interactable = false;
         }
         if(MinusBtn.interactable == false) MinusBtn.interactable = true;
+        if (qNum == 0) sendBtn.interactable = false;
+        else sendBtn.interactable = true;
         textQ.text = qNum.ToString();
         onQuantityChange?.Invoke();
     }
@@ -62,6 +67,8 @@ public class HologramBTN : MonoBehaviour
             MinusBtn.interactable = false;
         }
         if (PlusBtn.interactable == false) PlusBtn.interactable = true;
+        if (qNum == 0) sendBtn.interactable = false;
+        else sendBtn.interactable = true;
         textQ.text = qNum.ToString();
         onQuantityChange?.Invoke();
     }

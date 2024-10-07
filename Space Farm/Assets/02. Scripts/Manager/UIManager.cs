@@ -73,6 +73,8 @@ public class UIManager : MonoBehaviour
         PlayerPanel.SetActive(true);
 
         PanelGroup.AddRange(new GameObject[] { PlayerPanel, ComputerPanel, InventoryPanel ,ShippingPanel });
+
+        OpenPlayPanel();
     }
 
     private void OnEnable()
@@ -232,6 +234,7 @@ public class UIManager : MonoBehaviour
 
     public void OpenPlayPanel()
     {
+        CloseOtherPanel(PlayerPanel);
         PlayerPanel.SetActive(true);
         blackPanel.SetActive(false);
     }

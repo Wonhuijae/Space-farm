@@ -39,6 +39,7 @@ public class TransportationContents : MonoBehaviour
     private void OnEnable()
     {
         ContentsSetting();
+        InitPanel();
     }
 
     private void InitPanel()
