@@ -20,7 +20,7 @@ MonoBehaviour:
   _toolState: 1
   _toolModel: {fileID: 923510216103400584, guid: 9784a51fa8bde434093c1829deb246a7,
     type: 3}
-  _shortcutname: "\uBC2D \uAC08\uAE30"
+  _shortcutname: "\uBC2D\uAC08\uAE30"
   _animtrigger: Hoe
   Price: 100
   Tier: 0

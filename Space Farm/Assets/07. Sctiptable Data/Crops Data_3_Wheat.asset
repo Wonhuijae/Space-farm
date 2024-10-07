@@ -17,4 +17,4 @@ MonoBehaviour:
   _description: "\uC7AC\uBC30\uB41C \uC740\uD558 \uBC00"
   SalePrice: 50
   Icon_Inventory: {fileID: 21300000, guid: e989c63f1be7f634bae31d8b21d3d6b3, type: 3}
-  Quantity: 0
+  Quantity: 1

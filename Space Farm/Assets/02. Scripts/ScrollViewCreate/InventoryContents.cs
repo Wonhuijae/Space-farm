@@ -20,7 +20,7 @@ public class InventoryContents : MonoBehaviour
     private ToolData[] toolData;
     private CropsData[] cropsData;
 
-    public Color color;
+    public Color grayColor;
 
     private void Awake()
     {
@@ -33,10 +33,10 @@ public class InventoryContents : MonoBehaviour
         seedData = gmInstace.GetSeedData();
         toolData = gmInstace.GetToolData();
         cropsData = gmInstace.GetCropsData();
-
-        SeedContentsSetting();
+        
         ToolContentsSetting();
         CropsContentsSetting();
+        SeedContentsSetting();
     }
 
     public void SeedContentsSetting()
@@ -100,8 +100,6 @@ public class InventoryContents : MonoBehaviour
             //tmpSlot.GetComponent<RectTransform>().SetParent(slotPrefab.GetComponent<RectTransform>(), false);
             tmpSlot.transform.parent = contents[2].transform;
             tmpSlot.transform.localScale = Vector3.one;
-
-            if (item.Quantity == 0) tmpSlot.GetComponent<Image>().color = color;
 
             foreach (Image i in tmpSlot.GetComponentsInChildren<Image>())
             {

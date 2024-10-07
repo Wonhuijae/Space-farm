@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     public GameObject ComputerPanel;
     public GameObject InventoryPanel;
     public GameObject ShippingPanel;
+    public GameObject blackPanel;
     private List<GameObject> PanelGroup = new();
 
     string normalColorCode = "#FFFFFF84";
@@ -105,12 +106,15 @@ public class UIManager : MonoBehaviour
         {
             if (curActiveShortCut != _ShortCut) // 이전에 누른 도구 버튼이 아닐 경우
             {
-                curActiveShortCut.GetComponent<Outline>().enabled = false; // 이전 도구 버튼의 아웃라인을 끄고
+                curActiveShortCut.GetComponent<Image>().enabled = false;
+                curActiveShortCut.GetComponent<Outline>().enabled = false; // 이전 도구 버튼의 아웃라인과 이미지를 끄고
+                _ShortCut.GetComponent<Image>().enabled = true;
                 _ShortCut.GetComponent<Outline>().enabled = true; // 지금 누른 버튼의 아웃라인을 켜고
                 gmInstace.ChangeTool(_tState); // 장비 상태를 바꿔줌
             }
             else // 이전에 누른 도구 버튼을 다시 눌렀을 경우
             {
+                curActiveShortCut.GetComponent<Image>().enabled = false;
                 curActiveShortCut.GetComponent<Outline>().enabled = false;
                 gmInstace.ChangeTool(ToolState.None); // 도구 장비 해제(None)
                 gmInstace.ChangeSeed(SeedState.None);
@@ -119,6 +123,7 @@ public class UIManager : MonoBehaviour
         else // 장비 상태가 None인 경우
         {
             gmInstace.ChangeTool(_tState);
+            _ShortCut.GetComponent<Image>().enabled = true;
             _ShortCut.GetComponent<Outline>().enabled = true;
         }
 
@@ -181,6 +186,7 @@ public class UIManager : MonoBehaviour
         PlayerPanel.SetActive(false);
         if (!ComputerPanel.activeSelf) audioSource.PlayOneShot(computerClip);
         ComputerPanel.SetActive(true);
+        blackPanel.SetActive(true);
 
         CloseOtherPanel(ComputerPanel);
     }
@@ -190,6 +196,7 @@ public class UIManager : MonoBehaviour
         PlayerPanel.SetActive(false);
         if (!ShippingPanel.activeSelf) audioSource.PlayOneShot(projectorClip);
         ShippingPanel.SetActive(true);
+        blackPanel.SetActive(true);
 
         CloseOtherPanel(ShippingPanel);
     }
@@ -204,6 +211,7 @@ public class UIManager : MonoBehaviour
     {
         PlayerPanel.SetActive(false);
         InventoryPanel.SetActive(true);
+        blackPanel.SetActive(true);
 
         CloseOtherPanel(InventoryPanel);
     }
@@ -225,5 +233,6 @@ public class UIManager : MonoBehaviour
     public void OpenPlayPanel()
     {
         PlayerPanel.SetActive(true);
+        blackPanel.SetActive(false);
     }
 }

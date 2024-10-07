@@ -20,7 +20,7 @@ MonoBehaviour:
   _toolState: 2
   _toolModel: {fileID: 3844355804066867177, guid: 03b7ded755261b045917db3f408abea2,
     type: 3}
-  _shortcutname: "\uC528 \uBFCC\uB9AC\uAE30"
+  _shortcutname: "\uC528\uBFCC\uB9AC\uAE30"
   _animtrigger: Trowel
   Price: 100
   Tier: 0

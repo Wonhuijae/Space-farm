@@ -10,32 +10,37 @@ public class ShortCutButtonArray : MonoBehaviour
     public GameObject buttonPrefab;
     private GameManager gmInstance;
 
+    public Button[] shortCuts;
+
     private void OnEnable()
     {
         gmInstance = GameManager.Instance;
         items_tool = gmInstance.GetToolData();
 
-        foreach (Transform item in GetComponentInChildren<Transform>())
-        {
-            Destroy(item.gameObject);
-        }
-        
+        //foreach (Transform item in GetComponentInChildren<Transform>())
+        //{
+        //    Destroy(item.gameObject);
+        //}
+
+        int idx = 0;
         foreach(ToolData item in items_tool)
         {
-            GameObject tmpBtn = Instantiate(buttonPrefab, transform.position, Quaternion.identity);
-            tmpBtn.transform.parent = gameObject.transform;
-            tmpBtn.transform.localScale = Vector3.one;
+            shortCuts[idx].GetComponent<ShortCutManager>().toolState = item.toolState;
+            idx++;
+            //GameObject tmpBtn = Instantiate(buttonPrefab, transform.position, Quaternion.identity);
+            //tmpBtn.transform.parent = gameObject.transform;
+            //tmpBtn.transform.localScale = Vector3.one;
 
-            tmpBtn.GetComponent<ShortCutManager>().toolState = item.toolState;
+            //tmpBtn.GetComponent<ShortCutManager>().toolState = item.toolState;
 
-            Image[] tmpImage = tmpBtn.GetComponentsInChildren<Image>();
+            //Image[] tmpImage = tmpBtn.GetComponentsInChildren<Image>();
 
-            foreach (Image img in tmpImage)
-            {
-                if (img.gameObject.name == "Image") img.sprite = item.Icon_ShortCut;
-            }
+            //foreach (Image img in tmpImage)
+            //{
+            //    if (img.gameObject.name == "Image") img.sprite = item.Icon_ShortCut;
+            //}
 
-            tmpBtn.GetComponentInChildren<TextMeshProUGUI>().text = item.ShortcutName;
+            //tmpBtn.GetComponentInChildren<TextMeshProUGUI>().text = item.ShortcutName;
         }
     }
 }
