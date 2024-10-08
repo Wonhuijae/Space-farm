@@ -48,6 +48,7 @@ public class FarmSystem : MonoBehaviour
     private GameManager gmInstace;
     private PlayerManager plInstace;
     public GameObject[] VFXs;
+    public LayerMask layerMask;
 
     // 메인 카메라
     public Camera cam;
@@ -91,6 +92,7 @@ public class FarmSystem : MonoBehaviour
     public AudioClip wateringClip;
     public AudioClip sprinklerClip;
     public AudioClip hoeClip;
+    public GameObject plane;
 
     private Grid grid;
     private UIManager UIinstance;
@@ -173,8 +175,16 @@ public class FarmSystem : MonoBehaviour
                  
 #endif
         {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+            {
+                if (hit.collider.gameObject != plane) return;
+            }
+
             Vector3 fieldPos = grid.CellToWorld(cellPos);
-                fieldPos.y = 0;// -5 x 5  -10 z 11
+            fieldPos.y = 0;// -5 x 5  -10 z 11
 
                 switch (gmInstace.toolState)
                 {
