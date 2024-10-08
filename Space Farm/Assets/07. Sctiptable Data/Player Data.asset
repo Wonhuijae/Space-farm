@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Player Data
   m_EditorClassIdentifier: 
   money: 1000
-  color: {r: 1, g: 1, b: 1, a: 0}
+  color: {r: 1, g: 1, b: 1, a: 1}
   level: 1
   exp: 0
   maxExp: 100
-  ToolState: 0
+  ToolState: 2

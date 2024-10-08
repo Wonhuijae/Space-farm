@@ -262,10 +262,7 @@ public class GameManager : MonoBehaviour
 
     public void SetSeedItem(SeedData _seed)
     {
-        if (Array.Exists(seedData, e => e == _seed) && _seed.Quantity > 0)
-        {
-            dInstance.SaveDataToInventoryList(_seed.Code, -1);
-        }
+        dInstance.SaveDataToInventoryList(_seed.Code, -1);
     }
     
     public void GetCropsItem(CropsData _crops)

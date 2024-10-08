@@ -86,11 +86,18 @@ public class TransportationContents : MonoBehaviour
             {
                 if (i.name == "Image_Thumbnail") i.sprite = item.Icon_Inventory;
             }
-            
-            foreach(var t in tmp.GetComponentsInChildren<TextMeshProUGUI>())
+
+            foreach (var t in tmp.GetComponentsInChildren<TextMeshProUGUI>())
             {
                 if (t.name == "Text_Name") t.text = item.Name;
-                else t.text = gmInstance.GetQuantity(item.Code).ToString("N0");
+                else
+                {
+                    int q = gmInstance.GetQuantity(item.Code);
+                    t.text = q.ToString("N0");
+
+                    if (q <= 0) tmp.GetComponent<Button>().interactable = false;
+                    else tmp.GetComponent<Button>().interactable = true;
+                }
             }
         }
     }
@@ -99,6 +106,7 @@ public class TransportationContents : MonoBehaviour
     {
         salesImage.sprite = _data.Icon_Inventory;
         salesPrice.text = _data.SalePrice + " G";
+        hBtn.InteractFalse();
     }
 
     public void SetSumPrice()

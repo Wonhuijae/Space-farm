@@ -42,7 +42,7 @@ public class InventoryContents : MonoBehaviour
     public void SeedContentsSetting()
     {
         UIinstace.SetHighLight(categoryBTNs[0], contents[0], categoryBTNs, contents);
-       RemovingChildren(0);
+        RemovingChildren(0);
 
         foreach(SeedData item in seedData)
         {

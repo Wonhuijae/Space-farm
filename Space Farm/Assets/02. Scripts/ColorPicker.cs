@@ -7,11 +7,13 @@ public class ColorPicker : MonoBehaviour
 {
     public GameObject panleColorPic;
     public GameObject[] BTNs;
+    public GameObject camLight;
 
     public Image palette;
     public Image cursor;
 
     public Color selectedColor;
+    public Color previousColor;
 
     private Vector2 paletteSize;
     private CircleCollider2D paletteColl;
@@ -25,6 +27,18 @@ public class ColorPicker : MonoBehaviour
 
         paletteSize = new Vector2(palette.GetComponent<RectTransform>().rect.width,
                                   palette.GetComponent<RectTransform>().rect.height);
+        camLight.SetActive(false);
+    }
+
+    void OnEnable()
+    {
+        camLight.SetActive(true);
+        previousColor = playerInstance.playerRD.materials[1].color;
+    }
+
+    private void OnDisable()
+    {
+        playerInstance.playerRD.materials[1].color = previousColor;
     }
 
     private void SelectColor()
@@ -36,6 +50,7 @@ public class ColorPicker : MonoBehaviour
 
         selectedColor = GetColor();
         cursor.color = selectedColor;
+        playerInstance.playerRD.materials[1].color = selectedColor;
     }
 
     public void PointerDown()
@@ -65,7 +80,11 @@ public class ColorPicker : MonoBehaviour
 
     public void Cancle()
     {
+        playerInstance.playerRD.materials[1].color = previousColor;
+
+        camLight.SetActive(false);
         panleColorPic.SetActive(false);
+
         foreach(var o in BTNs)
         {
             o.SetActive(true);
@@ -75,5 +94,6 @@ public class ColorPicker : MonoBehaviour
     public void SaveColor()
     {
         playerInstance.SetColor(selectedColor);
+        previousColor = selectedColor;
     }
 }

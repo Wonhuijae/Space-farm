@@ -153,9 +153,13 @@ public class FieldCycle : MonoBehaviour
                 {
                     plInstance.GetAnim().SetTrigger("Trowel");
                     Init(farmSystem.GetDict(gmInstace.seedState));
-                    gmInstace.SetSeedItem(seed.SeedData);
                     Destroy(Instantiate(farmSystem.VFXs[1], FXPos, Quaternion.identity), 3f);
-                    Sowing();
+                    if (gmInstace.GetQuantity(seed.SeedData.Code) <= 0) return;
+                    else
+                    {
+                        gmInstace.SetSeedItem(seed.SeedData);
+                        Sowing();
+                    }
                 }
             }
         }
